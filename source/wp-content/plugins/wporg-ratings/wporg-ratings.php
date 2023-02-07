@@ -1,11 +1,11 @@
 <?php
-/*
-Plugin Name: WordPress.org Ratings System
-Version: 0.1
-Author: Otto
-Author URI: http://ottopress.com
-Description: Contains code needed for doing plugin/theme/other ratings on WordPress.org systems.
-*/
+/**
+ * Plugin Name: WordPress.org Ratings System
+ * Version: 0.1
+ * Author: Otto
+ * Author URI: http://ottopress.com
+ * Description: Contains code needed for doing plugin/theme/other ratings on WordPress.org systems.
+ */
 
 /**
  * Add a new cache group, because we're switching over to using post_id instead
@@ -21,7 +21,7 @@ class WPORG_Ratings {
 	const CACHE_TIME = HOUR_IN_SECONDS;
 	const REVIEWS_FORUM = 21272; // Support Forum reviews forum, is the post_parent of all reviews.
 
-	/*
+	/**
 	 * Retrieves a rating by post id, and caches the result.
 	 * @param $post_id post id of review. Default 0.
 	 * @return int.
@@ -47,7 +47,7 @@ class WPORG_Ratings {
 		return $rating;
 	}
 
-	/*
+	/**
 	 * Retrieves a user's rating, then sets a cache.
 	 * @param $object_type either theme or plugin.
 	 * @param $object_slug plugin or theme slug.
@@ -85,7 +85,7 @@ class WPORG_Ratings {
 		return (int) $rating;
 	}
 
-	/*
+	/**
 	 * Sets a rating on a theme or plugin for a user.
 	 * @param $post_id id of the review. Default 0.
 	 * @param $object_type either theme or plugin.
@@ -119,7 +119,7 @@ class WPORG_Ratings {
 		wp_cache_delete( "rating:counts:" . $object_type . ":" . $object_slug, self::CACHE_GROUP );
 	}
 
-	/*
+	/**
 	 * Gets the average rating for a theme or plugin.
 	 * @param $object_type either a theme or plugin.
 	 * @param $object_slug the slug of the theme or plugin.
@@ -151,7 +151,7 @@ class WPORG_Ratings {
 		return $avg;
 	}
 
-	/*
+	/**
 	 * Get the rating count for a theme or plugin.
 	 * @param $object_type either a theme or plugin.
 	 * @param $object_slug the slug of the theme or plugin.
@@ -167,7 +167,7 @@ class WPORG_Ratings {
 		return array_sum( $ratings );
 	}
 
-	/*
+	/**
 	 * Get the rating counts (1-5) for a plugin or theme.
 	 * @param $object_type either a theme or plugin.
 	 * @param $object_slug the slug of the theme or plugin.
@@ -213,7 +213,7 @@ class WPORG_Ratings {
 		return $counts;
 	}
 
-	/*
+	/**
 	 * Get the theme or plugin rating displayed as stars.
 	 * @param $rating the numerical rating for a theme or plugin. Default 0.
 	 * @return string a html string representing the rating.
@@ -242,7 +242,7 @@ class WPORG_Ratings {
 		return $output;
 	}
 
-	/*
+	/**
 	 * Outputs the form to allow ratings to be submitted.
 	 * @param $object_type either theme or plugin.
 	 * @param $object_slug the slug of theme or plugin.
