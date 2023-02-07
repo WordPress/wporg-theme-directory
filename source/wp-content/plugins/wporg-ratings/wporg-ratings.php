@@ -291,8 +291,8 @@ class WPORG_Ratings {
 			if ( $editable ) {
 				?>
                 <input type="hidden" name="rating" id="rating" value="<?php echo esc_attr( $rating ); ?>"/>
-                <input type="hidden" name="wporg_type" value="<?php esc_attr( $object_type ); ?>"/>
-                <input type="hidden" name="wporg_slug" value="<?php esc_attr( $object_slug ); ?>"/>
+                <input type="hidden" name="wporg_type" value="<?php echo esc_attr( $object_type ); ?>"/>
+                <input type="hidden" name="wporg_slug" value="<?php echo esc_attr( $object_slug ); ?>"/>
                 <script>
                     jQuery(document).ready(function ($) {
                         var ratings = $('.rating-stars');
