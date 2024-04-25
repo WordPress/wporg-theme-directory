@@ -1,6 +1,6 @@
 <?php
 
-use function WordPressdotorg\Theme\Theme_Directory_2024\get_support_url;
+use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_support_url, get_theme_patterns };
 
 /**
  * Convert a pattern object into a screenshot preview block.
@@ -36,20 +36,7 @@ if ( ! $current_post_id ) {
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
-$url = 'https://wp-themes.com/' . $theme_post->post_name . '/';
-$url = add_query_arg( 'rest_route', '/wporg-patterns/v1/patterns', $url );
-$response = wp_remote_get( $url );
-if ( is_wp_error( $response ) ) {
-	return;
-}
-
-if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-	return;
-}
-
-// This is decoded twice because the response is a quoted JSON string.
-// The first decode parses out to JSON, the second parses out to an object.
-$patterns = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+$patterns = get_theme_patterns( $theme_post->post_name );
 $initial_count = 6;
 
 if ( ! count( $patterns ) ) {

@@ -1,5 +1,7 @@
 <?php
 
+use function WordPressdotorg\Theme\Theme_Directory_2024\get_theme_patterns;
+
 $current_post_id = $block->context['postId'];
 if ( ! $current_post_id ) {
 	return;
@@ -8,8 +10,7 @@ if ( ! $current_post_id ) {
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
-$is_valid_url = isset( $theme->preview_url ) && 'wp-themes.com' === wp_parse_url( $theme->preview_url, PHP_URL_HOST );
-$url = $is_valid_url ? $theme->preview_url : '';
+$url = $theme->preview_url ?? '';
 
 // Get the device size from the query.
 $devices = [ 'desktop', 'tablet', 'mobile' ];
@@ -17,6 +18,18 @@ $device = 'desktop';
 if ( isset( $_REQUEST['device'] ) && in_array( $_REQUEST['device'], $devices ) ) {
 	$device = $_REQUEST['device']; // phpcs:ignore -- exact match to a given string.
 }
+
+// Check for any variation or pattern values passed in the query.
+if ( isset( $_REQUEST['pattern_name'] ) ) {
+	$show_pattern = wp_unslash( $_REQUEST['pattern_name'] ); // phpcs:ignore -- exact match to a given string.
+	$patterns = get_theme_patterns( $theme_post->post_name );
+	if ( $patterns ) {
+		$matches = wp_list_filter( $patterns, [ 'name' => $show_pattern ] );
+		$url = $matches ? $matches[0]->link : $url;
+	}
+}
+
+$is_valid_url = $url && 'wp-themes.com' === wp_parse_url( $url, PHP_URL_HOST );
 
 $classes = array();
 $notice = '';
@@ -87,7 +100,7 @@ $encoded_state = wp_json_encode( $init_state );
 			</div>
 		</section>
 		<iframe
-			src="<?php echo esc_url( $url ); ?>"
+			src="<?php echo esc_url_raw( $url ); ?>"
 			data-wp-style--width="state.iframeWidthCSS"
 			data-wp-style--height="state.iframeHeightCSS"
 			data-wp-on--load="actions.onLoad"

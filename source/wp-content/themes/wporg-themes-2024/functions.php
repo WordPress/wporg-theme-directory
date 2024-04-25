@@ -276,3 +276,30 @@ function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
 
 	return $features;
 }
+
+/**
+ * Get the list of patterns from wp-themes.com API.
+ */
+function get_theme_patterns( $theme_name ) {
+	$cache_key = 'wporg-themes-' . $theme_name . '-patterns';
+	$patterns = get_transient( $cache_key );
+
+	if ( false === $patterns ) {
+		$url = 'https://wp-themes.com/' . $theme_name . '/';
+		$url = add_query_arg( 'rest_route', '/wporg-patterns/v1/patterns', $url );
+		$response = wp_remote_get( $url );
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			// Set a short timeout to avoid hammering the API during outages.
+			set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
+			return [];
+		}
+
+		// This is decoded twice because the response is a quoted JSON string.
+		// The first decode parses out to JSON, the second parses out to an object.
+		$patterns = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+
+		set_transient( $cache_key, $patterns, HOUR_IN_SECONDS );
+	}
+
+	return $patterns;
+}
