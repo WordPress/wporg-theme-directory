@@ -50,5 +50,9 @@
 }
 
 :where(body.wporg-theme-preview) .wporg-theme-preview__download {
-	margin-top: auto;
+	top: auto;
+	bottom: 0;
+	background-color: inherit;
+	margin-inline: calc(-1 * var(--wp--preset--spacing--20));
+	padding-inline: var(--wp--preset--spacing--20);
 }
