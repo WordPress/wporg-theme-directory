@@ -56,3 +56,20 @@
 	margin-inline: calc(-1 * var(--wp--preset--spacing--20));
 	padding-inline: var(--wp--preset--spacing--20);
 }
+
+:where(body.wporg-theme-preview) .wporg-theme-patterns__grid {
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--wp--preset--spacing--10);
+}
+
+:where(body.wporg-theme-preview) .wp-block-wporg-screenshot-preview:where(.is-linked-image):hover {
+	border-color: var(--wp--preset--color--blueberry-2);
+	border-width: 1.5px;
+}
+
+:where(body.wporg-theme-preview) .wp-block-wporg-screenshot-preview:where(.is-linked-image):focus-within {
+	border-color: var(--wp--preset--color--blueberry-1);
+	border-width: 1.5px;
+	outline-color: var(--wp--preset--color--white);
+	outline-offset: 0;
+}

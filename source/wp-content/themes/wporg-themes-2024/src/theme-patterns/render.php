@@ -41,11 +41,13 @@ if ( ! $current_post_id ) {
 	return;
 }
 
+$show_all = $attributes['showAll'] ?? false;
+
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
 $patterns = get_theme_patterns( $theme_post->post_name );
-$initial_count = 6;
+$initial_count = $show_all ? PHP_INT_MAX : 6;
 
 if ( ! count( $patterns ) ) {
 	return '';

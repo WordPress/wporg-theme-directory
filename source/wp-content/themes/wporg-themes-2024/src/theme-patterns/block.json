@@ -8,6 +8,12 @@
 	"icon": "",
 	"description": "A list of patterns provided by this theme (with screenshots).",
 	"textdomain": "wporg",
+	"attributes": {
+		"showAll": {
+			"type": "boolean",
+			"default": false
+		}
+	},
 	"supports": {
 		"html": false
 	},
