@@ -95,7 +95,7 @@ function get_meta_block_value( $args, $block ) {
 			}
 			return '';
 		case 'preview-url':
-			return esc_url( $theme->preview_url );
+			return esc_url( untrailingslashit( get_permalink( $p ) ) . '/preview/' );
 		case 'download-url':
 			return esc_url( $theme->download_link );
 		case 'download-text':

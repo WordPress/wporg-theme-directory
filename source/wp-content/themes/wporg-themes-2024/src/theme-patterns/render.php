@@ -6,11 +6,19 @@ use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_support_url, get_t
  * Convert a pattern object into a screenshot preview block.
  */
 function get_pattern_preview_block( $pattern, $is_overflow = false ) {
+	$preview_link = add_query_arg( 'pattern_name', $pattern->name, $pattern->preview_base );
+
+	// If the page has a `style_variation` set, pass it through.
+	if ( isset( $_REQUEST['style_variation'] ) ) {
+		$style = sanitize_text_field( wp_unslash( $_REQUEST['style_variation'] ) );
+		$preview_link = add_query_arg( 'style_variation', $style, $preview_link );
+	}
+
 	$args = array(
 		'src' => $pattern->preview_link,
 		// translators: %s pattern name.
 		'alt' => sprintf( __( 'Pattern: %s', 'wporg-themes' ), $pattern->title ),
-		'href' => $pattern->link,
+		'href' => $preview_link,
 		'width' => 275,
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Name comes from API.
 		'viewportWidth' => $pattern->viewportWidth ?? 1200,
@@ -60,6 +68,7 @@ $encoded_state = wp_json_encode( $init_state );
 	<div class="wporg-theme-patterns__grid">
 		<?php
 		foreach ( $patterns as $i => $pattern ) {
+			$pattern->preview_base = untrailingslashit( get_permalink( $theme_post ) ) . '/preview/';
 			echo get_pattern_preview_block( $pattern, $i >= $initial_count ); // phpcs:ignore
 		}
 		?>
