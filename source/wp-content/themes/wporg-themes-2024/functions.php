@@ -16,12 +16,17 @@ require_once( __DIR__ . '/src/theme-patterns/index.php' );
  * Actions and filters.
  */
 add_action( 'init', __NAMESPACE__ . '\fix_term_imports' );
+add_action( 'init', __NAMESPACE__ . '\add_preview_endpoint' );
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_assets' );
-add_filter( 'frontpage_template_hierarchy', __NAMESPACE__ . '\use_archive_template_paged' );
 add_filter( 'post_thumbnail_html', __NAMESPACE__ . '\post_thumbnail_html', 10, 5 );
+add_action( 'body_class', __NAMESPACE__ . '\add_extra_body_class' );
+add_filter( 'frontpage_template_hierarchy', __NAMESPACE__ . '\use_archive_template_paged' );
+add_action( 'single_template_hierarchy', __NAMESPACE__ . '\load_theme_preview' );
 
 // Remove filters added by plugin.
 remove_filter( 'post_thumbnail_html', 'wporg_themes_post_thumbnail_html', 10, 5 );
+
+add_filter( 'show_admin_bar', '__return_false', 2000 );
 
 /**
  * Temporary fix for permission problem during local install.
@@ -30,6 +35,13 @@ function fix_term_imports() {
 	if ( defined( 'WP_CLI' ) ) {
 		remove_filter( 'pre_insert_term', 'wporg_themes_pre_insert_term' );
 	}
+}
+
+/**
+ * Set up the `view` endpoint.
+ */
+function add_preview_endpoint() {
+	add_rewrite_endpoint( 'preview', EP_PERMALINK, 'view' );
 }
 
 /**
@@ -45,18 +57,6 @@ function enqueue_assets() {
 		array( 'wporg-parent-2021-style', 'wporg-global-fonts' ),
 		filemtime( __DIR__ . '/style.css' )
 	);
-}
-
-/**
- * Switch to the archive.html template on paged requests.
- *
- * @param string[] $templates A list of template candidates, in descending order of priority.
- */
-function use_archive_template_paged( $templates ) {
-	if ( is_paged() ) {
-		array_unshift( $templates, 'archive.html' );
-	}
-	return $templates;
 }
 
 /**
@@ -96,6 +96,48 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 	}
 
 	return $html;
+}
+
+/**
+ * Add some custom classes to `body`.
+ *
+ * @param string[] $classes   An array of body class names.
+ */
+function add_extra_body_class( $classes ) {
+	global $wp_query;
+
+	if ( isset( $wp_query->query_vars['view'] ) ) {
+		$classes[] = 'wporg-theme-preview';
+	}
+
+	return $classes;
+}
+
+/**
+ * Switch to the archive.html template on paged requests.
+ *
+ * @param string[] $templates A list of template candidates, in descending order of priority.
+ */
+function use_archive_template_paged( $templates ) {
+	if ( is_paged() ) {
+		array_unshift( $templates, 'archive.html' );
+	}
+	return $templates;
+}
+
+/**
+ * If this is the `view` query, use preview template.
+ *
+ * @param string[] $templates A list of template candidates, in descending order of priority.
+ */
+function load_theme_preview( $templates ) {
+	global $wp_query;
+
+	if ( isset( $wp_query->query_vars['view'] ) ) {
+		return [ 'preview.html' ];
+	}
+
+	return $templates;
 }
 
 /**

@@ -26,3 +26,29 @@
 	border-radius: 2px;
 	box-shadow: 0 0 0 1.5px var(--wp--custom--link--color--text);
 }
+
+:where(main) a:where(:not(.wp-element-button)):focus,
+:where(main) button:where(:not([class*="wp-block-button"])):focus {
+	outline: none;
+	border-radius: 2px;
+	box-shadow: 0 0 0 1.5px var(--wp--custom--link--color--text);
+}
+
+:where(body.wporg-theme-preview) .wporg-theme-preview__container {
+	height: 100vh;
+}
+
+:where(body.wporg-theme-preview) .wporg-theme-preview__container > .wp-block-column {
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+}
+
+:where(body.wporg-theme-preview) .wp-block-column.has-charcoal-1-background-color {
+	/* Set the link color so that the focus outline is visible. */
+	--wp--custom--link--color--text: var(--wp--preset--color--blueberry-3);
+}
+
+:where(body.wporg-theme-preview) .wporg-theme-preview__download {
+	margin-top: auto;
+}
