@@ -303,3 +303,30 @@ function get_theme_patterns( $theme_name ) {
 
 	return $patterns;
 }
+
+/**
+ * Get the list of style variations from wp-themes.com API.
+ */
+function get_theme_style_variations( $theme_name ) {
+	$cache_key = 'wporg-themes-' . $theme_name . '-style-variations';
+	$styles = get_transient( $cache_key );
+
+	if ( false === $styles ) {
+		$url = 'https://wp-themes.com/' . $theme_name . '/';
+		$url = add_query_arg( 'rest_route', '/wporg-styles/v1/variations', $url );
+		$response = wp_remote_get( $url );
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			// Set a short timeout to avoid hammering the API during outages.
+			set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
+			return [];
+		}
+
+		// This is decoded twice because the response is a quoted JSON string.
+		// The first decode parses out to JSON, the second parses out to an object.
+		$styles = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+
+		set_transient( $cache_key, $styles, HOUR_IN_SECONDS );
+	}
+
+	return $styles;
+}

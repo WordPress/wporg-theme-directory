@@ -1,6 +1,6 @@
 <?php
 
-use function WordPressdotorg\Theme\Theme_Directory_2024\get_theme_patterns;
+use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_theme_patterns, get_theme_style_variations };
 
 $current_post_id = $block->context['postId'];
 if ( ! $current_post_id ) {
@@ -19,13 +19,27 @@ if ( isset( $_REQUEST['device'] ) && in_array( $_REQUEST['device'], $devices ) )
 	$device = $_REQUEST['device']; // phpcs:ignore -- exact match to a given string.
 }
 
-// Check for any variation or pattern values passed in the query.
+// Switch to using the pattern URL if a pattern is requested.
 if ( isset( $_REQUEST['pattern_name'] ) ) {
 	$show_pattern = wp_unslash( $_REQUEST['pattern_name'] ); // phpcs:ignore -- exact match to a given string.
 	$patterns = get_theme_patterns( $theme_post->post_name );
 	if ( $patterns ) {
 		$matches = wp_list_filter( $patterns, [ 'name' => $show_pattern ] );
-		$url = $matches ? $matches[0]->link : $url;
+		if ( $matches ) {
+			$url = current( $matches )->link;
+		}
+	}
+}
+
+// Add the style variation to the URL if one is selected.
+if ( isset( $_REQUEST['style_variation'] ) ) {
+	$show_style = wp_unslash( $_REQUEST['style_variation'] ); // phpcs:ignore -- exact match to a given string.
+	$styles = get_theme_style_variations( $theme_post->post_name );
+	if ( $styles ) {
+		$matches = wp_list_filter( $styles, [ 'title' => $show_style ] );
+		if ( $matches ) {
+			$url = add_query_arg( 'style_variation', $show_style, $url );
+		}
 	}
 }
 
