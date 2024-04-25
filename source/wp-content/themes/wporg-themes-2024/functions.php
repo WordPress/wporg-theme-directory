@@ -27,7 +27,20 @@ add_action( 'single_template_hierarchy', __NAMESPACE__ . '\load_theme_preview' )
 // Remove filters added by plugin.
 remove_filter( 'post_thumbnail_html', 'wporg_themes_post_thumbnail_html', 10, 5 );
 
-add_filter( 'show_admin_bar', '__return_false', 2000 );
+// Hide admin bar on preview pages.
+add_filter(
+	'show_admin_bar',
+	function( $should_show ) {
+		global $wp_query;
+
+		if ( isset( $wp_query->query_vars['view'] ) ) {
+			return false;
+		}
+
+		return $should_show;
+	},
+	2000
+);
 
 /**
  * Temporary fix for permission problem during local install.
