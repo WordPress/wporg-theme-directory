@@ -28,9 +28,7 @@
 	<div class="wp-block-column" style="flex-basis:70%">
 		<!-- wp:post-featured-image {"style":{"border":{"radius":"3px","style":"solid","width":"1px"}},"borderColor":"black-opacity-15"} /-->
 
-		<!-- wp:paragraph -->
-		<p>[style filters]</p>
-		<!-- /wp:paragraph -->
+		<!-- wp:wporg/theme-style-variations /-->
 	</div>
 	<!-- /wp:column -->
 

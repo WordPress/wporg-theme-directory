@@ -1,0 +1,18 @@
+.wporg-theme-style-variations__row {
+	display: flex;
+	gap: var(--wp--preset--spacing--10);
+	margin-block-start: var(--wp--preset--spacing--10);
+	list-style: none;
+	overflow-x: scroll;
+	overscroll-behavior: contain;
+	scroll-snap-type: inline mandatory;
+	scrollbar-width: none;
+
+	.wp-block-wporg-screenshot-preview {
+		flex-basis: 100px;
+
+		.wporg-screenshot-preview__container {
+			aspect-ratio: 200/125;
+		}
+	}
+}

@@ -12,6 +12,7 @@ require_once( __DIR__ . '/src/ratings-bars/index.php' );
 require_once( __DIR__ . '/src/ratings-stars/index.php' );
 require_once( __DIR__ . '/src/theme-patterns/index.php' );
 require_once( __DIR__ . '/src/theme-previewer/index.php' );
+require_once( __DIR__ . '/src/theme-style-variations/index.php' );
 
 /**
  * Actions and filters.
