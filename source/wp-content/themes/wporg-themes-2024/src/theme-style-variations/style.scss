@@ -1,15 +1,54 @@
+.wporg-theme-style-variations__controls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-block-start: var(--wp--preset--spacing--10);
+
+	h2 {
+		margin: 0 !important;
+		font-family: var(--wp--preset--font-family--inter);
+		font-size: var(--wp--preset--font-size--normal);
+		line-height: var(--wp--custom--body--typography--line-height);
+	}
+
+	.wporg-theme-style-variations__buttons {
+		svg {
+			vertical-align: middle;
+			fill: var(--wp--preset--color--charcoal-4) !important;
+
+			html[dir="rtl"] & {
+				transform: rotate(180deg);
+			}
+		}
+
+		[disabled] {
+			pointer-events: none;
+
+			svg {
+				fill: var(--wp--preset--color--charcoal-5) !important;
+			}
+		}
+	}
+}
+
 .wporg-theme-style-variations__row {
 	display: flex;
 	gap: var(--wp--preset--spacing--10);
 	margin-block-start: var(--wp--preset--spacing--10);
-	list-style: none;
 	overflow-x: scroll;
 	overscroll-behavior: contain;
 	scroll-snap-type: inline mandatory;
 	scrollbar-width: none;
 
+	&:focus {
+		outline: none;
+		border-radius: 2px;
+		box-shadow: 0 0 0 1.5px var(--wp--custom--link--color--text);
+	}
+
 	.wp-block-wporg-screenshot-preview {
 		flex-basis: 100px;
+		min-width: 100px;
 
 		.wporg-screenshot-preview__container {
 			aspect-ratio: 200/125;
