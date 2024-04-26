@@ -8,6 +8,8 @@ if ( ! $current_post_id ) {
 	return;
 }
 
+$display_style = $attributes['displayStyle'] ?? 'row';
+
 $theme_post = get_post( $block->context['postId'] );
 $styles = get_theme_style_variations( $theme_post->post_name );
 $count = count( $styles );
@@ -38,6 +40,8 @@ $encoded_state = wp_json_encode( $init_state );
 >
 	<div class="wporg-theme-style-variations__controls">
 		<h2><?php echo esc_html( $label ); ?></h2>
+
+		<?php if ( 'row' === $display_style ) : ?>
 		<div
 			class="wporg-theme-style-variations__buttons wp-block-buttons"
 			data-wp-bind--hidden="!state.hasOverscroll"
@@ -65,10 +69,11 @@ $encoded_state = wp_json_encode( $init_state );
 				</button>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 
 	<div
-		class="wporg-theme-style-variations__row"
+		class="wporg-theme-style-variations__<?php echo esc_attr( $display_style ); ?>"
 		data-wp-on--scroll="actions.handleScroll"
 	>
 		<?php

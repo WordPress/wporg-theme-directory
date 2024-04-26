@@ -8,6 +8,12 @@
 	"icon": "",
 	"description": "A list of style variations provided by this theme (with screenshots).",
 	"textdomain": "wporg",
+	"attributes": {
+		"displayStyle": {
+			"type": "string",
+			"enum": [ "row", "grid" ]
+		}
+	},
 	"supports": {
 		"html": false
 	},
