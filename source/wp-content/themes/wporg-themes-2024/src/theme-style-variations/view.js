@@ -41,8 +41,14 @@ const { state } = store( 'wporg/themes/style-variations', {
 		get hasOverscroll() {
 			return state.canNext || state.canPrevious;
 		},
+		get isHidden() {
+			// Each screenshot resets the context with its style.
+			const context = getContext();
+			return context.style !== state.selected;
+		},
 		position: 0,
 		overflow: 0,
+		selected: 'default',
 	},
 	actions: {
 		init() {
@@ -73,6 +79,11 @@ const { state } = store( 'wporg/themes/style-variations', {
 				left: position,
 				behavior: 'smooth',
 			} );
+		},
+		onStyleClick( event ) {
+			event.preventDefault();
+			const { ref } = getElement();
+			state.selected = ref?.dataset.style;
 		},
 	},
 } );

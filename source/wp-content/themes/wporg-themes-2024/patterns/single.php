@@ -26,8 +26,6 @@
 <div class="wp-block-columns alignwide" style="margin-top:var(--wp--preset--spacing--40)">
 	<!-- wp:column {"width":"70%","style":{"spacing":{"blockGap":"0"}}} -->
 	<div class="wp-block-column" style="flex-basis:70%">
-		<!-- wp:post-featured-image {"style":{"border":{"radius":"3px","style":"solid","width":"1px"}},"borderColor":"black-opacity-15"} /-->
-
 		<!-- wp:wporg/theme-style-variations /-->
 	</div>
 	<!-- /wp:column -->

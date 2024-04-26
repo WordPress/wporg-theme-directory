@@ -1,14 +1,12 @@
 <?php
 
 use function WordPressdotorg\Theme\Theme_Directory_2024\get_theme_style_variations;
-use function WordPressdotorg\Theme\Theme_Directory_2024\Theme_Style_Variations\get_style_variation_card;
+use function WordPressdotorg\Theme\Theme_Directory_2024\Theme_Style_Variations\{get_style_variation_card, get_theme_preview_images};
 
 $current_post_id = $block->context['postId'];
 if ( ! $current_post_id ) {
 	return;
 }
-
-$display_style = $attributes['displayStyle'] ?? 'row';
 
 $theme_post = get_post( $block->context['postId'] );
 $styles = get_theme_style_variations( $theme_post->post_name );
@@ -27,6 +25,7 @@ $label = sprintf(
 // Initial state to pass to Interactivity API.
 $init_state = [
 	'isRTL' => is_rtl(),
+	'selected' => 'default',
 ];
 $encoded_state = wp_json_encode( $init_state );
 
@@ -38,10 +37,13 @@ $encoded_state = wp_json_encode( $init_state );
 	data-wp-init="actions.init"
 	data-wp-on-window--resize="actions.init"
 >
-	<div class="wporg-theme-style-variations__controls">
+	<div class="wporg-theme-style-variations__screenshot">
+		<?php echo get_theme_preview_images( $theme_post ); // phpcs:ignore ?>
+	</div>
+
+	<div class="wporg-theme-style-variations__heading">
 		<h2><?php echo esc_html( $label ); ?></h2>
 
-		<?php if ( 'row' === $display_style ) : ?>
 		<div
 			class="wporg-theme-style-variations__buttons wp-block-buttons"
 			data-wp-bind--hidden="!state.hasOverscroll"
@@ -69,11 +71,10 @@ $encoded_state = wp_json_encode( $init_state );
 				</button>
 			</div>
 		</div>
-		<?php endif; ?>
 	</div>
 
 	<div
-		class="wporg-theme-style-variations__<?php echo esc_attr( $display_style ); ?>"
+		class="wporg-theme-style-variations__row"
 		data-wp-on--scroll="actions.handleScroll"
 	>
 		<?php
