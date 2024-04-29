@@ -13,7 +13,9 @@ $styles = get_theme_style_variations( $theme_post->post_name );
 $count = count( $styles );
 
 if ( ! $count ) {
-	return '';
+	// phpcs:ignore
+	echo do_blocks( '<!-- wp:post-featured-image {"style":{"border":{"radius":"3px","style":"solid","width":"1px"}},"borderColor":"black-opacity-15"} /-->' );
+	return;
 }
 
 $label = sprintf(
