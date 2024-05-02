@@ -161,12 +161,12 @@ function add_site_navigation_menus( $menus ) {
 	$menu = array();
 
 	$menu[] = array(
-		'label' => __( 'Submit a theme', 'wporg-themes' ),
-		'url' => '/getting-started/',
-	);
-	$menu[] = array(
 		'label' => __( 'My favorites', 'wporg-themes' ),
 		'url' => '/browse/favorites/',
+	);
+	$menu[] = array(
+		'label' => __( 'Submit a theme', 'wporg-themes' ),
+		'url' => '/getting-started/',
 	);
 	$menu[] = array(
 		'label' => __( 'Commercial theme companies', 'wporg-themes' ),
