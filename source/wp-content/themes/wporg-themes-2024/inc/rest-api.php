@@ -201,7 +201,7 @@ function get_locale_banner_for_theme( $request ) {
 		if ( ! empty( $suggestion_links ) ) {
 			$suggest_string .= ' ' . sprintf(
 				// translators: %s: List of links to theme in other locales.
-				__( 'This theme is also available in %s.', 'wporg-themes' ),
+				__( 'This theme is available in %s.', 'wporg-themes' ),
 				wp_sprintf_l( '%l', $suggestion_links )
 			);
 		}
