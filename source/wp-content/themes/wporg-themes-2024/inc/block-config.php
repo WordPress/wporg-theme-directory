@@ -5,6 +5,7 @@
 
 namespace WordPressdotorg\Theme\Theme_Directory_2024\Block_Config;
 
+use WP_HTML_Tag_Processor;
 use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_query_tags, wporg_themes_get_feature_list };
 
 add_filter( 'wporg_query_total_label', __NAMESPACE__ . '\update_query_total_label', 10, 2 );
@@ -14,6 +15,7 @@ add_filter( 'wporg_query_filter_options_subjects', __NAMESPACE__ . '\get_subject
 add_action( 'wporg_query_filter_in_form', __NAMESPACE__ . '\inject_other_filters', 10, 2 );
 add_filter( 'wporg_block_navigation_menus', __NAMESPACE__ . '\add_site_navigation_menus' );
 add_filter( 'render_block_wporg/link-wrapper', __NAMESPACE__ . '\inject_permalink_link_wrapper' );
+add_filter( 'render_block_wporg/language-suggest', __NAMESPACE__ . '\inject_language_suggest_endpoint' );
 
 /**
  * Update the query total label to reflect "patterns" found.
@@ -232,4 +234,22 @@ function add_site_navigation_menus( $menus ) {
  */
 function inject_permalink_link_wrapper( $block_content ) {
 	return str_replace( 'href=""', 'href="' . get_permalink() . '"', $block_content );
+}
+
+/**
+ * Update the endpoint used in `wporg/language-suggest` for the current theme.
+ *
+ * @param string $block_content The block content.
+ *
+ * @return array The updated block.
+ */
+function inject_language_suggest_endpoint( $block_content ) {
+	$html = new WP_HTML_Tag_Processor( $block_content );
+	$html->next_tag();
+	$endpoint_url = rest_url( '/wporg-themes/v1/locale-banner/' );
+	if ( is_single() ) {
+		$endpoint_url = trailingslashit( $endpoint_url . get_queried_object()->post_name );
+	}
+	$html->set_attribute( 'data-endpoint', $endpoint_url );
+	return $html->get_updated_html();
 }
