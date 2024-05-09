@@ -96,12 +96,14 @@
 		<!-- wp:wporg/theme-patterns /-->
 
 		<!-- wp:heading {"fontSize":"heading-4"} -->
-		<h2 class="wp-block-heading has-heading-4-font-size">Downloads per day</h2>
+		<h2 class="wp-block-heading has-heading-4-font-size"><?php esc_html_e( 'Downloads per day', 'wporg-themes' ); ?></h2>
 		<!-- /wp:heading -->
 
-		<!-- wp:paragraph -->
-		<p>[graph]</p>
+		<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"active-installs"}}}}} -->
+		<p>Active Installations</p>
 		<!-- /wp:paragraph -->
+
+		<!-- wp:wporg/theme-downloads /-->
 	</div>
 	<!-- /wp:column -->
 
