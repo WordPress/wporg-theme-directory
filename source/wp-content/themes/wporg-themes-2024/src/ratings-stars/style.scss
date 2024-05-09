@@ -12,6 +12,11 @@
 		margin-inline-start: -6px;
 		fill: var(--wp--custom--wporg-ratings-stars--color--fill);
 	}
+
+	// Flip the half-star for RTL views.
+	.rtl & .is-star-half {
+		transform: rotateY(-180deg);
+	}
 }
 
 .wporg-ratings-stars__label {
