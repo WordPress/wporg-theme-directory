@@ -51,7 +51,7 @@ function render( $attributes, $content, $block ) {
 
 	$attribute_markup = '';
 	foreach ( $attributes as $key => $value ) {
-		$attribute_markup .= sprintf( 'data-%s="%s" ', $key, $value );
+		$attribute_markup .= sprintf( 'data-%s="%s" ', $key, esc_attr( $value ) );
 	}
 
 	$wrapper_attributes = get_block_wrapper_attributes();
