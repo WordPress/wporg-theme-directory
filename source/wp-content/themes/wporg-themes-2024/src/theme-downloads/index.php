@@ -42,6 +42,9 @@ function render( $attributes, $content, $block ) {
 
 	$theme_post = get_post( $block->context['postId'] );
 	$theme = wporg_themes_theme_information( $theme_post->post_name );
+	if ( isset( $theme->error ) ) {
+		return '';
+	}
 
 	$attributes = array(
 		'theme' => $theme->slug,
