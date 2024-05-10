@@ -23,7 +23,7 @@ function init() {
 	);
 
 	// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- third-party script.
-	wp_register_script( 'google-charts-loader', 'https://www.gstatic.com/charts/loader.js', array(), null, true );
+	wp_register_script( 'google-charts-loader', 'https://www.gstatic.com/charts/loader.js', array( 'jquery' ), null, true );
 }
 
 /**

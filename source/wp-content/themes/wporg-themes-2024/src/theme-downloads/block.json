@@ -13,5 +13,5 @@
 	},
 	"usesContext": [ "postId", "postType" ],
 	"editorScript": "file:./index.js",
-	"viewScript": [ "google-charts-loader", "jquery", "file:./view.js" ]
+	"viewScript": [ "google-charts-loader", "file:./view.js" ]
 }
