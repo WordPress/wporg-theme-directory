@@ -20,7 +20,6 @@ async function renderChart( element ) {
 		} );
 
 		new google.visualization.ColumnChart( element ).draw( data, {
-			title: 'Density of Precious Metals, in g/cm^3',
 			colors: [ '#3858e9' ],
 			fontName: 'var(--wp--preset--font-family--inter)',
 			legend: {
