@@ -19,8 +19,16 @@ async function renderChart( element ) {
 			count++;
 		} );
 
+		const bodyStyle = window.getComputedStyle( document.body );
+		const colors = {
+			'charcoal-1': bodyStyle.getPropertyValue( '--wp--preset--color--charcoal-1' ),
+			'blueberry-1': bodyStyle.getPropertyValue( '--wp--preset--color--blueberry-1' ),
+			'light-grey-1': bodyStyle.getPropertyValue( '--wp--preset--color--light-grey-1' ),
+			'light-grey-2': bodyStyle.getPropertyValue( '--wp--preset--color--light-grey-2' ),
+		};
+
 		new google.visualization.ColumnChart( element ).draw( data, {
-			colors: [ '#3858e9' ],
+			colors: [ colors[ 'blueberry-1' ] ],
 			fontName: 'var(--wp--preset--font-family--inter)',
 			legend: {
 				position: 'none',
@@ -33,7 +41,7 @@ async function renderChart( element ) {
 			},
 			hAxis: {
 				textStyle: {
-					color: '#1e1e1e',
+					color: colors[ 'charcoal-1' ],
 					fontSize: 10,
 				},
 			},
@@ -43,19 +51,19 @@ async function renderChart( element ) {
 				viewWindowMode: 'explicit',
 				viewWindow: { min: 0 },
 				textStyle: {
-					color: '#1e1e1e',
+					color: colors[ 'charcoal-1' ],
 					fontSize: 14,
 				},
 				gridlines: {
-					color: '#d9d9d9',
+					color: colors[ 'light-grey-1' ],
 				},
 				minorGridlines: {
-					color: '#f6f6f6',
+					color: colors[ 'light-grey-2' ],
 				},
 			},
 			tooltip: {
 				textStyle: {
-					color: '#1e1e1e',
+					color: colors[ 'charcoal-1' ],
 				},
 			},
 			bar: {
