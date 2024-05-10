@@ -3,7 +3,15 @@
 async function renderChart( element ) {
 	const { theme = '', labelDate, labelValue } = element.dataset;
 	const url = 'https://api.wordpress.org/stats/themes/1.0/downloads.php?slug=' + theme + '&limit=260&callback=?';
-	const downloads = await jQuery.getJSON( url );
+	let downloads;
+	try {
+		downloads = await jQuery.ajax( {
+			dataType: 'jsonp',
+			url: url,
+		} );
+	} catch ( err ) {
+		return;
+	}
 
 	google.charts.setOnLoadCallback( function () {
 		const data = new google.visualization.DataTable();
