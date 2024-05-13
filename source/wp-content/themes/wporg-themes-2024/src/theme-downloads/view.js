@@ -3,7 +3,7 @@
 async function renderChart( element ) {
 	const { theme = '', labelDate, labelValue } = element.dataset;
 	const url = 'https://api.wordpress.org/stats/themes/1.0/downloads.php?slug=' + theme + '&limit=260&callback=?';
-	let downloads;
+	let downloads = {};
 	try {
 		downloads = await jQuery.ajax( {
 			dataType: 'jsonp',
