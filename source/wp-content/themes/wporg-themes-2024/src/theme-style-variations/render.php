@@ -52,24 +52,22 @@ $encoded_state = wp_json_encode( $init_state );
 		>
 			<div class="wp-block-button is-style-toggle is-small">
 				<button
-					tabindex="-1"
 					class="wp-block-button__link wp-element-button"
-					aria-label="Prev"
+					aria-label="<?php esc_attr_e( 'Scroll back', 'wporg-themes' ); ?>"
 					data-wp-on--click="actions.handlePrevious"
-					data-wp-bind--disabled="!state.canPrevious"
+					data-wp-bind--aria-disabled="!state.canPrevious"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M20 11.2H6.8l3.7-3.7-1-1L3.9 12l5.6 5.5 1-1-3.7-3.7H20z"></path></svg>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M14.6 7l-1.2-1L8 12l5.4 6 1.2-1-4.6-5z"></path></svg>
 				</button>
 			</div>
 			<div class="wp-block-button is-style-toggle is-small">
 				<button
-					tabindex="-1"
 					class="wp-block-button__link wp-element-button"
-					aria-label="Next"
+					aria-label="<?php esc_attr_e( 'Scroll forward', 'wporg-themes' ); ?>"
 					data-wp-on--click="actions.handleNext"
-					data-wp-bind--disabled="!state.canNext"
+					data-wp-bind--aria-disabled="!state.canNext"
 				>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="m14.5 6.5-1 1 3.7 3.7H4v1.6h13.2l-3.7 3.7 1 1 5.6-5.5z"></path></svg>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M10.6 6L9.4 7l4.6 5-4.6 5 1.2 1 5.4-6z"></path></svg>
 				</button>
 			</div>
 		</div>
