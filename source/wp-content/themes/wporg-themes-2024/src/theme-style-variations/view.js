@@ -54,9 +54,17 @@ const { state } = store( 'wporg/themes/style-variations', {
 		init() {
 			const element = getRowElement( getElement().ref );
 			state.position = element.scrollLeft;
+			if ( ! element.children.length ) {
+				return;
+			}
+
+			const elStyle = window.getComputedStyle( element );
+			const width = parseInt( elStyle.getPropertyValue( '--wporg-theme-style-variations--size' ), 10 );
+			const gap = parseInt( elStyle.getPropertyValue( 'gap' ), 10 );
+			const fullWidth = element.children.length * width + ( element.children.length - 1 ) * gap;
+
 			// How much extra scroll overflow do we have?
-			state.overflow =
-				element.children.length * 100 + ( element.children.length - 1 ) * 10 - element.clientWidth;
+			state.overflow = fullWidth - element.clientWidth;
 		},
 		handleScroll() {
 			const element = getRowElement( getElement().ref );

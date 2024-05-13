@@ -36,7 +36,7 @@ function get_style_variation_card( $style ) {
 		// translators: %s pattern name.
 		'alt' => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
 		'href' => $preview_link,
-		'width' => 100,
+		'width' => 130,
 		'viewportWidth' => 1180,
 		'viewportHeight' => 740,
 		'fullPage' => false,

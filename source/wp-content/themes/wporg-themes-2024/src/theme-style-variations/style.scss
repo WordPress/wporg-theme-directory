@@ -39,6 +39,8 @@
 
 .wporg-theme-style-variations__row,
 .wporg-theme-style-variations__grid {
+	--wporg-theme-style-variations--size: 130px;
+
 	&:focus {
 		outline: none;
 		border-radius: 2px;
@@ -46,7 +48,7 @@
 	}
 
 	.wp-block-wporg-screenshot-preview {
-		min-width: 100px;
+		min-width: var(--wporg-theme-style-variations--size);
 
 		.wporg-screenshot-preview__container {
 			aspect-ratio: 200/125;
@@ -64,7 +66,7 @@
 	scrollbar-width: none;
 
 	.wp-block-wporg-screenshot-preview {
-		flex-basis: 100px;
+		flex-basis: var(--wporg-theme-style-variations--size);
 	}
 }
 
