@@ -157,6 +157,8 @@
 		<h2 class="wp-block-heading has-heading-4-font-size"><?php esc_html_e( 'Translations', 'wporg-themes' ); ?></h2>
 		<!-- /wp:heading -->
 
+		<!-- wp:wporg/theme-available-translations /-->
+
 		<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"translate-link"}}}}} -->
 		<p>Translate this theme</p>
 		<!-- /wp:paragraph -->

@@ -12,6 +12,7 @@ require_once( __DIR__ . '/src/child-theme-notice/index.php' );
 require_once( __DIR__ . '/src/favorite-button/index.php' );
 require_once( __DIR__ . '/src/ratings-bars/index.php' );
 require_once( __DIR__ . '/src/ratings-stars/index.php' );
+require_once( __DIR__ . '/src/theme-available-translations/index.php' );
 require_once( __DIR__ . '/src/theme-downloads/index.php' );
 require_once( __DIR__ . '/src/theme-patterns/index.php' );
 require_once( __DIR__ . '/src/theme-previewer/index.php' );
