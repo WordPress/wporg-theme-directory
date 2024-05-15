@@ -104,6 +104,8 @@
 		<!-- /wp:paragraph -->
 
 		<!-- wp:wporg/theme-downloads /-->
+
+		<!-- wp:wporg/theme-settings /-->
 	</div>
 	<!-- /wp:column -->
 

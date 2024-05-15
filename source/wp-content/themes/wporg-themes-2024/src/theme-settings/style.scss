@@ -1,0 +1,58 @@
+.wp-block-wporg-theme-settings {
+	--wp--custom--form--border--width: 1px;
+	--wp--custom--form--border--color: var(--wp--preset--color--light-grey-1);
+
+	border-top: 1px solid var(--wp--preset--color--light-grey-1);
+	margin-top: var(--wp--preset--spacing--30);
+	padding-top: var(--wp--preset--spacing--30);
+
+	h2 {
+		margin: 0;
+	}
+
+	> *,
+	form > * {
+		margin: 0;
+	}
+
+	> * + * {
+		margin-top: var(--wp--preset--spacing--20);
+	}
+
+	.wporg-theme-settings__button {
+		display: flex;
+		margin-top: var(--wp--preset--spacing--20);
+		gap: var(--wp--preset--spacing--20);
+		align-items: center;
+
+		[aria-disabled="true"] {
+			pointer-events: none;
+			--wp--custom--button--color--background: var(--wp--preset--color--charcoal-4);
+		}
+	}
+}
+
+.wporg-theme-settings__url-field {
+	display: flex;
+	flex-direction: column;
+
+	label {
+		margin-bottom: calc(var(--wp--preset--spacing--10) * 0.4);
+	}
+
+	input {
+		width: 100%;
+		max-width: 50ch;
+
+		&:focus {
+			outline: 1.5px solid var(--wp--preset--color--blueberry-1);
+			outline-offset: -1.5px;
+			border-color: transparent;
+		}
+	}
+}
+
+.wporg-theme-settings__form-help {
+	font-size: var(--wp--preset--font-size--small);
+	line-height: var(--wp--custom--body--small--typography--line-height);
+}

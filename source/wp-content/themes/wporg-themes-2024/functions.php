@@ -15,6 +15,7 @@ require_once( __DIR__ . '/src/ratings-stars/index.php' );
 require_once( __DIR__ . '/src/theme-downloads/index.php' );
 require_once( __DIR__ . '/src/theme-patterns/index.php' );
 require_once( __DIR__ . '/src/theme-previewer/index.php' );
+require_once( __DIR__ . '/src/theme-settings/index.php' );
 require_once( __DIR__ . '/src/theme-status-notice/index.php' );
 require_once( __DIR__ . '/src/theme-style-variations/index.php' );
 require_once( __DIR__ . '/src/theme-style-variations-items/index.php' );
