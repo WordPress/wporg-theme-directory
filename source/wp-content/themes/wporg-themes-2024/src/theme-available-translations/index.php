@@ -74,12 +74,14 @@ function get_language_links( $slug ) {
 	$available_languages = array();
 	foreach ( $translated_locales as $locale ) {
 		if ( isset( $locale_subdomain_assoc[ $locale ] ) ) {
-			$language = \GP_Locales::by_field( 'wp_locale', $locale )->native_name;
+			$language = \GP_Locales::by_field( 'wp_locale', $locale );
+
 			$available_languages[ $locale ] = sprintf(
-				'<a href="https://%s.wordpress.org%s">%s</a>',
+				'<a href="https://%1$s.wordpress.org%2$s" lang="%3$s">%4$s</a>',
 				$locale_subdomain_assoc[ $locale ]->subdomain,
 				esc_url( trailingslashit( get_site()->path . $slug ) ),
-				$language
+				$language->slug,
+				$language->native_name
 			);
 		}
 	}
@@ -87,7 +89,7 @@ function get_language_links( $slug ) {
 	// Add in an "English (US)" link back to the main site.
 	if ( $available_languages || 'en_US' !== get_locale() ) {
 		$available_languages['en_US'] = sprintf(
-			'<a href="%1$s">%2$s</a>',
+			'<a href="%1$s" lang="en-US">%2$s</a>',
 			esc_url( trailingslashit( 'https://wordpress.org/themes/' . $slug ) ),
 			'English (US)', // Not translated, locale name is in native language.
 		);
