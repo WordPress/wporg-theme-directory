@@ -24,19 +24,17 @@ if ( ! $model_type || ! current_user_can( 'edit_post', $theme_post->ID ) ) {
 
 // Enqueue this script, so that it's available for the interactivity view script.
 wp_enqueue_script( 'wp-api-fetch' );
-// Enqueue the notice style so the markup is styled correctly.
-wp_enqueue_style( 'wporg-notice-style' );
 
 $labels = [
 	'heading' => __( 'Theme options', 'wporg-themes' ),
 ];
 if ( 'community' === $model_type ) {
-	$labels['type'] = __( 'Community theme', 'wporg-themes' );
+	$labels['type'] = __( 'Community theme:', 'wporg-themes' );
 	$labels['description'] = __( 'This theme is developed and supported by a community.', 'wporg-themes' );
 	$labels['form_label'] = __( 'Development repository URL', 'wporg-themes' );
 	$labels['form_help'] = __( 'Optional. The URL where development happens, such as at github.com.', 'wporg-themes' );
 } elseif ( 'commercial' === $model_type ) {
-	$labels['type'] = __( 'Commercial theme', 'wporg-themes' );
+	$labels['type'] = __( 'Commercial theme:', 'wporg-themes' );
 	$labels['description'] = __( 'This theme is free but offers paid upgrades, support, and/or add-ons.', 'wporg-themes' );
 	$labels['form_label'] = __( 'Commercial support URL', 'wporg-themes' );
 	$labels['form_help'] = __( 'Optional. The URL for theme support, other than its support forum on wordpress.org.', 'wporg-themes' );
@@ -48,7 +46,7 @@ $init_state = [
 	'type' => $model_type,
 	'url' => $url,
 	'labels' => [
-		'success' => __( 'Saved!', 'wporg-themes' ),
+		'success' => __( 'URL saved correctly!', 'wporg-themes' ),
 		'error' => __( 'Error updating the URL. Please try again.', 'wporg-themes' ),
 	],
 ];
@@ -61,15 +59,10 @@ $encoded_state = wp_json_encode( $init_state );
 	data-wp-context="<?php echo esc_attr( $encoded_state ); ?>"
 >
 	<h2 class="has-heading-4-font-size"><?php echo esc_html( $labels['heading'] ); ?></h2>
-	<div class="wp-block-wporg-notice is-info-notice">
-		<div class="wp-block-wporg-notice__icon"></div>
-		<div class="wp-block-wporg-notice__content">
-			<p class="wporg-theme-settings__description">
-				<strong><?php echo esc_html( $labels['type'] ); ?></strong><br />
-				<?php echo esc_html( $labels['description'] ); ?>
-			</p>
-		</div>
-	</div>
+	<p class="wporg-theme-settings__description">
+		<strong><?php echo esc_html( $labels['type'] ); ?></strong>
+		<?php echo esc_html( $labels['description'] ); ?>
+	</p>
 	<form data-wp-on--submit="actions.onSubmit" method="POST">
 		<div class="wporg-theme-settings__url-field">
 			<label for="wporg-theme-settings-url"><?php echo esc_html( $labels['form_label'] ); ?></label>
@@ -82,8 +75,8 @@ $encoded_state = wp_json_encode( $init_state );
 				data-wp-bind--value="context.url"
 				data-wp-on--keydown="actions.onChange"
 			/>
+			<p class="wporg-theme-settings__form-help" id="wporg-theme-settings__form-help"><?php echo esc_html( $labels['form_help'] ); ?></p>
 		</div>
-		<p class="wporg-theme-settings__form-help" id="wporg-theme-settings__form-help"><?php echo esc_html( $labels['form_help'] ); ?></p>
 		<div class="wporg-theme-settings__button wp-block-button is-small">
 			<button
 				class="wp-block-button__link wp-element-button"
