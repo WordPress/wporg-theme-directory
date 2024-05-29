@@ -4,6 +4,7 @@ namespace WordPressdotorg\Theme\Theme_Directory_2024;
 
 require_once( __DIR__ . '/inc/block-bindings.php' );
 require_once( __DIR__ . '/inc/block-config.php' );
+require_once( __DIR__ . '/inc/i18n.php' );
 require_once( __DIR__ . '/inc/rest-api.php' );
 
 // Block files
