@@ -9,7 +9,6 @@ use WP_Post;
 
 const TRANSLATED_TAXONOMIES = [
 	// Taxonomy => Tax label name.
-	'category' => 'Categories',
 	'post_tag' => 'Tags',
 ];
 
