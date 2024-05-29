@@ -94,7 +94,7 @@ function translate_term( $term ) {
 	}
 
 	$label = TRANSLATED_TAXONOMIES[ $term->taxonomy ];
-	$term->name = strrev( translate_with_gettext_context( html_entity_decode( $term->name ), $label . ' term name', 'wporg-themes' ) ); // phpcs:ignore
+	$term->name = esc_html( translate_with_gettext_context( html_entity_decode( $term->name ), $label . ' term name', 'wporg-themes' ) ); // phpcs:ignore
 	if ( ! empty( $term->description ) ) {
 		$term->description = esc_html( translate_with_gettext_context( html_entity_decode( $term->description ), $label . ' term description', 'wporg-themes' ) ); // phpcs:ignore
 	}
