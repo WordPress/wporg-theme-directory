@@ -26,7 +26,7 @@ function get_the_theme( $_post = false ) {
 		$_post = $post;
 	}
 
-	$theme_post = get_post( $post );
+	$theme_post = get_post( $_post );
 	// Not a post, or not a theme post type.
 	if ( ! ( $theme_post instanceof WP_Post ) || 'repopackage' !== $theme_post->post_type ) {
 		return false;
