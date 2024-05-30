@@ -6,11 +6,7 @@
 namespace WordPressdotorg\Theme\Theme_Directory_2024\I18N;
 
 use WP_Post;
-
-const TRANSLATED_TAXONOMIES = [
-	// Taxonomy => Tax label name.
-	'post_tag' => 'Tags',
-];
+use function WordPressdotorg\Theme\Theme_Directory_2024\wporg_themes_get_feature_list;
 
 add_filter( 'the_content', __NAMESPACE__ . '\translate_the_content', 1 );
 add_filter( 'the_title', __NAMESPACE__ . '\translate_the_title', 1, 2 );
@@ -83,20 +79,24 @@ function translate_the_title( $title, $post_id = null ) {
 }
 
 /**
- * Translate term names into the current site locale.
+ * Translate tag names into the current site locale.
+ *
+ * Only tags are visible on the frontend. We can ignore categories,
+ * and `theme_business_model` is never output as terms.
  *
  * @param WP_Term $term The WP_Term object being loaded.
  */
 function translate_term( $term ) {
-	// Not get_user_locale(), as we respect the displayed site locale.
-	if ( is_admin() || 'en_US' === get_locale() || ! isset( TRANSLATED_TAXONOMIES[ $term->taxonomy ] ) ) {
+	if ( is_admin() || 'post_tag' !== $term->taxonomy ) {
 		return $term;
 	}
 
-	$label = TRANSLATED_TAXONOMIES[ $term->taxonomy ];
-	$term->name = esc_html( translate_with_gettext_context( html_entity_decode( $term->name ), $label . ' term name', 'wporg-themes' ) ); // phpcs:ignore
-	if ( ! empty( $term->description ) ) {
-		$term->description = esc_html( translate_with_gettext_context( html_entity_decode( $term->description ), $label . ' term description', 'wporg-themes' ) ); // phpcs:ignore
+	// Get the feature list, collapsed into a one-dimensional array.
+	$features = wporg_themes_get_feature_list( 'all' );
+	$features = array_merge( ...array_values( $features ) );
+
+	if ( isset( $features[ $term->slug ] ) ) {
+		$term->name = $features[ $term->slug ];
 	}
 
 	return $term;
