@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
 
       - name: i18n
-        uses: WordPress/wporg-repo-tools/.github/actions/i18n@try/i18n-action
+        uses: WordPress/wporg-repo-tools/.github/actions/i18n@trunk
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --no_taxonomies --post_types=page --url=https://wordpress.org/themes/wp-json/wp/v2/ --textdomain=wporg-themes
