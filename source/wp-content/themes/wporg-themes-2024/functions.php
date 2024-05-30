@@ -392,7 +392,8 @@ function get_tag_labels( $tags ) {
 }
 
 /**
- * Get all possible features, using the default textdomain to mirror WP core.
+ * Get all possible features. This list mirrors core, but needs the local
+ * textdomain as the terms have been updated to be sentence-case.
  *
  * @param string $include Optional. Type of list: 'active', 'deprecated' or 'all'. Default 'active'.
  * @param string $subset  Optional. Returns only the selected subset of features.
@@ -402,120 +403,118 @@ function get_tag_labels( $tags ) {
 function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
 	$features = array();
 
-	// phpcs:disable WordPress.WP.I18n.MissingArgDomain -- Intentionally uses core textdomain.
 	if ( 'active' === $include || 'all' === $include ) {
 		$features = array(
-			__( 'Layout' )   => array(
-				'grid-layout'   => __( 'Grid layout' ),
-				'one-column'    => __( 'One column' ),
-				'two-columns'   => __( 'Two columns' ),
-				'three-columns' => __( 'Three columns' ),
-				'four-columns'  => __( 'Four columns' ),
-				'left-sidebar'  => __( 'Left sidebar' ),
-				'right-sidebar' => __( 'Right sidebar' ),
-				'wide-blocks'   => __( 'Wide blocks' ),
+			__( 'Layout', 'wporg-themes' )   => array(
+				'grid-layout'   => __( 'Grid layout', 'wporg-themes' ),
+				'one-column'    => __( 'One column', 'wporg-themes' ),
+				'two-columns'   => __( 'Two columns', 'wporg-themes' ),
+				'three-columns' => __( 'Three columns', 'wporg-themes' ),
+				'four-columns'  => __( 'Four columns', 'wporg-themes' ),
+				'left-sidebar'  => __( 'Left sidebar', 'wporg-themes' ),
+				'right-sidebar' => __( 'Right sidebar', 'wporg-themes' ),
+				'wide-blocks'   => __( 'Wide blocks', 'wporg-themes' ),
 			),
-			__( 'Features' ) => array(
-				'accessibility-ready'   => __( 'Accessibility ready' ),
-				'block-patterns'        => __( 'Block editor patterns' ),
-				'block-styles'          => __( 'Block editor styles' ),
-				'full-site-editing'     => __( 'Block themes' ),
-				'buddypress'            => __( 'BuddyPress' ),
-				'custom-background'     => __( 'Custom background' ),
-				'custom-colors'         => __( 'Custom colors' ),
-				'custom-header'         => __( 'Custom header' ),
-				'custom-logo'           => __( 'Custom logo' ),
-				'custom-menu'           => __( 'Custom menu' ),
-				'editor-style'          => __( 'Editor style' ),
-				'featured-image-header' => __( 'Featured image header' ),
-				'featured-images'       => __( 'Featured images' ),
-				'flexible-header'       => __( 'Flexible header' ),
-				'footer-widgets'        => __( 'Footer widgets' ),
-				'front-page-post-form'  => __( 'Front page posting' ),
-				'full-width-template'   => __( 'Full width template' ),
-				'microformats'          => __( 'Microformats' ),
-				'post-formats'          => __( 'Post formats' ),
-				'rtl-language-support'  => __( 'RTL language support' ),
-				'sticky-post'           => __( 'Sticky post' ),
-				'style-variations'      => __( 'Style variations' ),
-				'template-editing'      => __( 'Template editing' ),
-				'theme-options'         => __( 'Theme options' ),
-				'threaded-comments'     => __( 'Threaded comments' ),
-				'translation-ready'     => __( 'Translation ready' ),
+			__( 'Features', 'wporg-themes' ) => array(
+				'accessibility-ready'   => __( 'Accessibility ready', 'wporg-themes' ),
+				'block-patterns'        => __( 'Block editor patterns', 'wporg-themes' ),
+				'block-styles'          => __( 'Block editor styles', 'wporg-themes' ),
+				'full-site-editing'     => __( 'Block themes', 'wporg-themes' ),
+				'buddypress'            => __( 'BuddyPress', 'wporg-themes' ),
+				'custom-background'     => __( 'Custom background', 'wporg-themes' ),
+				'custom-colors'         => __( 'Custom colors', 'wporg-themes' ),
+				'custom-header'         => __( 'Custom header', 'wporg-themes' ),
+				'custom-logo'           => __( 'Custom logo', 'wporg-themes' ),
+				'custom-menu'           => __( 'Custom menu', 'wporg-themes' ),
+				'editor-style'          => __( 'Editor style', 'wporg-themes' ),
+				'featured-image-header' => __( 'Featured image header', 'wporg-themes' ),
+				'featured-images'       => __( 'Featured images', 'wporg-themes' ),
+				'flexible-header'       => __( 'Flexible header', 'wporg-themes' ),
+				'footer-widgets'        => __( 'Footer widgets', 'wporg-themes' ),
+				'front-page-post-form'  => __( 'Front page posting', 'wporg-themes' ),
+				'full-width-template'   => __( 'Full width template', 'wporg-themes' ),
+				'microformats'          => __( 'Microformats', 'wporg-themes' ),
+				'post-formats'          => __( 'Post formats', 'wporg-themes' ),
+				'rtl-language-support'  => __( 'RTL language support', 'wporg-themes' ),
+				'sticky-post'           => __( 'Sticky post', 'wporg-themes' ),
+				'style-variations'      => __( 'Style variations', 'wporg-themes' ),
+				'template-editing'      => __( 'Template editing', 'wporg-themes' ),
+				'theme-options'         => __( 'Theme options', 'wporg-themes' ),
+				'threaded-comments'     => __( 'Threaded comments', 'wporg-themes' ),
+				'translation-ready'     => __( 'Translation ready', 'wporg-themes' ),
 			),
-			__( 'Subject' )  => array(
-				'blog'           => __( 'Blog' ),
-				'e-commerce'     => __( 'E-commerce' ),
-				'education'      => __( 'Education' ),
-				'entertainment'  => __( 'Entertainment' ),
-				'food-and-drink' => __( 'Food & drink' ),
-				'holiday'        => __( 'Holiday' ),
-				'news'           => __( 'News' ),
-				'photography'    => __( 'Photography' ),
-				'portfolio'      => __( 'Portfolio' ),
+			__( 'Subject', 'wporg-themes' )  => array(
+				'blog'           => __( 'Blog', 'wporg-themes' ),
+				'e-commerce'     => __( 'E-commerce', 'wporg-themes' ),
+				'education'      => __( 'Education', 'wporg-themes' ),
+				'entertainment'  => __( 'Entertainment', 'wporg-themes' ),
+				'food-and-drink' => __( 'Food & drink', 'wporg-themes' ),
+				'holiday'        => __( 'Holiday', 'wporg-themes' ),
+				'news'           => __( 'News', 'wporg-themes' ),
+				'photography'    => __( 'Photography', 'wporg-themes' ),
+				'portfolio'      => __( 'Portfolio', 'wporg-themes' ),
 			),
 		);
 	}
 
 	if ( 'deprecated' === $include || 'all' === $include ) {
-		$features[ __( 'Colors' ) ] = array(
-			'black'  => __( 'Black' ),
-			'blue'   => __( 'Blue' ),
-			'brown'  => __( 'Brown' ),
-			'gray'   => __( 'Gray' ),
-			'green'  => __( 'Green' ),
-			'orange' => __( 'Orange' ),
-			'pink'   => __( 'Pink' ),
-			'purple' => __( 'Purple' ),
-			'red'    => __( 'Red' ),
-			'silver' => __( 'Silver' ),
-			'tan'    => __( 'Tan' ),
-			'white'  => __( 'White' ),
-			'yellow' => __( 'Yellow' ),
-			'dark'   => __( 'Dark' ),
-			'light'  => __( 'Light' ),
+		$features[ __( 'Colors', 'wporg-themes' ) ] = array(
+			'black'  => __( 'Black', 'wporg-themes' ),
+			'blue'   => __( 'Blue', 'wporg-themes' ),
+			'brown'  => __( 'Brown', 'wporg-themes' ),
+			'gray'   => __( 'Gray', 'wporg-themes' ),
+			'green'  => __( 'Green', 'wporg-themes' ),
+			'orange' => __( 'Orange', 'wporg-themes' ),
+			'pink'   => __( 'Pink', 'wporg-themes' ),
+			'purple' => __( 'Purple', 'wporg-themes' ),
+			'red'    => __( 'Red', 'wporg-themes' ),
+			'silver' => __( 'Silver', 'wporg-themes' ),
+			'tan'    => __( 'Tan', 'wporg-themes' ),
+			'white'  => __( 'White', 'wporg-themes' ),
+			'yellow' => __( 'Yellow', 'wporg-themes' ),
+			'dark'   => __( 'Dark', 'wporg-themes' ),
+			'light'  => __( 'Light', 'wporg-themes' ),
 		);
 
 		if ( 'deprecated' === $include ) {
 			// Initialize arrays.
-			$features[ __( 'Layout' ) ]   = array();
-			$features[ __( 'Features' ) ] = array();
-			$features[ __( 'Subject' ) ]  = array();
+			$features[ __( 'Layout', 'wporg-themes' ) ]   = array();
+			$features[ __( 'Features', 'wporg-themes' ) ] = array();
+			$features[ __( 'Subject', 'wporg-themes' ) ]  = array();
 		}
 
-		$features[ __( 'Layout' ) ] = array_merge(
-			$features[ __( 'Layout' ) ],
+		$features[ __( 'Layout', 'wporg-themes' ) ] = array_merge(
+			$features[ __( 'Layout', 'wporg-themes' ) ],
 			array(
-				'fixed-layout'      => __( 'Fixed Layout' ),
-				'fluid-layout'      => __( 'Fluid Layout' ),
-				'responsive-layout' => __( 'Responsive Layout' ),
+				'fixed-layout'      => __( 'Fixed Layout', 'wporg-themes' ),
+				'fluid-layout'      => __( 'Fluid Layout', 'wporg-themes' ),
+				'responsive-layout' => __( 'Responsive Layout', 'wporg-themes' ),
 			)
 		);
 
-		$features[ __( 'Features' ) ] = array_merge(
-			$features[ __( 'Features' ) ],
+		$features[ __( 'Features', 'wporg-themes' ) ] = array_merge(
+			$features[ __( 'Features', 'wporg-themes' ) ],
 			array(
-				'blavatar' => __( 'Blavatar' ),
+				'blavatar' => __( 'Blavatar', 'wporg-themes' ),
 			)
 		);
 
-		$features[ __( 'Subject' ) ] = array_merge(
-			$features[ __( 'Subject' ) ],
+		$features[ __( 'Subject', 'wporg-themes' ) ] = array_merge(
+			$features[ __( 'Subject', 'wporg-themes' ) ],
 			array(
-				'photoblogging' => __( 'Photoblogging' ),
-				'seasonal'      => __( 'Seasonal' ),
+				'photoblogging' => __( 'Photoblogging', 'wporg-themes' ),
+				'seasonal'      => __( 'Seasonal', 'wporg-themes' ),
 			)
 		);
 	}
 
 	if ( 'layouts' === $subset ) {
-		return $features[ __( 'Layout' ) ];
+		return $features[ __( 'Layout', 'wporg-themes' ) ];
 	} else if ( 'features' === $subset ) {
-		return $features[ __( 'Features' ) ];
+		return $features[ __( 'Features', 'wporg-themes' ) ];
 	} else if ( 'subjects' === $subset ) {
-		return $features[ __( 'Subject' ) ];
+		return $features[ __( 'Subject', 'wporg-themes' ) ];
 	}
-	// phpcs:enable WordPress.WP.I18n.MissingArgDomain
 
 	return $features;
 }
