@@ -5,7 +5,7 @@
 			var(--wp--custom--button--small--spacing--padding--top)
 			calc(var(--wp--custom--button--small--spacing--padding--right) - 4px)
 			var(--wp--custom--button--small--spacing--padding--bottom)
-			var(--wp--custom--button--small--spacing--padding--left);
+			calc(var(--wp--custom--button--small--spacing--padding--left) - 4px);
 		background: none;
 		border: 1px solid var(--wp--preset--color--light-grey-1);
 		border-radius: 2px;

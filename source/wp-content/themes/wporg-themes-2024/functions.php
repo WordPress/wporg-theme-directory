@@ -64,6 +64,9 @@ add_action(
 	function() {
 		// Don't swap author link with w.org profile link.
 		remove_all_filters( 'author_link' );
+
+		// Remove the "By…" from the author name block.
+		remove_filter( 'render_block_core/post-author-name', 'WordPressdotorg\Theme\Parent_2021\Gutenberg_Tweaks\render_author_prefix', 10, 2 );
 	}
 );
 
