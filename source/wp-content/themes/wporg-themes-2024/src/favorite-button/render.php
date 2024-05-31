@@ -15,6 +15,7 @@ if ( ! $user_id ) {
 
 // Manually enqueue this script, so that it's available for the interactivity view script.
 wp_enqueue_script( 'wp-api-fetch' );
+wp_enqueue_script( 'wp-a11y' );
 
 $is_favorite = wporg_themes_is_favourited( $theme_post->post_name );
 
@@ -22,6 +23,8 @@ $classes = $is_favorite ? 'is-favorite' : '';
 
 $add_label = __( 'Add to favorites', 'wporg-themes' );
 $remove_label = __( 'Remove from favorites', 'wporg-themes' );
+$favorited_label = __( 'Favorited', 'wporg-themes' );
+$unfavorited_label = __( 'Removed from favorites', 'wporg-themes' );
 
 // Initial state to pass to Interactivity API.
 $init_state = [
@@ -30,6 +33,8 @@ $init_state = [
 	'label' => [
 		'add' => $add_label,
 		'remove' => $remove_label,
+		'favorited' => $favorited_label,
+		'unfavorited' => $unfavorited_label,
 	],
 ];
 $encoded_state = wp_json_encode( $init_state );

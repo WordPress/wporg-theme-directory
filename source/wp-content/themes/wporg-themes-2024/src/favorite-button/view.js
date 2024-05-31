@@ -21,6 +21,7 @@ store( 'wporg/themes/favorite-button', {
 						data: { theme_slug: context.themeSlug },
 					} );
 					context.isFavorite = false;
+					wp.a11y.speak( context.label.unfavorited, 'polite' );
 				} catch ( error ) {}
 			} else {
 				try {
@@ -30,6 +31,7 @@ store( 'wporg/themes/favorite-button', {
 						data: { theme_slug: context.themeSlug },
 					} );
 					context.isFavorite = true;
+					wp.a11y.speak( context.label.favorited, 'polite' );
 				} catch ( error ) {}
 			}
 		},
