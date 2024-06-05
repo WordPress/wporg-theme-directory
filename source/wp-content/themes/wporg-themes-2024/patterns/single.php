@@ -106,9 +106,6 @@
 			<h2 class="wp-block-heading has-heading-4-font-size"><?php esc_html_e( 'Ratings', 'wporg-themes' ); ?></h2>
 			<!-- /wp:heading -->
 
-			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"ratings-link"}}}},"className":"wporg-ratings-link"} -->
-			<p class="wporg-ratings-link">See all</p>
-			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:group -->
 
@@ -116,9 +113,17 @@
 
 		<!-- wp:wporg/ratings-bars /-->
 
-		<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"}}},"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"submit-review-link"}}}}} -->
-		<p style="margin-top:var(--wp--preset--spacing--10)">Add my review</p>
-		<!-- /wp:paragraph -->
+		<!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|10"},"blockGap":"var:preset|spacing|10"}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+		<div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--10)">
+			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"ratings-link"}}}},"className":"wporg-ratings-link"} -->
+			<p class="wporg-ratings-link">See all</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"submit-review-link"}}}}} -->
+			<p >Add my review</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
 
 		<!-- wp:heading {"fontSize":"heading-4"} -->
 		<h2 class="wp-block-heading has-heading-4-font-size"><?php esc_html_e( 'Support', 'wporg-themes' ); ?></h2>
