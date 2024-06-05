@@ -120,7 +120,7 @@
 			<!-- /wp:paragraph -->
 
 			<!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"wporg-themes/meta","args":{"key":"submit-review-link"}}}}} -->
-			<p >Add my review</p>
+			<p>Add my review</p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:group -->
