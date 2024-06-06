@@ -1,13 +1,22 @@
 :where(.wp-block-wporg-favorite-button) {
 	.wporg-favorite-button__button {
 		margin: 0;
-		padding: 0;
+		padding:
+			var(--wp--custom--button--small--spacing--padding--top)
+			calc(var(--wp--custom--button--small--spacing--padding--right) - 4px)
+			var(--wp--custom--button--small--spacing--padding--bottom)
+			var(--wp--custom--button--small--spacing--padding--left);
 		background: none;
-		border: 0;
-		border-radius: 0;
+		border: 1px solid var(--wp--preset--color--light-grey-1);
+		border-radius: 2px;
 		box-shadow: none;
 		font-size: 14px;
 		cursor: pointer;
+		color: var(--wp--preset--color--charcoal-1);
+
+		&:hover {
+			background-color: var(--wp--preset--color--light-grey-2);
+		}
 	}
 
 	> * {
