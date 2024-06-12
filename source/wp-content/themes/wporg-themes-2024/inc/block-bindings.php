@@ -78,7 +78,7 @@ function get_meta_block_value( $args, $block ) {
 			return sprintf(
 				'<a href="%s">%s</a>',
 				esc_url( get_support_url( $theme->slug . '/reviews/' ) ),
-				__( 'See all reviews', 'wporg-themes' )
+				__( 'See all', 'wporg-themes' )
 			);
 		case 'support-forum-url':
 			return esc_url( get_support_url( $theme->slug ) );
