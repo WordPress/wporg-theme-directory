@@ -20,6 +20,28 @@ class wporgListbox {
 		listbox.addEventListener( 'focus', this.handleFocus.bind( this ) );
 		listbox.addEventListener( 'keydown', this.handleKeyboard.bind( this ) );
 
+		const listItems = listbox.querySelectorAll( 'li' );
+		listItems.forEach( ( element, index ) => {
+			element.dataset.index = index;
+			element.addEventListener( 'click', this.handleClick.bind( this ) );
+		} );
+
+		this.updateRender();
+	}
+
+	handleClick( event ) {
+		const element = event.target.closest( 'li' );
+		if ( ! element ) {
+			return;
+		}
+
+		// Focus the container.
+		element.closest( 'ul' ).focus();
+
+		this.current = element.dataset.index * 1;
+		this.selected = element.dataset.index * 1;
+
+		this.updateSelected();
 		this.updateRender();
 	}
 
