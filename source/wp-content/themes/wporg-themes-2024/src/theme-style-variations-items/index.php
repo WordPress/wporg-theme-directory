@@ -34,7 +34,7 @@ function get_style_variation_card( $style ) {
 		'src' => $style->preview_link,
 		// translators: %s pattern name.
 		'alt' => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
-		'href' => $preview_link,
+		// 'href' => $preview_link,
 		'width' => 100,
 		'viewportWidth' => 1180,
 		'viewportHeight' => 740,
@@ -42,9 +42,11 @@ function get_style_variation_card( $style ) {
 	);
 	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
 
-	$html = new WP_HTML_Tag_Processor( $block_markup );
-	$html->next_tag( 'a' );
-	$html->set_attribute( 'data-wp-on--click', 'wporg/themes/preview::actions.setIframeUrl' );
+	$instance_id = wp_unique_id( 'wporg-theme-style-var-item-' );
 
-	return $html->get_updated_html();
+	return sprintf(
+		'<li id="%1$s" role="option">%2$s</li>',
+		$instance_id,
+		$block_markup
+	);
 }

@@ -17,10 +17,24 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: var(--wp--preset--spacing--20);
+	list-style: none;
+	padding-left: 0;
 
 	.wp-block-wporg-screenshot-preview {
 		padding: var(--wp--preset--spacing--20);
 		border-color: var(--wp--preset--color--light-grey-1);
 		background-color: var(--wp--preset--color--light-grey-2);
+	}
+
+	&:focus {
+		outline: none;
+
+		.is-focus .wp-block-wporg-screenshot-preview {
+			background-color: var(--wp--preset--color--pomegrade-2);
+		}
+	}
+
+	[aria-selected="true"] .wp-block-wporg-screenshot-preview {
+		background-color: var(--wp--preset--color--acid-green-2);
 	}
 }

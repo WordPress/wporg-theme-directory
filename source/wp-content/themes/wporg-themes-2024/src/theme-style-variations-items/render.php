@@ -16,21 +16,34 @@ if ( ! $count ) {
 	return '';
 }
 
+// Initial state to pass to JS (*not* Interactivty API).
+$init_state = [
+	'hideOverflow' => false,
+	'initialCount' => $count,
+	'totalCount' => $count,
+];
+$encoded_state = wp_json_encode( $init_state );
+
 ?>
 <div
-	data-wp-interactive="wporg/themes/style-variations"
 	<?php echo get_block_wrapper_attributes(); // phpcs:ignore ?>
+	data-initial-state="<?php echo esc_attr( $encoded_state ); ?>"
 >
 	<div class="wporg-theme-style-variations__heading">
-		<h2><?php esc_html_e( 'Style variations', 'wporg-themes' ); ?></h2>
+		<h2 id="wporg-theme-style-variations-heading"><?php esc_html_e( 'Style variations', 'wporg-themes' ); ?></h2>
 	</div>
 
-	<div class="wporg-theme-style-variations__grid">
+	<ul
+		tabindex="0"
+		role="listbox"
+		aria-labelledby="wporg-theme-style-variations-heading"
+		class="wporg-theme-style-variations__grid"
+	>
 		<?php
 		foreach ( $styles as $i => $style ) {
 			$style->preview_base = untrailingslashit( get_permalink( $theme_post ) ) . '/preview/';
 			echo get_style_variation_card( $style ); // phpcs:ignore
 		}
 		?>
-	</div>
+	</ul>
 </div>

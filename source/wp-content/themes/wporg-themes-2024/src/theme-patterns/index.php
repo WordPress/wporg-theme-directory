@@ -18,3 +18,35 @@ add_action( 'init', __NAMESPACE__ . '\init' );
 function init() {
 	register_block_type( dirname( dirname( __DIR__ ) ) . '/build/theme-patterns' );
 }
+
+/**
+ * Convert a pattern object into a screenshot preview block.
+ */
+function get_pattern_preview_block( $pattern, $is_overflow = false ) {
+	$preview_link = add_query_arg( 'pattern_name', $pattern->name, $pattern->preview_base );
+	$cache_buster = '20240522'; // To break out of cached image.
+	$view_url = add_query_arg( 'v', $cache_buster, $pattern->preview_link );
+
+	$args = array(
+		'src' => $view_url,
+		// translators: %s pattern name.
+		'alt' => sprintf( __( 'Pattern: %s', 'wporg-themes' ), $pattern->title ),
+		// 'href' => false,
+		'width' => 275,
+		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Name comes from API.
+		'viewportWidth' => $pattern->viewportWidth ?? 1200,
+		'fullPage' => true,
+		'isHidden' => $is_overflow,
+	);
+
+	$image_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
+
+	$instance_id = wp_unique_id( 'wporg-theme-patterns-item-' );
+
+	return sprintf(
+		'<li id="%1$s" role="option" %2$s>%3$s</li>',
+		$instance_id,
+		$is_overflow ? 'style="display:none;"' : '',
+		$image_markup
+	);
+}
