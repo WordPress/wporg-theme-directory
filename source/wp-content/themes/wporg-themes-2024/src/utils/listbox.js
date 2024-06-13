@@ -1,3 +1,4 @@
+/* global CustomEvent */
 /**
  * WordPress dependencies
  */
@@ -55,11 +56,7 @@ class wporgListbox {
 			this.decrement( true );
 		} else if ( event.keyCode === ENTER || event.keyCode === SPACE ) {
 			this.selected = this.current;
-			// Trigger the custom "show" event on each image.
-			// this.container.querySelectorAll( '.wp-block-wporg-screenshot-preview' ).forEach( ( element ) => {
-			// 	const dispatchEvent = new Event( 'wporg-show' );
-			// 	element.dispatchEvent( dispatchEvent );
-			// } );
+			this.updateSelected();
 		} else {
 			// Do nothing if none of the previous conditions triggered.
 			return;
@@ -86,6 +83,17 @@ class wporgListbox {
 				listbox.focus();
 			}
 		}, 0 );
+	}
+
+	updateSelected() {
+		// Push the selected event out to anyone listening (theme previewer).
+		const listbox = this.container.querySelector( '[role="listbox"]' );
+		const listItems = listbox.querySelectorAll( 'li' );
+		if ( listbox && listItems && listItems[ this.selected ] ) {
+			const dispatchEvent = new CustomEvent( 'wporg-select' );
+			dispatchEvent.selectedElement = listItems[ this.selected ];
+			listbox.dispatchEvent( dispatchEvent );
+		}
 	}
 
 	updateRender() {

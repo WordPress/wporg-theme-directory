@@ -25,16 +25,10 @@ function init() {
  * Convert a style object into a screenshot preview block.
  */
 function get_style_variation_card( $style ) {
-	$preview_link = $style->preview_base;
-	if ( str_contains( $style->link, 'style_variation' ) ) {
-		$preview_link = add_query_arg( 'style_variation', $style->title, $style->preview_base );
-	}
-
 	$args = array(
 		'src' => $style->preview_link,
 		// translators: %s pattern name.
 		'alt' => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
-		// 'href' => $preview_link,
 		'width' => 100,
 		'viewportWidth' => 1180,
 		'viewportHeight' => 740,
@@ -45,8 +39,9 @@ function get_style_variation_card( $style ) {
 	$instance_id = wp_unique_id( 'wporg-theme-style-var-item-' );
 
 	return sprintf(
-		'<li id="%1$s" role="option">%2$s</li>',
+		'<li role="option" id="%1$s" data-style_variation="%2$s">%3$s</li>',
 		$instance_id,
+		$style->title,
 		$block_markup
 	);
 }

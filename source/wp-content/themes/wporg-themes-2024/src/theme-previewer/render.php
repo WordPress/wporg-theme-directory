@@ -69,22 +69,8 @@ $markup = <<<BLOCKS
 BLOCKS;
 
 $html = new WP_HTML_Tag_Processor( $content );
-while ( $html->next_tag( [ 'class_name' => 'wp-block-wporg-screenshot-preview' ] ) ) {
-	$html->next_tag( 'a' );
-	$preview_link = $html->get_attribute( 'href' );
-	if ( $preview_link ) {
-		$query = wp_parse_url( $preview_link, PHP_URL_QUERY );
-		$args = wp_parse_args( $query );
-		// If neither style or pattern is found, this is the default style variation.
-		if ( empty( $args ) ) {
-			$args['style_variation'] = 'default';
-		}
-		foreach ( $args as $key => $value ) {
-			$html->set_attribute( 'data-' . esc_attr( $key ), esc_attr( $value ) );
-		}
-
-		$html->set_attribute( 'data-wp-on--click', 'wporg/themes/preview::actions.navigateIframe' );
-	}
+while ( $html->next_tag( [ 'class_name' => 'wporg-theme-listbox' ] ) ) {
+	$html->set_attribute( 'data-wp-on--wporg-select', 'wporg/themes/preview::actions.navigateIframe' );
 }
 
 $content = $html->get_updated_html();

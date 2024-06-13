@@ -37,11 +37,10 @@ $encoded_state = wp_json_encode( $init_state );
 		tabindex="0"
 		role="listbox"
 		aria-labelledby="wporg-theme-style-variations-heading"
-		class="wporg-theme-style-variations__grid"
+		class="wporg-theme-style-variations__grid wporg-theme-listbox"
 	>
 		<?php
 		foreach ( $styles as $i => $style ) {
-			$style->preview_base = untrailingslashit( get_permalink( $theme_post ) ) . '/preview/';
 			echo get_style_variation_card( $style ); // phpcs:ignore
 		}
 		?>

@@ -42,11 +42,10 @@ $encoded_state = wp_json_encode( $init_state );
 		tabindex="0"
 		role="listbox"
 		aria-labelledby="wporg-theme-patterns-heading"
-		class="wporg-theme-patterns__grid"
+		class="wporg-theme-patterns__grid wporg-theme-listbox"
 	>
 		<?php
 		foreach ( $patterns as $i => $pattern ) {
-			$pattern->preview_base = untrailingslashit( get_permalink( $theme_post ) ) . '/preview/';
 			echo get_pattern_preview_block( $pattern, $i >= $initial_count ); // phpcs:ignore
 		}
 		?>

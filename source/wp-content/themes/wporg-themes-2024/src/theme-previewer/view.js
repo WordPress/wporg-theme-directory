@@ -16,9 +16,8 @@ store( 'wporg/themes/preview', {
 			context.isLoaded = true;
 		},
 		navigateIframe( event ) {
-			event.preventDefault();
 			const context = getContext();
-			const { ref } = getElement();
+			const { selectedElement: ref } = event;
 			if ( ref && ref.dataset ) {
 				context.isLoaded = false;
 				if ( ref.dataset.style_variation ) {
