@@ -7,6 +7,9 @@ if ( ! $current_post_id ) {
 	return;
 }
 
+// Manually enqueue this script, so that it's available for the interactivity view script.
+wp_enqueue_script( 'wp-a11y' );
+
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
@@ -49,6 +52,9 @@ $init_state = [
 	'permalink' => $permalink,
 	'previewBase' => $theme->preview_url,
 	'selected' => $selected,
+	'label' => array(
+		'postNavigate' => __( 'Theme preview frame updated.', 'wporg-themes' ),
+	),
 ];
 $encoded_state = wp_json_encode( $init_state );
 

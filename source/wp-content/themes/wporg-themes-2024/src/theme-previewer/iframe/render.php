@@ -88,11 +88,12 @@ $encoded_state = wp_json_encode( $init_state );
 			</div>
 		</section>
 		<iframe
+			title="<?php esc_attr_e( 'Theme preview', 'wporg-themes' ); ?>"
 			src="<?php echo esc_url_raw( $url ); ?>"
 			data-wp-bind--src="wporg/themes/preview::context.url"
 			data-wp-style--width="state.iframeWidthCSS"
 			data-wp-style--height="state.iframeHeightCSS"
 			data-wp-on--load="wporg/themes/preview::actions.onLoad"
-		/>
+		></iframe>
 	<?php endif; ?>
 </div>

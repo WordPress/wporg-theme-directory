@@ -14,6 +14,7 @@ store( 'wporg/themes/preview', {
 		onLoad() {
 			const context = getContext();
 			context.isLoaded = true;
+			wp.a11y?.speak( context.label.postNavigate, 'polite' );
 		},
 		navigateIframe( event ) {
 			const context = getContext();
