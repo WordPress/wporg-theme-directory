@@ -24,7 +24,7 @@ function init() {
 /**
  * Convert a style object into a screenshot preview block.
  */
-function get_style_variation_card( $style ) {
+function get_style_variation_card( $style, $is_selected = false ) {
 	$args = array(
 		'src' => $style->preview_link,
 		// translators: %s pattern name.
@@ -38,10 +38,14 @@ function get_style_variation_card( $style ) {
 
 	$instance_id = wp_unique_id( 'wporg-theme-style-var-item-' );
 
+	$extra_attrs = '';
+	$extra_attrs .= $is_selected ? ' aria-selected="true"' : '';
+
 	return sprintf(
-		'<li role="option" id="%1$s" data-style_variation="%2$s">%3$s</li>',
+		'<li role="option" id="%1$s" data-style_variation="%2$s" %3$s>%4$s</li>',
 		$instance_id,
 		$style->title,
+		$extra_attrs,
 		$block_markup
 	);
 }

@@ -24,12 +24,23 @@ if ( ! $pattern_count ) {
 	return '';
 }
 
+$selected_index = -1;
+if ( isset( $_GET['pattern_name'] ) ) {
+	foreach ( $patterns as $i => $pattern ) {
+		if ( $pattern->name === $_GET['pattern_name'] ) {
+			$selected_index = $i;
+			break;
+		}
+	}
+}
+
 // Initial state to pass to JS (*not* Interactivty API).
 $init_state = [
 	'hideOverflow' => true,
 	'allowUnselect' => true,
 	'initialCount' => $initial_count,
 	'totalCount' => $pattern_count,
+	'initialSelected' => $selected_index,
 ];
 $encoded_state = wp_json_encode( $init_state );
 ?>
@@ -47,7 +58,7 @@ $encoded_state = wp_json_encode( $init_state );
 	>
 		<?php
 		foreach ( $patterns as $i => $pattern ) {
-			echo get_pattern_preview_block( $pattern, $i >= $initial_count ); // phpcs:ignore
+			echo get_pattern_preview_block( $pattern, $i >= $initial_count, $i === $selected_index ); // phpcs:ignore
 		}
 		?>
 	</ul>

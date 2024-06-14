@@ -16,11 +16,22 @@ if ( ! $count ) {
 	return '';
 }
 
+$selected_index = -1;
+if ( isset( $_GET['style_variation'] ) ) {
+	foreach ( $styles as $i => $style ) {
+		if ( $style->title === $_GET['style_variation'] ) {
+			$selected_index = $i;
+			break;
+		}
+	}
+}
+
 // Initial state to pass to JS (*not* Interactivty API).
 $init_state = [
 	'hideOverflow' => false,
 	'initialCount' => $count,
 	'totalCount' => $count,
+	'initialSelected' => $selected_index,
 ];
 $encoded_state = wp_json_encode( $init_state );
 
@@ -41,7 +52,7 @@ $encoded_state = wp_json_encode( $init_state );
 	>
 		<?php
 		foreach ( $styles as $i => $style ) {
-			echo get_style_variation_card( $style ); // phpcs:ignore
+			echo get_style_variation_card( $style, $i === $selected_index ); // phpcs:ignore
 		}
 		?>
 	</ul>

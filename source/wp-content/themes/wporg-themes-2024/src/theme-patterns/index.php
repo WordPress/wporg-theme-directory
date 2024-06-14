@@ -22,7 +22,7 @@ function init() {
 /**
  * Convert a pattern object into a screenshot preview block.
  */
-function get_pattern_preview_block( $pattern, $is_overflow = false ) {
+function get_pattern_preview_block( $pattern, $is_overflow = false, $is_selected = false ) {
 	$cache_buster = '20240522'; // To break out of cached image.
 	$view_url = add_query_arg( 'v', $cache_buster, $pattern->preview_link );
 
@@ -42,11 +42,15 @@ function get_pattern_preview_block( $pattern, $is_overflow = false ) {
 
 	$instance_id = wp_unique_id( 'wporg-theme-patterns-item-' );
 
+	$extra_attrs = '';
+	$extra_attrs .= $is_overflow ? ' style="display:none;"' : '';
+	$extra_attrs .= $is_selected ? ' aria-selected="true"' : '';
+
 	return sprintf(
 		'<li role="option" id="%1$s" data-pattern_name="%2$s" %3$s>%4$s</li>',
 		$instance_id,
 		$pattern->name,
-		$is_overflow ? 'style="display:none;"' : '',
+		$extra_attrs,
 		$image_markup
 	);
 }
