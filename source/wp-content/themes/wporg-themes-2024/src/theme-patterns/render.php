@@ -27,6 +27,7 @@ if ( ! $pattern_count ) {
 // Initial state to pass to JS (*not* Interactivty API).
 $init_state = [
 	'hideOverflow' => true,
+	'allowUnselect' => true,
 	'initialCount' => $initial_count,
 	'totalCount' => $pattern_count,
 ];

@@ -71,6 +71,7 @@ BLOCKS;
 $html = new WP_HTML_Tag_Processor( $content );
 while ( $html->next_tag( [ 'class_name' => 'wporg-theme-listbox' ] ) ) {
 	$html->set_attribute( 'data-wp-on--wporg-select', 'wporg/themes/preview::actions.navigateIframe' );
+	$html->set_attribute( 'data-wp-on--wporg-unselect', 'wporg/themes/preview::actions.navigateIframe' );
 }
 
 $content = $html->get_updated_html();

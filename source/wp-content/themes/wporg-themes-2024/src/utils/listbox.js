@@ -39,7 +39,6 @@ class wporgListbox {
 		element.closest( 'ul' ).focus();
 
 		this.current = element.dataset.index * 1;
-		this.selected = element.dataset.index * 1;
 
 		this.updateSelected();
 		this.updateRender();
@@ -77,7 +76,6 @@ class wporgListbox {
 		} else if ( event.keyCode === HOME ) {
 			this.decrement( true );
 		} else if ( event.keyCode === ENTER || event.keyCode === SPACE ) {
-			this.selected = this.current;
 			this.updateSelected();
 		} else {
 			// Do nothing if none of the previous conditions triggered.
@@ -108,12 +106,34 @@ class wporgListbox {
 	}
 
 	updateSelected() {
+		// Maybe untoggle the element.
+		if ( this.current === this.selected ) {
+			if ( this.state.allowUnselect ) {
+				this.selected = null;
+			} else {
+				// Noop, this is already selected.
+				return;
+			}
+		} else {
+			this.selected = this.current;
+		}
+
 		// Push the selected event out to anyone listening (theme previewer).
 		const listbox = this.container.querySelector( '[role="listbox"]' );
 		const listItems = listbox.querySelectorAll( 'li' );
-		if ( listbox && listItems && listItems[ this.selected ] ) {
+		if ( ! listItems ) {
+			return;
+		}
+
+		if ( listItems[ this.selected ] ) {
 			const dispatchEvent = new CustomEvent( 'wporg-select' );
 			dispatchEvent.selectedElement = listItems[ this.selected ];
+			listbox.dispatchEvent( dispatchEvent );
+		} else if ( listItems[ this.current ] ) {
+			// If the selected item is not found, it's null (was just unselected),
+			// and we should use the currently-focused element instead.
+			const dispatchEvent = new CustomEvent( 'wporg-unselect' );
+			dispatchEvent.selectedElement = listItems[ this.current ];
 			listbox.dispatchEvent( dispatchEvent );
 		}
 	}
