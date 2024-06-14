@@ -36,31 +36,6 @@
 		}
 	}
 
-	.wporg-theme-patterns__grid {
-		grid-template-columns: repeat(2, 1fr);
-		gap: var(--wp--preset--spacing--10);
-
-		.wp-block-wporg-screenshot-preview {
-			padding: calc(var(--wp--preset--spacing--10) * 0.5);
-		}
-	}
-
-	.wp-block-wporg-screenshot-preview {
-		border-color: var(--wp--preset--color--white-opacity-15);
-		border-width: 1.5px;
-
-		&:where(.is-linked-image):hover {
-			border-color: var(--wp--preset--color--blueberry-2) !important;
-		}
-
-		&:where(.is-linked-image):focus-within {
-			border-color: var(--wp--preset--color--blueberry-1);
-			border-width: 1.5px;
-			outline-color: var(--wp--preset--color--white);
-			outline-offset: 0;
-		}
-	}
-
 	@media (max-width: 781px) {
 		--wporg-theme-preview--sidebar--height: 80px;
 

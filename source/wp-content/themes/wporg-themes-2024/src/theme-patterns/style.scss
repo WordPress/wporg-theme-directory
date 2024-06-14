@@ -22,19 +22,18 @@
 
 	.wp-block-wporg-screenshot-preview {
 		padding: var(--wp--preset--spacing--20);
-		border-color: var(--wp--preset--color--light-grey-1);
-		background-color: var(--wp--preset--color--light-grey-2);
-	}
 
-	&:focus {
-		outline: none;
-
-		.is-focus .wp-block-wporg-screenshot-preview {
-			background-color: var(--wp--preset--color--pomegrade-2);
+		&:hover img {
+			transform: scale(1.08);
 		}
 	}
 
-	[aria-selected="true"] .wp-block-wporg-screenshot-preview {
-		background-color: var(--wp--preset--color--acid-green-2);
+	:where(body.wporg-theme-preview) & {
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--wp--preset--spacing--10);
+
+		.wp-block-wporg-screenshot-preview {
+			padding: var(--wp--preset--spacing--10);
+		}
 	}
 }

@@ -89,7 +89,6 @@
 
 	.wp-block-wporg-screenshot-preview {
 		flex-basis: var(--wporg-theme-style-variations--size);
-		border-color: var(--wp--preset--color--light-grey-1);
 	}
 }
 
@@ -101,20 +100,4 @@
 	overflow-x: initial;
 	list-style: none;
 	padding-left: 0;
-
-	.wp-block-wporg-screenshot-preview {
-		min-width: unset;
-	}
-
-	&:focus {
-		outline: none;
-
-		.is-focus .wp-block-wporg-screenshot-preview {
-			background-color: var(--wp--preset--color--pomegrade-2);
-		}
-	}
-
-	[aria-selected="true"] .wp-block-wporg-screenshot-preview {
-		background-color: var(--wp--preset--color--acid-green-2);
-	}
 }
