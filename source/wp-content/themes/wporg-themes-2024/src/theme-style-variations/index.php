@@ -63,6 +63,7 @@ function get_theme_preview_images( $theme_post ) {
 			$block_markup = do_blocks( '<!-- wp:post-featured-image {"style":{"border":{"radius":"3px","style":"solid","width":"1px"}},"borderColor":"black-opacity-15"} /-->' );
 		} else {
 			$args = array(
+				'className' => 'is-preview-image',
 				'src' => $style->link,
 				'fullPage' => false,
 			);

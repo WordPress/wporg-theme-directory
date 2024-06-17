@@ -3,7 +3,7 @@
 	border-color: var(--wp--preset--color--light-grey-1);
 }
 
-.wp-block-wporg-screenshot-preview:hover img {
+.wp-block-wporg-screenshot-preview:not(.is-preview-image):hover img {
 	transform: scale(1.15);
 }
 
