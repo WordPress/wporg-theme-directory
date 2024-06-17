@@ -30,7 +30,6 @@ function get_pattern_preview_block( $pattern, $is_overflow = false, $is_selected
 		'src' => $view_url,
 		// translators: %s pattern name.
 		'alt' => sprintf( __( 'Pattern: %s', 'wporg-themes' ), $pattern->title ),
-		// 'href' => false,
 		'width' => 275,
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Name comes from API.
 		'viewportWidth' => $pattern->viewportWidth ?? 1200,

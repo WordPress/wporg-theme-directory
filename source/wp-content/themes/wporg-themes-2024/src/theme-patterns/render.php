@@ -8,9 +8,6 @@ if ( ! $current_post_id ) {
 	return;
 }
 
-// Manually enqueue this script, so that it's available for the interactivity view script.
-wp_enqueue_script( 'wp-keycodes' );
-
 $show_all = $attributes['showAll'] ?? false;
 
 $theme_post = get_post( $block->context['postId'] );
