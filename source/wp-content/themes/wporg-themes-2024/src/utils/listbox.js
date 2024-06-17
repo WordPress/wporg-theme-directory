@@ -72,6 +72,8 @@ class wporgListbox {
 	 * - Move backward if up, left, or home are pressed.
 	 * - Holding cmd/ctrl (event.metaKey is true) while arrow jumps to the end of the list.
 	 * - Space and enter trigger the current item to be selected.
+	 *
+	 * @param {KeyboardEvent} event
 	 */
 	handleKeyboard( event ) {
 		if ( event.keyCode === DOWN || event.keyCode === RIGHT ) {
