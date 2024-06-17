@@ -141,8 +141,9 @@ class wporgListbox {
 	updateRender() {
 		const listbox = this.container.querySelector( '[role="listbox"]' );
 		const listItems = listbox.querySelectorAll( 'li' );
-		if ( this.current !== null ) {
+		if ( typeof listItems[ this.current ] !== 'undefined' ) {
 			listbox.setAttribute( 'aria-activedescendant', listItems[ this.current ].id );
+			listItems[ this.current ].scrollIntoView( { block: 'nearest', inline: 'nearest' } );
 		}
 
 		listItems.forEach( ( element, index ) => {
