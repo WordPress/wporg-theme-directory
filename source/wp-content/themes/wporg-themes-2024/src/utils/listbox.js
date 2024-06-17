@@ -66,6 +66,13 @@ class wporgListbox {
 		}
 	}
 
+	/**
+	 * Handle the keyboard events.
+	 * - Move forward if down, right, or end are pressed.
+	 * - Move backward if up, left, or home are pressed.
+	 * - Holding cmd/ctrl (event.metaKey is true) while arrow jumps to the end of the list.
+	 * - Space and enter trigger the current item to be selected.
+	 */
 	handleKeyboard( event ) {
 		if ( event.keyCode === DOWN || event.keyCode === RIGHT ) {
 			this.increment( event.metaKey );
@@ -105,6 +112,17 @@ class wporgListbox {
 		}, 0 );
 	}
 
+	/**
+	 * Update the current selected item.
+	 *
+	 * Set selected to the focused element. If the focused item is already
+	 * selected, and we allow unselecting (set in the initial state), then
+	 * unselect the item. Otherwise, do nothing and return.
+	 *
+	 * Once the selected item is updated, trigger a custom event with the
+	 * selected element. The previewer listens for this event to update
+	 * the iframe's content.
+	 */
 	updateSelected() {
 		// Maybe untoggle the element.
 		if ( this.current === this.selected ) {
@@ -138,6 +156,13 @@ class wporgListbox {
 		}
 	}
 
+	/**
+	 * Update the assorted classes, attributes, and styles for the
+	 * currently focused and selected items, unset for the rest.
+	 * Ensure the focused item is correctly flagged, and in view.
+	 *
+	 * This function is called after every update (manually).
+	 */
 	updateRender() {
 		const listbox = this.container.querySelector( '[role="listbox"]' );
 		const listItems = listbox.querySelectorAll( 'li' );
