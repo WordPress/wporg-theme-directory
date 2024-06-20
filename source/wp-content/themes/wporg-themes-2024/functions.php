@@ -614,6 +614,11 @@ function get_theme_style_variations( $theme_name ) {
 		// The first decode parses out to JSON, the second parses out to an object.
 		$styles = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
 
+		// If the response is not an error but invalid, transform into something that will not error.
+		if ( NULL === $styles ) {
+			$styles = [];
+		}
+
 		set_transient( $cache_key, $styles, HOUR_IN_SECONDS );
 	}
 
