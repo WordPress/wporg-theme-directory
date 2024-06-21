@@ -575,12 +575,13 @@ function get_theme_patterns( $theme_name ) {
 	$patterns = get_transient( $cache_key );
 
 	if ( false === $patterns ) {
+		// Set a short timeout to avoid hammering the API.
+		set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
+
 		$url = 'https://wp-themes.com/' . $theme_name . '/';
 		$url = add_query_arg( 'rest_route', '/wporg-patterns/v1/patterns', $url );
 		$response = wp_remote_get( $url );
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			// Set a short timeout to avoid hammering the API during outages.
-			set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
 			return [];
 		}
 
@@ -607,12 +608,13 @@ function get_theme_style_variations( $theme_name ) {
 	$styles = get_transient( $cache_key );
 
 	if ( false === $styles ) {
+		// Set a short timeout to avoid hammering the API.
+		set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
+
 		$url = 'https://wp-themes.com/' . $theme_name . '/';
 		$url = add_query_arg( 'rest_route', '/wporg-styles/v1/variations', $url );
 		$response = wp_remote_get( $url );
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			// Set a short timeout to avoid hammering the API during outages.
-			set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
 			return [];
 		}
 
