@@ -7,7 +7,7 @@ namespace WordPressdotorg\Theme\Theme_Directory_2024\Block_Config;
 
 use WP_HTML_Tag_Processor, WP_Block_Supports;
 use const WordPressdotorg\Theme\Theme_Directory_2024\THEME_POST_TYPE;
-use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_query_tags, get_theme_information, wporg_themes_get_feature_list };
+use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_query_tags, get_support_url, get_theme_information, wporg_themes_get_feature_list };
 use function WordPressdotorg\Theme\Theme_Directory_2024\SEO_Social_Meta\{get_archive_title};
 
 add_filter( 'wporg_query_total_label', __NAMESPACE__ . '\update_query_total_label', 10, 2 );
@@ -17,6 +17,7 @@ add_filter( 'wporg_query_filter_options_subjects', __NAMESPACE__ . '\get_subject
 add_action( 'wporg_query_filter_in_form', __NAMESPACE__ . '\inject_other_filters', 10, 2 );
 add_filter( 'wporg_block_navigation_menus', __NAMESPACE__ . '\add_site_navigation_menus' );
 add_filter( 'wporg_favorite_button_settings', __NAMESPACE__ . '\get_favorite_settings', 10, 2 );
+add_filter( 'wporg_ratings_data', __NAMESPACE__ . '\set_rating_data', 10, 2 );
 add_filter( 'render_block_wporg/link-wrapper', __NAMESPACE__ . '\inject_permalink_link_wrapper' );
 add_filter( 'render_block_wporg/language-suggest', __NAMESPACE__ . '\inject_language_suggest_endpoint' );
 add_filter( 'render_block_core/search', __NAMESPACE__ . '\inject_browse_search_block' );
@@ -407,5 +408,27 @@ function update_site_title( $block_content ) {
 		get_bloginfo( 'name' ),
 		__( 'Themes', 'wporg-themes' ),
 		$block_content
+	);
+}
+
+/**
+ * Update ratings blocks with real rating data.
+ *
+ * @param array $data    Rating data.
+ * @param int   $post_id Current post.
+ *
+ * @return array
+ */
+function set_rating_data( $data, $post_id ) {
+	$theme = get_theme_information( $post_id );
+	if ( ! $theme ) {
+		return $data;
+	}
+
+	return array(
+		'rating' => $theme->rating,
+		'ratingsCount' => $theme->num_ratings,
+		'ratings' => $theme->ratings,
+		'supportUrl' => get_support_url( $theme->slug . '/reviews/' ),
 	);
 }
