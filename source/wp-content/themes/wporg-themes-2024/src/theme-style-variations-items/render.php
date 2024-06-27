@@ -9,7 +9,7 @@ if ( ! $current_post_id ) {
 }
 
 $theme_post = get_post( $block->context['postId'] );
-$styles = get_theme_style_variations( $theme_post->post_name );
+$styles = get_theme_style_variations( $theme_post );
 $count = $styles ? count( $styles ) : 0;
 
 if ( ! $count ) {

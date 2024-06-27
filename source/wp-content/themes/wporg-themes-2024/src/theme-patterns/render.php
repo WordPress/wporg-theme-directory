@@ -13,7 +13,7 @@ $show_all = $attributes['showAll'] ?? false;
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
-$patterns = get_theme_patterns( $theme_post->post_name );
+$patterns = get_theme_patterns( $theme_post );
 $pattern_count = $patterns ? count( $patterns ) : 0;
 $initial_count = $show_all ? $pattern_count : 6;
 

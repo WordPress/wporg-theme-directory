@@ -38,7 +38,7 @@ if ( $is_playground ) {
 // Switch to using the pattern URL if a pattern is requested.
 if ( isset( $_REQUEST['pattern_name'] ) ) {
 	$show_pattern = wp_unslash( $_REQUEST['pattern_name'] ); // phpcs:ignore -- exact match to a given string.
-	$patterns = get_theme_patterns( $theme_post->post_name );
+	$patterns = get_theme_patterns( $theme_post );
 	if ( $patterns ) {
 		$matches = wp_list_filter( $patterns, [ 'name' => $show_pattern ] );
 		if ( $matches ) {
@@ -51,7 +51,7 @@ if ( isset( $_REQUEST['pattern_name'] ) ) {
 // Add the style variation to the URL if one is selected.
 if ( isset( $_REQUEST['style_variation'] ) ) {
 	$show_style = wp_unslash( $_REQUEST['style_variation'] ); // phpcs:ignore -- exact match to a given string.
-	$styles = get_theme_style_variations( $theme_post->post_name );
+	$styles = get_theme_style_variations( $theme_post );
 	if ( $styles ) {
 		$matches = wp_list_filter( $styles, [ 'title' => $show_style ] );
 		if ( $matches ) {

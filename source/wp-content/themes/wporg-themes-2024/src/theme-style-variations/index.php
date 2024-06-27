@@ -55,7 +55,7 @@ function get_style_variation_card( $style ) {
  * Get the full-sized images for each style variation, hide everything but the currently-selected item.
  */
 function get_theme_preview_images( $theme_post ) {
-	$styles = get_theme_style_variations( $theme_post->post_name );
+	$styles = get_theme_style_variations( $theme_post );
 	$output = '';
 
 	foreach ( $styles as $style ) {
