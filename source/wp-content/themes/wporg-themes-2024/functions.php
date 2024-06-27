@@ -570,31 +570,14 @@ function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
 /**
  * Get the list of patterns from wp-themes.com API.
  */
-function get_theme_patterns( $theme_name ) {
-	$cache_key = 'wporg-themes-' . $theme_name . '-patterns';
-	$patterns = get_transient( $cache_key );
+function get_theme_patterns( $post ) {
+	if ( is_string( $post ) ) {
+		$post = ( new \WPORG_Themes_Repo_Package( $post ) )->wp_post;
+	}
 
-	if ( false === $patterns ) {
-		// Set a short timeout to avoid hammering the API.
-		set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
-
-		$url = 'https://wp-themes.com/' . $theme_name . '/';
-		$url = add_query_arg( 'rest_route', '/wporg-patterns/v1/patterns', $url );
-		$response = wp_remote_get( $url );
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			return [];
-		}
-
-		// This is decoded twice because the response is a quoted JSON string.
-		// The first decode parses out to JSON, the second parses out to an object.
-		$patterns = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
-
-		// If the response is not an error but invalid, transform into something that will not error.
-		if ( empty( $patterns ) ) {
-			$patterns = [];
-		}
-
-		set_transient( $cache_key, $patterns, HOUR_IN_SECONDS );
+	$patterns = get_post_meta( $post->ID, 'theme_patterns', true );
+	if ( ! is_array( $patterns ) ) {
+		$patterns = update_cached_theme_patterns( $post->ID );
 	}
 
 	return $patterns;
@@ -603,32 +586,91 @@ function get_theme_patterns( $theme_name ) {
 /**
  * Get the list of style variations from wp-themes.com API.
  */
-function get_theme_style_variations( $theme_name ) {
-	$cache_key = 'wporg-themes-' . $theme_name . '-style-variations';
-	$styles = get_transient( $cache_key );
+function get_theme_style_variations( $post ) {
+	if ( is_string( $post ) ) {
+		$post = ( new \WPORG_Themes_Repo_Package( $post ) )->wp_post;
+	}
 
-	if ( false === $styles ) {
-		// Set a short timeout to avoid hammering the API.
-		set_transient( $cache_key, [], 0.5 * MINUTE_IN_SECONDS );
-
-		$url = 'https://wp-themes.com/' . $theme_name . '/';
-		$url = add_query_arg( 'rest_route', '/wporg-styles/v1/variations', $url );
-		$response = wp_remote_get( $url );
-		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
-			return [];
-		}
-
-		// This is decoded twice because the response is a quoted JSON string.
-		// The first decode parses out to JSON, the second parses out to an object.
-		$styles = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
-
-		// If the response is not an error but invalid, transform into something that will not error.
-		if ( empty( $styles ) ) {
-			$styles = [];
-		}
-
-		set_transient( $cache_key, $styles, HOUR_IN_SECONDS );
+	$styles = get_post_meta( $post->ID, 'style_variations', true );
+	if ( ! is_array( $styles ) ) {
+		$styles = update_cached_style_variations( $post->ID );
 	}
 
 	return $styles;
 }
+
+/**
+ * Update the cached style variations for a theme.
+ *
+ * @param int $post_id
+ * @return array The style variations.
+ */
+function update_cached_style_variations( $post_id ) {
+	$post = get_post( $post_id );
+
+	// If the postmeta doesn't yet exist, set it to empty for other requests.
+	if ( ! is_array( $post->style_variations ) ) {
+		update_post_meta( $post_id, 'style_variations', [] );
+	}
+
+	// Fetch fresh data.
+	$url = 'https://wp-themes.com/' . $post->post_name . '/';
+	$url = add_query_arg( 'rest_route', '/wporg-styles/v1/variations', $url );
+	$response = wp_remote_get( $url );
+	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		return;
+	}
+
+	// This is decoded twice because the response is a quoted JSON string.
+	// The first decode parses out to JSON, the second parses out to an object.
+	$styles = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+
+	// If the response is not an error but invalid, transform into something that will not error.
+	if ( empty( $styles ) ) {
+		$styles = [];
+	}
+
+	update_post_meta( $post_id, 'style_variations', $styles );
+
+	return $styles;
+}
+add_action( 'publish_repopackage', 'update_cached_style_variations', 100, 1 );
+add_action( 'wporg_themes_update_version_live', 'update_cached_style_variations', 100, 1 );
+
+/**
+ * Update the cached theme patterns for a theme.
+ *
+ * @param int $post_id
+ * @return array The theme patterns.
+ */
+function update_cached_theme_patterns( $post_id ) {
+	$post = get_post( $post_id );
+
+	// If the postmeta doesn't yet exist, set it to empty for other requests.
+	if ( ! is_array( $post->theme_patterns ) ) {
+		update_post_meta( $post_id, 'theme_patterns', [] );
+	}
+
+	// Fetch fresh data.
+	$url = 'https://wp-themes.com/' . $post->post_name . '/';
+	$url = add_query_arg( 'rest_route', '/wporg-styles/v1/patterns', $url );
+	$response = wp_remote_get( $url );
+	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
+		return;
+	}
+
+	// This is decoded twice because the response is a quoted JSON string.
+	// The first decode parses out to JSON, the second parses out to an object.
+	$patterns = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+
+	// If the response is not an error but invalid, transform into something that will not error.
+	if ( empty( $patterns ) ) {
+		$patterns = [];
+	}
+
+	update_post_meta( $post_id, 'theme_patterns', $styles );
+
+	return $patterns;
+}
+add_action( 'publish_repopackage', 'update_cached_theme_patterns', 100, 1 );
+add_action( 'wporg_themes_update_version_live', 'update_cached_theme_patterns', 100, 1 );
