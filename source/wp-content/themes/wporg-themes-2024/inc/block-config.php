@@ -7,7 +7,7 @@ namespace WordPressdotorg\Theme\Theme_Directory_2024\Block_Config;
 
 use WP_HTML_Tag_Processor, WP_Block_Supports;
 use const WordPressdotorg\Theme\Theme_Directory_2024\THEME_POST_TYPE;
-use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_query_tags, wporg_themes_get_feature_list };
+use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_query_tags, get_theme_information, wporg_themes_get_feature_list };
 use function WordPressdotorg\Theme\Theme_Directory_2024\SEO_Social_Meta\{get_archive_title};
 
 add_filter( 'wporg_query_total_label', __NAMESPACE__ . '\update_query_total_label', 10, 2 );
@@ -16,6 +16,7 @@ add_filter( 'wporg_query_filter_options_features', __NAMESPACE__ . '\get_feature
 add_filter( 'wporg_query_filter_options_subjects', __NAMESPACE__ . '\get_subjects_options' );
 add_action( 'wporg_query_filter_in_form', __NAMESPACE__ . '\inject_other_filters', 10, 2 );
 add_filter( 'wporg_block_navigation_menus', __NAMESPACE__ . '\add_site_navigation_menus' );
+add_filter( 'wporg_favorite_button_settings', __NAMESPACE__ . '\get_favorite_settings', 10, 2 );
 add_filter( 'render_block_wporg/link-wrapper', __NAMESPACE__ . '\inject_permalink_link_wrapper' );
 add_filter( 'render_block_wporg/language-suggest', __NAMESPACE__ . '\inject_language_suggest_endpoint' );
 add_filter( 'render_block_core/search', __NAMESPACE__ . '\inject_browse_search_block' );
@@ -237,6 +238,41 @@ function add_site_navigation_menus( $menus ) {
 	return array(
 		'main' => $menu,
 		'browse' => $browse_menu,
+	);
+}
+
+/**
+ * Configure the favorite button.
+ *
+ * @param array $settings Array of settings for this filter.
+ * @param int   $post_id  The current post ID.
+ *
+ * @return array|bool Settings array or false if not a theme.
+ */
+function get_favorite_settings( $settings, $post_id ) {
+	$theme_post = get_theme_information( $post_id );
+	if ( ! $theme_post ) {
+		return false;
+	}
+
+	return array(
+		'is_favorite' => wporg_themes_is_favourited( $theme_post->slug ),
+		'add_callback' => function( $post_id ) {
+			$theme_post = get_theme_information( $post_id );
+			if ( ! $theme_post ) {
+				return new \WP_Error( 'theme-not-found', 'Theme not found.' );
+			}
+
+			return wporg_themes_add_favorite( $theme_post->slug );
+		},
+		'delete_callback' => function( $post_id ) {
+			$theme_post = get_theme_information( $post_id );
+			if ( ! $theme_post ) {
+				return new \WP_Error( 'theme-not-found', 'Theme not found.' );
+			}
+
+			return wporg_themes_remove_favorite( $theme_post->slug );
+		},
 	);
 }
 

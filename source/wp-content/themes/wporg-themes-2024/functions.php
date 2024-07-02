@@ -8,13 +8,11 @@ require_once( __DIR__ . '/inc/block-bindings.php' );
 require_once( __DIR__ . '/inc/block-config.php' );
 require_once( __DIR__ . '/inc/embed.php' );
 require_once( __DIR__ . '/inc/i18n.php' );
-require_once( __DIR__ . '/inc/rest-api.php' );
 require_once( __DIR__ . '/inc/seo-social-meta.php' );
 
 // Block files
 require_once( __DIR__ . '/src/business-model-notice/index.php' );
 require_once( __DIR__ . '/src/child-theme-notice/index.php' );
-require_once( __DIR__ . '/src/favorite-button/index.php' );
 require_once( __DIR__ . '/src/meta-list/index.php' );
 require_once( __DIR__ . '/src/ratings-bars/index.php' );
 require_once( __DIR__ . '/src/ratings-stars/index.php' );
