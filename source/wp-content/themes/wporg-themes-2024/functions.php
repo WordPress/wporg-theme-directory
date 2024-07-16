@@ -645,7 +645,7 @@ function update_cached_theme_patterns( $post_id ) {
 
 	// Fetch fresh data.
 	$url = 'https://wp-themes.com/' . $post->post_name . '/';
-	$url = add_query_arg( 'rest_route', '/wporg-styles/v1/patterns', $url );
+	$url = add_query_arg( 'rest_route', '/wporg-patterns/v1/patterns', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		return;
@@ -660,7 +660,7 @@ function update_cached_theme_patterns( $post_id ) {
 		$patterns = [];
 	}
 
-	update_post_meta( $post_id, 'theme_patterns', $styles );
+	update_post_meta( $post_id, 'theme_patterns', $patterns );
 
 	return $patterns;
 }
