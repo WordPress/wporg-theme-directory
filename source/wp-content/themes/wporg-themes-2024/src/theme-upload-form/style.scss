@@ -33,4 +33,43 @@
 		}
 	}
 
+	.tc-lead {
+		font-weight: 600;
+	}
+
+	.tc-result {
+		padding-inline-start: 0;
+		list-style: none;
+		font-size: var(--wp--preset--font-size--small);
+
+		li {
+			margin-block-start: calc(var(--wp--preset--spacing--10) / 2);
+			padding: var(--wp--preset--spacing--10);
+			border-inline-start: 3px solid currentColor;
+
+			> :last-child {
+				margin-block-end: 0;
+			}
+		}
+
+		li:has(.tc-required),
+		li:has(.tc-warning) {
+			border-color: var(--wp--preset--color--pomegrade-1);
+			background: var(--wp--preset--color--pomegrade-3);
+		}
+
+		li:has(.tc-recommended),
+		li:has(.tc-info) {
+			border-color: var(--wp--preset--color--light-grey-1);
+			background: var(--wp--preset--color--light-grey-2);
+		}
+
+		// Don't add space between groups of the same level.
+		li:has(.tc-required) + li:has(.tc-required),
+		li:has(.tc-warning) + li:has(.tc-warning),
+		li:has(.tc-recommended) + li:has(.tc-recommended),
+		li:has(.tc-info) + li:has(.tc-info) {
+			margin-block-start: 0;
+		}
+	}
 }

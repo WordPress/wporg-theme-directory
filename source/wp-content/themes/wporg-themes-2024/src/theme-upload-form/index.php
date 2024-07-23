@@ -37,7 +37,10 @@ function render( $attributes, $content, $block ) {
 	// Enqueue the notice style so the below markup is styled correctly.
 	wp_enqueue_style( 'wporg-notice-style' );
 
-	$form = do_shortcode( '[wporg-themes-upload]' );
+	// Theme check results are echo'd directly, so catch all output.
+	ob_start();
+	echo do_shortcode( '[wporg-themes-upload]' );
+	$form = ob_get_clean();
 
 	// Replace default HTML with styled block components.
 	$form  = preg_replace(
