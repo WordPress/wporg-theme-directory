@@ -208,6 +208,12 @@ function add_site_navigation_menus( $menus ) {
 		'url' => '/browse/favorites/',
 		'className' => ( 'favorites' === $current_browse ? 'current-menu-item ' : '' ) . 'has-separator',
 	);
+	if ( ! is_user_logged_in() ) {
+		$menu[] = array(
+			'label' => __( 'Sign in', 'wporg-themes' ),
+			'url' => wp_login_url( home_url() ),
+		);
+	}
 
 	$browse_menu = array(
 		array(
