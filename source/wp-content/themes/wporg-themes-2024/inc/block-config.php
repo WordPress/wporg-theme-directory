@@ -211,7 +211,7 @@ function add_site_navigation_menus( $menus ) {
 	if ( ! is_user_logged_in() ) {
 		$redirect_url = isset( $_SERVER['REQUEST_URI'] ) ? home_url( $_SERVER['REQUEST_URI'] ) : home_url();
 		$menu[] = array(
-			'label' => __( 'Sign in', 'wporg-themes' ),
+			'label' => __( 'Log in', 'wporg-themes' ),
 			'url' => wp_login_url( $redirect_url ),
 		);
 	}
