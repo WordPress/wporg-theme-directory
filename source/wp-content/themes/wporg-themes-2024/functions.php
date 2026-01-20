@@ -611,15 +611,13 @@ function update_cached_style_variations( $post_id ) {
 
 	// Fetch fresh data.
 	$url = 'https://wp-themes.com/' . $post->post_name . '/';
-	$url = add_query_arg( 'rest_route', '/wporg-styles/v1/variations', $url );
+	$url = add_query_arg( 'rest_route', '/wporg-styles/v2/variations', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		return;
 	}
 
-	// This is decoded twice because the response is a quoted JSON string.
-	// The first decode parses out to JSON, the second parses out to an object.
-	$styles = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+	$styles = json_decode( wp_remote_retrieve_body( $response ) );
 
 	// If the response is not an error but invalid, transform into something that will not error.
 	if ( empty( $styles ) ) {
@@ -647,15 +645,13 @@ function update_cached_theme_patterns( $post_id ) {
 
 	// Fetch fresh data.
 	$url = 'https://wp-themes.com/' . $post->post_name . '/';
-	$url = add_query_arg( 'rest_route', '/wporg-patterns/v1/patterns', $url );
+	$url = add_query_arg( 'rest_route', '/wporg-patterns/v2/patterns', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		return;
 	}
 
-	// This is decoded twice because the response is a quoted JSON string.
-	// The first decode parses out to JSON, the second parses out to an object.
-	$patterns = json_decode( json_decode( wp_remote_retrieve_body( $response ) ) );
+	$patterns = json_decode( wp_remote_retrieve_body( $response ) );
 
 	// If the response is not an error but invalid, transform into something that will not error.
 	if ( empty( $patterns ) ) {
