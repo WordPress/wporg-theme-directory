@@ -220,19 +220,19 @@ class WPORG_Ratings {
 	 */
 	public static function get_dashicons_stars( $rating = 0 ): string {
 		$title   = sprintf( __( "%d out of 5 stars", 'wporg-forums' ), $rating );
-		$output  = "<div class='wporg-ratings' title='" . esc_attr( $title ) . "' style='color:#ffb900;'>";
+		$output  = "<div class='wporg-ratings' aria-label='" . esc_attr( $title ) . "' style='color:#ffb900;'>";
 		$counter = round( $rating * 2 );
 		for ( $i = 0; $i < 5; $i ++ ) {
 			switch ( $counter ) {
 				case 0 :
-					$output .= '<span class="dashicons dashicons-star-empty"></span>';
+					$output .= '<span class="dashicons dashicons-star-empty" aria-hidden="true"></span>';
 					break;
 				case 1 :
-					$output .= '<span class="dashicons dashicons-star-half"></span>';
+					$output .= '<span class="dashicons dashicons-star-half" aria-hidden="true"></span>';
 					$counter --;
 					break;
 				default :
-					$output  .= '<span class="dashicons dashicons-star-filled"></span>';
+					$output  .= '<span class="dashicons dashicons-star-filled" aria-hidden="true"></span>';
 					$counter -= 2;
 					break;
 			}
