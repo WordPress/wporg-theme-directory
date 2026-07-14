@@ -10,7 +10,6 @@ This is as-yet incomplete, a starting point. Following this will get you partial
 
 * Docker
 * Node/npm
-* Yarn
 * Composer
 
 ### Setup
@@ -18,7 +17,7 @@ This is as-yet incomplete, a starting point. Following this will get you partial
 1. Set up repo dependencies.
 
 	```bash
-	yarn setup:tools
+	npm run setup:tools
 	```
 
 1. Add the theme-directory plugin, as this is not installed by composer.
@@ -31,13 +30,13 @@ This is as-yet incomplete, a starting point. Following this will get you partial
 1. Start the local environment.
 
 	```bash
-	yarn wp-env start
+	npm run wp-env start
 	```
 
 1. Run the setup script.
 
 	```bash
-	yarn setup:wp
+	npm run setup:wp
 	```
 
 1. (optional) There may be times when you want to make changes to the Parent theme and test them with the Main them. To do that:
@@ -68,42 +67,42 @@ These must be run in the project's root folder, _not_ in theme/plugin subfolders
 * Stop the environment.
 
 	```bash
-	yarn wp-env stop
+	npm run wp-env stop
 	```
 
 * Restart the environment.
 
 	```bash
-	yarn wp-env start
+	npm run wp-env start
 	```
 
 * Refresh local WordPress content with a current copy from the staging site.
 
 	```bash
-	yarn setup:refresh
+	npm run setup:refresh
 	```
 
 * Reset WordPress to a clean install, and reconfigure. This will nuke all local WordPress content!
 
 	```bash
-	yarn wp-env clean all
-	yarn setup:wp
+	npm run wp-env clean all
+	npm run setup:wp
 	```
 
 * SSH into docker container.
 
 	```bash
-	yarn wp-env run wordpress bash
+	npm run wp-env run wordpress bash
 	```
 
 * Run wp-cli commands. Keep the wp-cli command in quotes so that the flags are passed correctly.
 
 	```bash
-	yarn wp-env run cli "post list --post_status=publish"
+	npm run wp-env run cli "post list --post_status=publish"
 	```
 
 * Update composer dependencies and sync any `repo-tools` changes.
 
 	```bash
-	yarn update:tools
+	npm run update:tools
 	```

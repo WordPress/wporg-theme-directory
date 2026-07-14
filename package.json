@@ -10,12 +10,12 @@
 		"@wordpress/scripts": "27.6.0"
 	},
 	"scripts": {
-		"build:theme": "yarn workspace wporg-themes-2024 build",
+		"build:theme": "npm run build --workspace=wporg-themes-2024",
 		"lint:php": "composer lint ./source/wp-content/themes/wporg-themes-2024",
-		"setup:tools": "yarn && composer install && TEXTDOMAIN=wporg-themes composer exec update-configs",
+		"setup:tools": "npm install && composer install && TEXTDOMAIN=wporg-themes composer exec update-configs",
 		"setup:wp": "wp-env run cli bash env/setup.sh",
 		"setup:refresh": "./env/refresh.sh",
-		"start:theme": "yarn workspace wporg-themes-2024 start",
+		"start:theme": "npm run start --workspace=wporg-themes-2024",
 		"update:tools": "composer update && TEXTDOMAIN=wporg composer exec update-configs",
 		"wp-env": "wp-env"
 	},
