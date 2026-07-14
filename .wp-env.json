@@ -23,7 +23,6 @@
 	"themes": [
 		"./source/wp-content/themes/wporg",
 		"./source/wp-content/themes/wporg-parent-2021",
-		"./source/wp-content/themes/wporg-themes",
 		"./source/wp-content/themes/wporg-themes-2024"
 	],
 	"mappings": {

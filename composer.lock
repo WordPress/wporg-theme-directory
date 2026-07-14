@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "501fbd35326f6f900baaa74534648337",
+    "content-hash": "eb78d8b9c6eb48e6786fd035686976e0",
     "packages": [],
     "packages-dev": [
         {
@@ -2393,16 +2393,6 @@
             "type": "wordpress-theme"
         },
         {
-            "name": "wordpress-meta/wporg-themes",
-            "version": "1",
-            "source": {
-                "type": "svn",
-                "url": "https://meta.svn.wordpress.org/sites/",
-                "reference": "trunk/wordpress.org/public_html/wp-content/themes/pub/wporg-themes/"
-            },
-            "type": "wordpress-theme"
-        },
-        {
             "name": "wp-coding-standards/wpcs",
             "version": "2.3.0",
             "source": {
@@ -2685,16 +2675,16 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "wporg/wporg-repo-tools": 20,
         "wporg/wporg-mu-plugins": 20,
-        "wporg/wporg-parent-2021": 20
+        "wporg/wporg-parent-2021": 20,
+        "wporg/wporg-repo-tools": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "platform-overrides": {
         "php": "7.4"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.9.0"
 }
