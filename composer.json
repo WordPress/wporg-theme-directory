@@ -77,16 +77,6 @@
 						"url": "https://meta.svn.wordpress.org/sites/",
 						"reference": "trunk/wordpress.org/public_html/wp-content/themes/pub/wporg/"
 					}
-				},
-				{
-					"name": "wordpress-meta/wporg-themes",
-					"type": "wordpress-theme",
-					"version": "1",
-					"source": {
-						"type": "svn",
-						"url": "https://meta.svn.wordpress.org/sites/",
-						"reference": "trunk/wordpress.org/public_html/wp-content/themes/pub/wporg-themes/"
-					}
 				}
 			]
 		}
@@ -100,7 +90,6 @@
 		"wordpress-meta/pub": "1",
 		"wordpress-meta/theme-directory": "1",
 		"wordpress-meta/wporg": "1",
-		"wordpress-meta/wporg-themes": "1",
 		"wp-coding-standards/wpcs": "2.*",
 		"wp-phpunit/wp-phpunit": "^5.4",
 		"wpackagist-plugin/chart-card": "*",
