@@ -11,9 +11,9 @@ class wporgListbox {
 		this.selected = state.initialSelected >= 0 ? state.initialSelected : null;
 		this.current = null;
 
-		const button = container.querySelector( 'button' );
-		if ( button ) {
-			button.addEventListener( 'click', this.showAll.bind( this ) );
+		this.button = container.querySelector( 'button' );
+		if ( this.button ) {
+			this.button.addEventListener( 'click', this.showAll.bind( this ) );
 		}
 
 		const listbox = container.querySelector( '[role="listbox"]' );
@@ -98,6 +98,14 @@ class wporgListbox {
 	showAll() {
 		this.state.hideOverflow = false;
 		this.updateRender();
+
+		// Remove the button now that every item is visible, so it can't be
+		// clicked again (which would scroll focus back to the top of the list).
+		if ( this.button ) {
+			const wrapper = this.button.closest( '.wp-block-button' ) || this.button;
+			wrapper.remove();
+			this.button = null;
+		}
 
 		// Trigger the custom "show" event on each image.
 		this.container.querySelectorAll( '.wp-block-wporg-screenshot-preview' ).forEach( ( element ) => {
