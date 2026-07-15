@@ -1,108 +1,29 @@
 # Theme Directory
 
-The codebase and development environment for the WordPress.org Theme Directory.
-
-This is as-yet incomplete, a starting point. Following this will get you partially set up, but you need a `ratings` database table to prevent fatal errors.
+The `wporg-themes-2024` frontend theme that powers the [WordPress.org Theme Directory](https://wordpress.org/themes/).
 
 ## Development
 
-### Prerequisites
+Local development and testing happen in the **Theme Directory environment** in the [`WordPress/wordpress.org`](https://github.com/WordPress/wordpress.org) repo, under [`environments/theme-directory/`](https://github.com/WordPress/wordpress.org/tree/trunk/environments). It mounts this repo, loads the theme-directory plugin, and seeds a realistic directory with real themes.
 
-* Docker
-* Node/npm
-* Composer
+Follow the setup and testing instructions in that repo's [`environments/README.md`](https://github.com/WordPress/wordpress.org/blob/trunk/environments/README.md).
 
-### Setup
+### Testing local changes to this theme
 
-1. Set up repo dependencies.
+By default the environment mounts this repo from GitHub. To run it against your local checkout instead:
 
-	```bash
-	npm run setup:tools
-	```
+1. Build the theme so the environment picks up your assets: `npm run build:theme` (or `npm run start:theme` to rebuild on change).
 
-1. Add the theme-directory plugin, as this is not installed by composer.
-
-	```bash
-	cd source/wp-content/plugins/
-	svn checkout https://meta.svn.wordpress.org/sites/trunk/wordpress.org/public_html/wp-content/plugins/theme-directory
-	```
-
-1. Start the local environment.
-
-	```bash
-	npm run wp-env start
-	```
-
-1. Run the setup script.
-
-	```bash
-	npm run setup:wp
-	```
-
-1. (optional) There may be times when you want to make changes to the Parent theme and test them with the Main them. To do that:
-	1. Clone the Parent repo and follow the setup instructions in its `readme.md` file.
-	1. Create a `.wp-env.override.json` file in this repo
-	1. Copy the `themes` section from `.wp-env.json` and paste it into the override file. You must copy the entire section for it to work, because it won't be merged with `.wp-env.json`.
-	1. Update the path to the Parent theme to the Parent theme folder inside the Parent repository you cloned above.
+1. In the wordpress.org repo's `environments/theme-directory/` directory, create a git-ignored `.wp-env.override.json` that remaps the theme mount to your checkout. Use an absolute path — wp-env resolves relative paths against the config file's directory:
 
 	```json
 	{
-		"themes": [
-			"./source/wp-content/themes/wporg",
-			"./source/wp-content/themes/wporg-themes",
-			"./source/wp-content/themes/wporg-themes-2024"
-			"../wporg-parent-2021/source/wp-content/themes/wporg-parent-2021"
-		]
+		"mappings": {
+			"wp-content/wporg-theme-directory": "/absolute/path/to/wporg-theme-directory"
+		}
 	}
 	```
 
-1. Visit site at [localhost:8888](http://localhost:8888).
+	`mappings` merges key-by-key with `.wp-env.json`, so only this entry is overridden.
 
-1. Log in with username `admin` and password `password`.
-
-### Environment management
-
-These must be run in the project's root folder, _not_ in theme/plugin subfolders.
-
-* Stop the environment.
-
-	```bash
-	npm run wp-env stop
-	```
-
-* Restart the environment.
-
-	```bash
-	npm run wp-env start
-	```
-
-* Refresh local WordPress content with a current copy from the staging site.
-
-	```bash
-	npm run setup:refresh
-	```
-
-* Reset WordPress to a clean install, and reconfigure. This will nuke all local WordPress content!
-
-	```bash
-	npm run wp-env clean all
-	npm run setup:wp
-	```
-
-* SSH into docker container.
-
-	```bash
-	npm run wp-env run wordpress bash
-	```
-
-* Run wp-cli commands. Keep the wp-cli command in quotes so that the flags are passed correctly.
-
-	```bash
-	npm run wp-env run cli "post list --post_status=publish"
-	```
-
-* Update composer dependencies and sync any `repo-tools` changes.
-
-	```bash
-	npm run update:tools
-	```
+1. Restart the environment (`npm run themes:env start` from `environments/`) so the new mount takes effect.
