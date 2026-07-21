@@ -7,7 +7,7 @@ if ( ! $current_post_id ) {
 	return;
 }
 
-$is_playground = (bool) ( $_REQUEST['playground-preview'] ?? false );
+$is_playground = ! empty( $_REQUEST['playground-preview'] );
 
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );

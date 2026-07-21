@@ -1,0 +1,29 @@
+name: Lint
+
+on:
+    pull_request:
+    push:
+        branches:
+            - trunk
+    # Enable manually running action if necessary.
+    workflow_dispatch:
+
+jobs:
+    php:
+        name: PHP coding standards
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+            - name: Setup
+              # Installs PHP and Composer, and generates phpcs.xml.dist via `npm run setup:tools`.
+              # The theme build is not needed to lint PHP.
+              uses: WordPress/wporg-repo-tools/.github/actions/setup@trunk
+              with:
+                token: ${{ secrets.GITHUB_TOKEN }}
+                packageManager: npm
+                skip-build: 'true'
+
+            - name: Run PHPCS
+              run: npm run lint:php

@@ -267,7 +267,7 @@ function get_favorite_settings( $settings, $post_id ) {
 
 	return array(
 		'is_favorite' => wporg_themes_is_favourited( $theme_post->slug ),
-		'add_callback' => function( $post_id ) {
+		'add_callback' => function ( $post_id ) {
 			$theme_post = get_theme_information( $post_id );
 			if ( ! $theme_post ) {
 				return new \WP_Error( 'theme-not-found', 'Theme not found.' );
@@ -275,7 +275,7 @@ function get_favorite_settings( $settings, $post_id ) {
 
 			return wporg_themes_add_favorite( $theme_post->slug );
 		},
-		'delete_callback' => function( $post_id ) {
+		'delete_callback' => function ( $post_id ) {
 			$theme_post = get_theme_information( $post_id );
 			if ( ! $theme_post ) {
 				return new \WP_Error( 'theme-not-found', 'Theme not found.' );
