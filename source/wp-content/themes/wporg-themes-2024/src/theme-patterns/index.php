@@ -48,7 +48,7 @@ function get_pattern_preview_block( $pattern, $is_overflow = false, $is_selected
 	return sprintf(
 		'<li role="option" id="%1$s" data-pattern_name="%2$s" %3$s>%4$s</li>',
 		$instance_id,
-		$pattern->name,
+		esc_attr( $pattern->name ),
 		$extra_attrs,
 		$image_markup
 	);

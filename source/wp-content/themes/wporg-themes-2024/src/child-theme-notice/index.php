@@ -54,7 +54,7 @@ function render( $attributes, $content, $block ) {
 		__( 'This is a child theme of %s.', 'wporg-themes' ),
 		sprintf(
 			'<a href="%1$s">%2$s</a>',
-			home_url( $theme->parent['slug'] . '/' ),
+			esc_url( home_url( $theme->parent['slug'] . '/' ) ),
 			esc_html( $theme->parent['name'] )
 		)
 	);
