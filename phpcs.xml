@@ -9,6 +9,22 @@
     <!-- Import the shared PHPCS settings. -->
     <rule ref="./phpcs.xml.dist" />
 
+    <!--
+        The shared config declares this inside its PHPCompatibilityWP rule, where PHPCS
+        does not apply it. Left unset, PHPCompatibility passes null to trim() and every
+        file aborts on PHP 8.1+. Redeclared here as a direct child of <ruleset>.
+    -->
+    <config name="testVersion" value="8.4-" />
+
+    <!--
+        WPCS 3 moved this sniff from Generic to Universal. The shared config still
+        excludes it under the old name, so re-exclude it here to keep short array
+        syntax allowed as the project already intends.
+    -->
+    <rule ref="WordPress">
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
+    </rule>
+
     <!-- Filter out 3rd-party code from being linted. -->
     <exclude-pattern>source/wp-content/mu-plugins/*</exclude-pattern>
     <exclude-pattern>source/wp-content/themes/wporg/*</exclude-pattern>
