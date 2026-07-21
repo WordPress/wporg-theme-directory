@@ -73,7 +73,9 @@ function get_theme_preview_images( $theme_post ) {
 			$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
 		}
 
-		$output .= '<div data-wp-bind--hidden="state.isHidden" data-wp-context=\'{"style":"' . strtolower( $style->title ) . '"}\'>';
+		$context = wp_json_encode( array( 'style' => strtolower( $style->title ) ) );
+
+		$output .= '<div data-wp-bind--hidden="state.isHidden" data-wp-context="' . esc_attr( $context ) . '">';
 		$output .= $block_markup;
 		$output .= '</div>';
 	}

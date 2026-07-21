@@ -44,7 +44,7 @@ function get_style_variation_card( $style, $is_selected = false ) {
 	return sprintf(
 		'<li role="option" id="%1$s" data-style_variation="%2$s" %3$s>%4$s</li>',
 		$instance_id,
-		$style->title,
+		esc_attr( $style->title ),
 		$extra_attrs,
 		$block_markup
 	);
