@@ -16,6 +16,13 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
+            - name: Cache Composer downloads
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+              with:
+                path: ~/.cache/composer
+                key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+                restore-keys: ${{ runner.os }}-composer-
+
             - name: Setup
               # Installs PHP and Composer, and generates phpcs.xml.dist via `npm run setup:tools`.
               # The theme build is not needed to lint PHP.
