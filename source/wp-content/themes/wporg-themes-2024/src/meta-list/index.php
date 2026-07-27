@@ -69,7 +69,7 @@ function render( $attributes, $content, $block ) {
 	if ( isset( $attributes['meta'] ) ) {
 		$meta_fields = array_filter(
 			$meta_fields,
-			function( $field ) use ( $attributes ) {
+			function ( $field ) use ( $attributes ) {
 				return in_array( $field['key'], $attributes['meta'] );
 			}
 		);

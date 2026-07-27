@@ -5,8 +5,8 @@
 
 namespace WordPressdotorg\Theme\Theme_Directory_2024\SEO_Social_Meta;
 
-use const WordPressdotorg\Theme\Theme_Directory_2024\THEME_POST_TYPE;
 use function WordPressdotorg\Theme\Theme_Directory_2024\{ get_query_tags, get_tag_labels, get_theme_information };
+use const WordPressdotorg\Theme\Theme_Directory_2024\THEME_POST_TYPE;
 
 add_filter( 'document_title_parts', __NAMESPACE__ . '\set_document_title' );
 add_filter( 'document_title_separator', __NAMESPACE__ . '\document_title_separator' );

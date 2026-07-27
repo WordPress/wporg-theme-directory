@@ -4,26 +4,26 @@ namespace WordPressdotorg\Theme\Theme_Directory_2024;
 
 const THEME_POST_TYPE = 'repopackage';
 
-require_once( __DIR__ . '/inc/block-bindings.php' );
-require_once( __DIR__ . '/inc/block-config.php' );
-require_once( __DIR__ . '/inc/embed.php' );
-require_once( __DIR__ . '/inc/i18n.php' );
-require_once( __DIR__ . '/inc/seo-social-meta.php' );
+require_once __DIR__ . '/inc/block-bindings.php';
+require_once __DIR__ . '/inc/block-config.php';
+require_once __DIR__ . '/inc/embed.php';
+require_once __DIR__ . '/inc/i18n.php';
+require_once __DIR__ . '/inc/seo-social-meta.php';
 
 // Block files
-require_once( __DIR__ . '/src/business-model-notice/index.php' );
-require_once( __DIR__ . '/src/child-theme-notice/index.php' );
-require_once( __DIR__ . '/src/meta-list/index.php' );
-require_once( __DIR__ . '/src/theme-available-translations/index.php' );
-require_once( __DIR__ . '/src/theme-downloads/index.php' );
-require_once( __DIR__ . '/src/theme-patterns/index.php' );
-require_once( __DIR__ . '/src/theme-previewer/index.php' );
-require_once( __DIR__ . '/src/theme-previewer-settings/index.php' );
-require_once( __DIR__ . '/src/theme-settings/index.php' );
-require_once( __DIR__ . '/src/theme-status-notice/index.php' );
-require_once( __DIR__ . '/src/theme-style-variations/index.php' );
-require_once( __DIR__ . '/src/theme-style-variations-items/index.php' );
-require_once( __DIR__ . '/src/theme-upload-form/index.php' );
+require_once __DIR__ . '/src/business-model-notice/index.php';
+require_once __DIR__ . '/src/child-theme-notice/index.php';
+require_once __DIR__ . '/src/meta-list/index.php';
+require_once __DIR__ . '/src/theme-available-translations/index.php';
+require_once __DIR__ . '/src/theme-downloads/index.php';
+require_once __DIR__ . '/src/theme-patterns/index.php';
+require_once __DIR__ . '/src/theme-previewer/index.php';
+require_once __DIR__ . '/src/theme-previewer-settings/index.php';
+require_once __DIR__ . '/src/theme-settings/index.php';
+require_once __DIR__ . '/src/theme-status-notice/index.php';
+require_once __DIR__ . '/src/theme-style-variations/index.php';
+require_once __DIR__ . '/src/theme-style-variations-items/index.php';
+require_once __DIR__ . '/src/theme-upload-form/index.php';
 
 /**
  * Actions and filters.
@@ -53,7 +53,7 @@ remove_filter( 'post_thumbnail_html', 'wporg_themes_post_thumbnail_html', 10, 5 
 // Hide admin bar on preview pages.
 add_filter(
 	'show_admin_bar',
-	function( $should_show ) {
+	function ( $should_show ) {
 		global $wp_query;
 
 		if ( isset( $wp_query->query_vars['view'] ) ) {
@@ -67,7 +67,7 @@ add_filter(
 
 add_action(
 	'init',
-	function() {
+	function () {
 		// Don't swap author link with w.org profile link.
 		remove_all_filters( 'author_link' );
 
@@ -429,7 +429,7 @@ function get_query_tags() {
 function get_tag_labels( $tags ) {
 	$features = wporg_themes_get_feature_list( 'active' );
 	$labels = array_map(
-		function( $tag ) use ( $features ) {
+		function ( $tag ) use ( $features ) {
 			foreach ( $features as $list ) {
 				if ( isset( $list[ $tag ] ) ) {
 					return $list[ $tag ];

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Customizations for oEmbed output.
+ */
 
 namespace WordPressdotorg\Theme\Theme_Directory_2024\Embed;
 

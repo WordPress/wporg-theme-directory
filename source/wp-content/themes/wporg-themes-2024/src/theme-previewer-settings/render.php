@@ -37,7 +37,7 @@ $blueprint = [
 			'username' => 'admin',
 			'password' => 'password',
 		],
-	]
+	],
 ];
 
 if ( $theme_post->preview_blueprint ) {
@@ -64,11 +64,11 @@ $encoded_state = wp_json_encode( $init_state );
 	data-wp-interactive="wporg/themes/theme-previewer-settings"
 	data-wp-context="<?php echo esc_attr( $encoded_state ); ?>"
 >
-	<h2><?php _e( 'Theme Preview options', 'wporg-themes' ) ?></h2>
+	<h2><?php esc_html_e( 'Theme Preview options', 'wporg-themes' ); ?></h2>
 	<p class="wporg-theme-settings__description">
 		This is a work in progress, and not currently fully supported.<br>
 		Provide a Playground Blueprint to of your theme to be used for previews.<br>
-		The <a href="https://playground.wordpress.net/builder/builder.html#<?php echo urlencode( $blueprint ) ?>">Blueprint Builder</a> can be used to validate your JSON.
+		The <a href="https://playground.wordpress.net/builder/builder.html#<?php echo urlencode( $blueprint ); ?>">Blueprint Builder</a> can be used to validate your JSON.
 	</p>
 	<form data-wp-on--submit="actions.onSubmit" method="POST">
 		<div class="wporg-theme-settings__blueprint-field">

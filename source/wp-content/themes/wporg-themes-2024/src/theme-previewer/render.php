@@ -10,7 +10,7 @@ if ( ! $current_post_id ) {
 // Manually enqueue this script, so that it's available for the interactivity view script.
 wp_enqueue_script( 'wp-a11y' );
 
-$is_playground = (bool) ( $_REQUEST['playground-preview'] ?? false );
+$is_playground = ! empty( $_REQUEST['playground-preview'] );
 
 $theme_post = get_post( $block->context['postId'] );
 $theme = wporg_themes_theme_information( $theme_post->post_name );
