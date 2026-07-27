@@ -63,7 +63,7 @@ function translate_the_title( $title, $post_id = null ) {
  * @param WP_Term $term The WP_Term object being loaded.
  */
 function translate_term( $term ) {
-	if ( is_admin() || 'post_tag' !== $term->taxonomy ) {
+	if ( is_admin() || ! ( $term instanceof \WP_Term ) || 'post_tag' !== $term->taxonomy ) {
 		return $term;
 	}
 

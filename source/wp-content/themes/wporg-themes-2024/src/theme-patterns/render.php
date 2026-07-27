@@ -11,6 +11,10 @@ if ( ! $current_post_id ) {
 $show_all = $attributes['showAll'] ?? false;
 
 $theme_post = get_post( $block->context['postId'] );
+if ( ! $theme_post || ! ( $theme_post instanceof \WP_Post ) ) {
+	return '';
+}
+
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
 $patterns = get_theme_patterns( $theme_post );
@@ -22,9 +26,10 @@ if ( ! $pattern_count ) {
 }
 
 $selected_index = -1;
-if ( isset( $_GET['pattern_name'] ) ) {
+if ( isset( $_GET['pattern_name'] ) && is_string( $_GET['pattern_name'] ) ) {
+	$requested_pattern = wp_unslash( $_GET['pattern_name'] );
 	foreach ( $patterns as $i => $pattern ) {
-		if ( $pattern->name === $_GET['pattern_name'] ) {
+		if ( $pattern->name === $requested_pattern ) {
 			$selected_index = $i;
 			break;
 		}

@@ -39,6 +39,9 @@ function render( $attributes, $content, $block ) {
 	}
 
 	$theme_post = get_post( $block->context['postId'] );
+	if ( ! $theme_post || ! ( $theme_post instanceof \WP_Post ) ) {
+		return '';
+	}
 
 	$is_commercial = has_term( 'commercial', 'theme_business_model', $theme_post );
 	$is_community = has_term( 'community', 'theme_business_model', $theme_post );
@@ -72,7 +75,7 @@ function render( $attributes, $content, $block ) {
 	$markup .= '<!-- wp:paragraph --><p>';
 	$markup .= esc_html( $content );
 	if ( $url ) {
-		$markup .= ' <a href="' . esc_url( $url ) . '" class="external-link">' . esc_html( $link_text ) . '</a>'; //nofollow
+		$markup .= ' <a href="' . esc_url( $url ) . '" class="external-link" rel="nofollow noopener">' . esc_html( $link_text ) . '</a>';
 	}
 	$markup .= '</p><!-- /wp:paragraph -->';
 

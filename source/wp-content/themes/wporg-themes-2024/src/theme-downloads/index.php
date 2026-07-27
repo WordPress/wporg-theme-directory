@@ -41,8 +41,12 @@ function render( $attributes, $content, $block ) {
 	}
 
 	$theme_post = get_post( $block->context['postId'] );
+	if ( ! $theme_post || ! ( $theme_post instanceof \WP_Post ) ) {
+		return '';
+	}
+
 	$theme = wporg_themes_theme_information( $theme_post->post_name );
-	if ( isset( $theme->error ) ) {
+	if ( ! $theme || isset( $theme->error ) ) {
 		return '';
 	}
 

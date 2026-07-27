@@ -34,9 +34,13 @@ function get_meta_block_value( $args, $block ) {
 		return '';
 	}
 
-	$p = get_post( $block->context['postId'] );
+	$p = get_post( $block->context['postId'] ?? null );
+	if ( ! $p || ! ( $p instanceof \WP_Post ) ) {
+		return '';
+	}
+
 	$theme = wporg_themes_theme_information( $p->post_name );
-	if ( isset( $theme->error ) ) {
+	if ( ! $theme || isset( $theme->error ) ) {
 		return '';
 	}
 

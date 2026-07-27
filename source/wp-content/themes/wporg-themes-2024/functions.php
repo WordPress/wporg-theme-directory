@@ -135,7 +135,7 @@ function enqueue_assets() {
  */
 function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
 	$current_post = get_post( $post_id );
-	if ( THEME_POST_TYPE == $current_post->post_type ) {
+	if ( $current_post && THEME_POST_TYPE === $current_post->post_type ) {
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
 		$src   = add_query_arg(
 			array(
@@ -156,7 +156,7 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 		}
 
 		$html .= ' />';
-	} else if ( 'theme_shop' == $current_post->post_type ) {
+	} else if ( $current_post && 'theme_shop' === $current_post->post_type ) {
 		$src = get_post_meta( $current_post->ID, 'image_url', true );
 		if ( ! $src ) {
 			$url = get_post_meta( $current_post->ID, 'url', true );
@@ -274,7 +274,7 @@ function modify_query_loop_block_query_vars( $query, $block ) {
  * @param WP_Post $post      The post in question.
  */
 function update_theme_shop_permalink( $post_link, $post ) {
-	if ( 'theme_shop' === $post->post_type ) {
+	if ( $post && 'theme_shop' === $post->post_type ) {
 		$url = get_post_meta( $post->ID, 'url', true );
 		if ( $url ) {
 			$post_link = $url;
@@ -603,9 +603,13 @@ function get_theme_style_variations( $post ) {
  */
 function update_cached_style_variations( $post_id ) {
 	$post = get_post( $post_id );
+	if ( ! $post || ! ( $post instanceof \WP_Post ) ) {
+		return [];
+	}
 
 	// If the postmeta doesn't yet exist, set it to empty for other requests.
-	if ( ! is_array( $post->style_variations ) ) {
+	$existing = get_post_meta( $post_id, 'style_variations', true );
+	if ( ! is_array( $existing ) ) {
 		update_post_meta( $post_id, 'style_variations', [] );
 	}
 
@@ -614,7 +618,7 @@ function update_cached_style_variations( $post_id ) {
 	$url = add_query_arg( 'rest_route', '/wporg-styles/v2/variations', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-		return;
+		return [];
 	}
 
 	$styles = json_decode( wp_remote_retrieve_body( $response ) );
@@ -637,9 +641,13 @@ function update_cached_style_variations( $post_id ) {
  */
 function update_cached_theme_patterns( $post_id ) {
 	$post = get_post( $post_id );
+	if ( ! $post || ! ( $post instanceof \WP_Post ) ) {
+		return [];
+	}
 
 	// If the postmeta doesn't yet exist, set it to empty for other requests.
-	if ( ! is_array( $post->theme_patterns ) ) {
+	$existing = get_post_meta( $post_id, 'theme_patterns', true );
+	if ( ! is_array( $existing ) ) {
 		update_post_meta( $post_id, 'theme_patterns', [] );
 	}
 
@@ -648,7 +656,7 @@ function update_cached_theme_patterns( $post_id ) {
 	$url = add_query_arg( 'rest_route', '/wporg-patterns/v2/patterns', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
-		return;
+		return [];
 	}
 
 	$patterns = json_decode( wp_remote_retrieve_body( $response ) );

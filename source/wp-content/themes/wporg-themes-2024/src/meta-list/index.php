@@ -82,7 +82,7 @@ function render( $attributes, $content, $block ) {
 			if ( 'theme-link' === $field['key'] ) {
 				$list_items[] = sprintf(
 					'<li class="is-meta-%1$s">
-						<a href="%2$s" class="external-link">%3$s</a>
+						<a href="%2$s" class="external-link" rel="noopener noreferrer">%3$s</a>
 					</li>',
 					$field['key'],
 					esc_url( $value ),
@@ -122,19 +122,23 @@ function render( $attributes, $content, $block ) {
  */
 function get_value( $key, $post_id ) {
 	$p = get_post( $post_id );
+	if ( ! $p || ! ( $p instanceof \WP_Post ) ) {
+		return '';
+	}
+
 	$theme = wporg_themes_theme_information( $p->post_name );
-	if ( isset( $theme->error ) ) {
+	if ( ! $theme || isset( $theme->error ) ) {
 		return '';
 	}
 
 	switch ( $key ) {
 		case 'version':
-			return $theme->version;
+			return $theme->version ?? '';
 		case 'last-updated':
 			/* translators: localized date format, see http://php.net/date */
 			return date_i18n( _x( 'F j, Y', 'last update date format', 'wporg-themes' ), strtotime( $theme->last_updated ) );
 		case 'active-installs':
-			$active_installs = $theme->active_installs;
+			$active_installs = $theme->active_installs ?? 0;
 			if ( $active_installs < 10 ) {
 				$active_installs = __( 'Less than 10', 'wporg-themes' );
 			} elseif ( $active_installs >= 1000000 ) {
@@ -160,9 +164,5 @@ function get_value( $key, $post_id ) {
 			return '';
 	}
 
-	if ( is_wp_error( $value ) ) {
-		return '';
-	}
-
-	return $value;
+	return '';
 }

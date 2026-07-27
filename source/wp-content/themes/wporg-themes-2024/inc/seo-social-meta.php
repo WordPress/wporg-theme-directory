@@ -81,6 +81,8 @@ function document_title_separator() {
  * Add meta tags for richer social media integrations.
  */
 function add_social_meta_tags( $tags ) {
+	global $wp_query;
+
 	$default_image = 'https://wordpress.org/files/2024/06/wporg-themes-ogimage-2024.png';
 	$site_title = function_exists( '\WordPressdotorg\site_brand' ) ? \WordPressdotorg\site_brand() : 'WordPress.org';
 	$description = __( 'Find the perfect theme for your WordPress website. Choose from thousands of stunning designs with a wide variety of features and customization options.', 'wporg-themes' );
