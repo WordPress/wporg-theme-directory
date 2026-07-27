@@ -280,7 +280,7 @@ class WPORG_Ratings {
 				$checked = checked( $i, $rating, false );
 
 				$output .= "<label for='rating_" . esc_attr( $i ) . "'>";
-				$output .= "<input class='hidden' id='rating_" . esc_attr( $i ) . "' type='radio' name='rating' " . esc_attr( $checked ) . " value='" . esc_attr( $i ) . "'>";
+				$output .= "<input class='hidden' id='rating_" . esc_attr( $i ) . "' type='radio' name='rating'" . $checked . " value='" . esc_attr( $i ) . "'>";
 				$output .= "<span class='dashicons dashicons-star-empty " . esc_attr( $class ) . "' style='color:#ffb900 !important;' title='" . esc_attr( $text ) . "'></span>";
 				$output .= "<span class='screen-reader-text'>" . esc_html( $text ) . "</span>";
 				$output .= "</label>";
