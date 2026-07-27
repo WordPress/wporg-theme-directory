@@ -20,6 +20,17 @@
 	.wporg-theme-style-variations__buttons {
 		display: flex;
 
+		/*
+		 * Disabled arrows ignore pointer events, so rapid clicks land on this
+		 * container; without this they would start a text selection.
+		 */
+		user-select: none;
+
+		// The flex display above would otherwise override the hidden attribute.
+		&[hidden] {
+			display: none;
+		}
+
 		.wp-block-button__link {
 			--wp--custom--button--spacing--padding--top: 6px !important;
 			--wp--custom--button--spacing--padding--bottom: 6px !important;
@@ -36,6 +47,11 @@
 			border-left: none;
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
+
+			&:focus {
+				// The focus style trades the 1px border for padding, but this button has no left border to trade.
+				padding-left: var(--wp--custom--button--spacing--padding--left) !important;
+			}
 		}
 
 		svg {
@@ -48,9 +64,7 @@
 		}
 
 		[aria-disabled="true"] {
-			&:hover {
-				--wp--custom--button--outline--hover--color--background: transparent !important;
-			}
+			pointer-events: none;
 
 			svg {
 				fill: var(--wp--preset--color--light-grey-1) !important;
