@@ -81,18 +81,15 @@
 			]
 		}
 	],
-	"require": {},
 	"require-dev": {
 		"composer/installers": "~1.0",
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
-		"phpunit/phpunit": "^11.5",
 		"wordpress-meta/pub": "1",
 		"wordpress-meta/theme-directory": "1",
 		"wordpress-meta/wporg": "1",
 		"squizlabs/php_codesniffer": "^3.13",
 		"wp-coding-standards/wpcs": "^3.1",
-		"wp-phpunit/wp-phpunit": "^6.7",
 		"wpackagist-plugin/chart-card": "*",
 		"wpackagist-plugin/gutenberg": "*",
 		"wpackagist-plugin/jetpack": "*",

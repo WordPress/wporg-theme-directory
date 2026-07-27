@@ -18,11 +18,11 @@
 
     <!--
         WPCS 3 moved this sniff from Generic to Universal. The shared config still
-        excludes it under the old name, so re-exclude it here to keep short array
-        syntax allowed as the project already intends.
+        excludes it under the old name, so silence it under the new name to keep
+        short array syntax allowed as the project already intends.
     -->
-    <rule ref="WordPress">
-        <exclude name="Universal.Arrays.DisallowShortArraySyntax.Found" />
+    <rule ref="Universal.Arrays.DisallowShortArraySyntax.Found">
+        <severity>0</severity>
     </rule>
 
     <!-- Filter out 3rd-party code from being linted. -->
