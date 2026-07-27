@@ -14,7 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
             - name: Cache Composer downloads
               uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -23,14 +23,24 @@ jobs:
                 key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
                 restore-keys: ${{ runner.os }}-composer-
 
-            - name: Setup
-              # Installs PHP and Composer, and generates phpcs.xml.dist via `npm run setup:tools`.
-              # The theme build is not needed to lint PHP.
-              uses: WordPress/wporg-repo-tools/.github/actions/setup@trunk
+            - name: Setup PHP
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2.37.2
               with:
-                token: ${{ secrets.GITHUB_TOKEN }}
-                packageManager: npm
-                skip-build: 'true'
+                php-version: '8.4'
+              env:
+                COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Install Subversion
+              # Composer sources the wordpress-meta/* packages from SVN, which
+              # ubuntu-latest no longer ships.
+              run: sudo apt-get update && sudo apt-get install -y subversion
+
+            - name: Install dependencies
+              # PHP linting only needs Composer packages and the phpcs.xml.dist
+              # generated from them, not npm or a theme build.
+              run: |
+                composer install || composer update wporg/*
+                TEXTDOMAIN=wporg-themes composer exec update-configs
 
             - name: Run PHPCS
-              run: npm run lint:php
+              run: composer lint ./source/wp-content/themes/wporg-themes-2024
