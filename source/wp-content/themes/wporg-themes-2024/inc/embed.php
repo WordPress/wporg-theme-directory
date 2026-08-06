@@ -86,7 +86,7 @@ function update_embed_thumbnail( $html, $attachment_id, $size, $icon, $attr ) {
 			$attr['alt'] = '';
 
 			foreach ( $attr as $name => $value ) {
-				$html .= " $name=" . '"' . $value . '"';
+				$html .= sprintf( ' %s="%s"', esc_attr( $name ), esc_attr( $value ) );
 			}
 		}
 

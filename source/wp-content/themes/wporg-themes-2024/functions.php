@@ -151,7 +151,7 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 			$attr['alt'] = '';
 
 			foreach ( $attr as $name => $value ) {
-				$html .= " $name=" . '"' . $value . '"';
+				$html .= sprintf( ' %s="%s"', esc_attr( $name ), esc_attr( $value ) );
 			}
 		}
 
@@ -182,7 +182,7 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 			$attr['alt'] = '';
 
 			foreach ( $attr as $name => $value ) {
-				$html .= " $name=" . '"' . $value . '"';
+				$html .= sprintf( ' %s="%s"', esc_attr( $name ), esc_attr( $value ) );
 			}
 		}
 
