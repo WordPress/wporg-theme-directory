@@ -13,7 +13,14 @@ wp_enqueue_script( 'wp-a11y' );
 $is_playground = ! empty( $_REQUEST['playground-preview'] );
 
 $theme_post = get_post( $block->context['postId'] );
+if ( ! $theme_post || ! ( $theme_post instanceof \WP_Post ) ) {
+	return;
+}
+
 $theme = wporg_themes_theme_information( $theme_post->post_name );
+if ( ! $theme || isset( $theme->error ) ) {
+	return;
+}
 
 $url = $theme->preview_url ?? '';
 $permalink = get_permalink() . 'preview/';

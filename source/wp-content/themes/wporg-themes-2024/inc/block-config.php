@@ -308,8 +308,9 @@ function inject_language_suggest_endpoint( $block_content ) {
 	$html = new WP_HTML_Tag_Processor( $block_content );
 	$html->next_tag();
 	$endpoint_url = rest_url( '/wporg-themes/v1/locale-banner/' );
-	if ( is_single() ) {
-		$endpoint_url = trailingslashit( $endpoint_url . get_queried_object()->post_name );
+	$queried = get_queried_object();
+	if ( is_single() && $queried && isset( $queried->post_name ) ) {
+		$endpoint_url = trailingslashit( $endpoint_url . $queried->post_name );
 	}
 	$html->set_attribute( 'data-endpoint', $endpoint_url );
 	return $html->get_updated_html();

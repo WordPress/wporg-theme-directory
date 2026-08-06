@@ -5,6 +5,9 @@ if ( ! $block->context['postId'] ) {
 }
 
 $theme_post = get_post( $block->context['postId'] );
+if ( ! $theme_post || ! ( $theme_post instanceof \WP_Post ) ) {
+	return '';
+}
 
 $model_type = false;
 $url = '';

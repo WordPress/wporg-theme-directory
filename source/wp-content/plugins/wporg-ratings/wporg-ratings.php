@@ -93,7 +93,7 @@ class WPORG_Ratings {
 	 * @param $user_id id of users' rating.
 	 * @param $rating the rating being set.
 	 */
-	public static function set_rating( $post_id = 0, $object_type, $object_slug, $user_id, $rating ) {
+	public static function set_rating( int $post_id, string $object_type, string $object_slug, int $user_id, int $rating ) {
 		global $wpdb;
 
 		// Make sure the current user has permissions to submit the rating.

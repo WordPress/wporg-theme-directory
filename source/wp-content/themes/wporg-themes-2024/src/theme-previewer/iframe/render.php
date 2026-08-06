@@ -10,6 +10,10 @@ if ( ! $current_post_id ) {
 $is_playground = ! empty( $_REQUEST['playground-preview'] );
 
 $theme_post = get_post( $block->context['postId'] );
+if ( ! $theme_post || ! ( $theme_post instanceof \WP_Post ) ) {
+	return;
+}
+
 $theme = wporg_themes_theme_information( $theme_post->post_name );
 
 // Get the device size from the query.
@@ -41,7 +45,7 @@ $encoded_state = wp_json_encode( $init_state );
 				data-device="desktop"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" aria-hidden="true" focusable="false"><path d="M20.5 16h-.7V8c0-1.1-.9-2-2-2H6.2c-1.1 0-2 .9-2 2v8h-.7c-.8 0-1.5.7-1.5 1.5h20c0-.8-.7-1.5-1.5-1.5zM5.7 8c0-.3.2-.5.5-.5h11.6c.3 0 .5.2.5.5v7.6H5.7V8z"></path></svg>
-				<span><?php echo esc_attr_x( 'Wide', 'theme preview size toggle', 'wporg-themes' ); ?></span>
+				<span><?php echo esc_html_x( 'Wide', 'theme preview size toggle', 'wporg-themes' ); ?></span>
 			</button>
 		</div>
 		<div class="wp-block-button is-style-toggle is-small">
@@ -52,7 +56,7 @@ $encoded_state = wp_json_encode( $init_state );
 				data-device="tablet"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" aria-hidden="true" focusable="false"><path d="M17 4H7c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H7c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h10c.3 0 .5.2.5.5v12zm-7.5-.5h4V16h-4v1.5z"></path></svg>
-				<span><?php echo esc_attr_x( 'Medium', 'theme preview size toggle', 'wporg-themes' ); ?></span>
+				<span><?php echo esc_html_x( 'Medium', 'theme preview size toggle', 'wporg-themes' ); ?></span>
 			</button>
 		</div>
 		<div class="wp-block-button is-style-toggle is-small">
@@ -63,12 +67,12 @@ $encoded_state = wp_json_encode( $init_state );
 				data-device="mobile"
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36" aria-hidden="true" focusable="false"><path d="M15 4H9c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm.5 14c0 .3-.2.5-.5.5H9c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h6c.3 0 .5.2.5.5v12zm-4.5-.5h2V16h-2v1.5z"></path></svg>
-				<span><?php echo esc_attr_x( 'Narrow', 'theme preview size toggle', 'wporg-themes' ); ?></span>
+				<span><?php echo esc_html_x( 'Narrow', 'theme preview size toggle', 'wporg-themes' ); ?></span>
 			</button>
 		</div>
 	</section>
 	<iframe
-		title="<?php esc_attr_e( 'Theme preview', 'wporg-themes' ); ?>"
+		title="<?php echo esc_attr( sprintf( __( 'Theme preview for %s', 'wporg-themes' ), $theme->name ?? '' ) ); ?>"
 		data-wp-style--width="state.iframeWidthCSS"
 		data-wp-style--height="state.iframeHeightCSS"
 		<?php if ( $is_playground ) { ?>
@@ -78,5 +82,5 @@ $encoded_state = wp_json_encode( $init_state );
 			data-wp-bind--src="wporg/themes/preview::context.url"
 			data-wp-on--load="wporg/themes/preview::actions.onLoad"
 		<?php } ?>
-	/>
+	></iframe>
 </div>
