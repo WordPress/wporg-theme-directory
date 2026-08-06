@@ -34,7 +34,7 @@ function get_style_variation_card( $style, $is_selected = false ) {
 		'viewportHeight' => 740,
 		'fullPage' => false,
 	);
-	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
+	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 
 	$instance_id = wp_unique_id( 'wporg-theme-style-var-item-' );
 

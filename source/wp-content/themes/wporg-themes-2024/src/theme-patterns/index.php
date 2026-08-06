@@ -37,7 +37,7 @@ function get_pattern_preview_block( $pattern, $is_overflow = false, $is_selected
 		'isHidden' => $is_overflow,
 	);
 
-	$image_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
+	$image_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 
 	$instance_id = wp_unique_id( 'wporg-theme-patterns-item-' );
 

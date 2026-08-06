@@ -44,7 +44,7 @@ function get_style_variation_card( $style ) {
 		'viewportHeight' => 740,
 		'fullPage' => false,
 	);
-	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
+	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 
 	$html = new WP_HTML_Tag_Processor( $block_markup );
 	$html->next_tag( 'a' );
@@ -70,7 +70,7 @@ function get_theme_preview_images( $theme_post ) {
 				'src' => $style->link,
 				'fullPage' => false,
 			);
-			$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', wp_json_encode( $args ) ) );
+			$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 		}
 
 		$context = wp_json_encode( array( 'style' => strtolower( $style->title ) ) );
