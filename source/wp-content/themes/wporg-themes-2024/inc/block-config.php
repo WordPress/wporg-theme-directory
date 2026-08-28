@@ -300,10 +300,6 @@ function inject_permalink_link_wrapper( $block_content ) {
 /**
  * Update the endpoint used in `wporg/language-suggest` for the current theme.
  *
- * The block resolves its endpoint server-side rather than from a `data-endpoint`
- * attribute, so that block markup in post content cannot choose where the
- * suggestion is fetched from.
- *
  * @param string $endpoint The default endpoint URL.
  *
  * @return string The endpoint URL for the current request.
