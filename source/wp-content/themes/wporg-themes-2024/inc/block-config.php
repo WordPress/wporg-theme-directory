@@ -18,8 +18,8 @@ add_action( 'wporg_query_filter_in_form', __NAMESPACE__ . '\inject_other_filters
 add_filter( 'wporg_block_navigation_menus', __NAMESPACE__ . '\add_site_navigation_menus' );
 add_filter( 'wporg_favorite_button_settings', __NAMESPACE__ . '\get_favorite_settings', 10, 2 );
 add_filter( 'wporg_ratings_data', __NAMESPACE__ . '\set_rating_data', 10, 2 );
+add_filter( 'wporg_language_suggest_endpoint', __NAMESPACE__ . '\get_language_suggest_endpoint' );
 add_filter( 'render_block_wporg/link-wrapper', __NAMESPACE__ . '\inject_permalink_link_wrapper' );
-add_filter( 'render_block_wporg/language-suggest', __NAMESPACE__ . '\inject_language_suggest_endpoint' );
 add_filter( 'render_block_core/search', __NAMESPACE__ . '\inject_browse_search_block' );
 add_filter( 'render_block_core/query-title', __NAMESPACE__ . '\update_archive_title', 10, 3 );
 add_filter( 'render_block_wporg/language-suggest', __NAMESPACE__ . '\filter_language_suggest_block' );
@@ -300,19 +300,22 @@ function inject_permalink_link_wrapper( $block_content ) {
 /**
  * Update the endpoint used in `wporg/language-suggest` for the current theme.
  *
- * @param string $block_content The block content.
+ * The block resolves its endpoint server-side rather than from a `data-endpoint`
+ * attribute, so that block markup in post content cannot choose where the
+ * suggestion is fetched from.
  *
- * @return array The updated block.
+ * @param string $endpoint The default endpoint URL.
+ *
+ * @return string The endpoint URL for the current request.
  */
-function inject_language_suggest_endpoint( $block_content ) {
-	$html = new WP_HTML_Tag_Processor( $block_content );
-	$html->next_tag();
-	$endpoint_url = rest_url( '/wporg-themes/v1/locale-banner/' );
+function get_language_suggest_endpoint( $endpoint ) {
+	$endpoint = rest_url( '/wporg-themes/v1/locale-banner/' );
+
 	if ( is_single() ) {
-		$endpoint_url = trailingslashit( $endpoint_url . get_queried_object()->post_name );
+		$endpoint = trailingslashit( $endpoint . get_queried_object()->post_name );
 	}
-	$html->set_attribute( 'data-endpoint', $endpoint_url );
-	return $html->get_updated_html();
+
+	return $endpoint;
 }
 
 /**
