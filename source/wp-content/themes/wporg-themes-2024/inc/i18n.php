@@ -25,9 +25,25 @@ function translate_the_content( $content ) {
 		// A description is the plain text of a `style.css` header, so drop the filters that would interpret it.
 		remove_filter( 'the_content', 'do_shortcode', 11 );
 		remove_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
+		add_filter( 'the_content', __NAMESPACE__ . '\restore_content_filters', PHP_INT_MAX );
 
 		return $theme->description;
 	}
+
+	return $content;
+}
+
+/**
+ * Restore the filters translate_the_content() removed for a description.
+ *
+ * Runs last in the same pass, so the removal covers the substituted description
+ * and not whatever else the request renders through the_content() afterwards.
+ * Re-adding at priorities already passed leaves this pass alone.
+ */
+function restore_content_filters( $content ) {
+	add_filter( 'the_content', 'do_shortcode', 11 );
+	add_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
+	remove_filter( 'the_content', __NAMESPACE__ . '\restore_content_filters', PHP_INT_MAX );
 
 	return $content;
 }
