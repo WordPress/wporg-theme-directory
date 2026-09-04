@@ -22,6 +22,10 @@ function translate_the_content( $content ) {
 
 	$theme = get_theme_information();
 	if ( isset( $theme->description ) ) {
+		// A description is the plain text of a `style.css` header, so drop the filters that would interpret it.
+		remove_filter( 'the_content', 'do_shortcode', 11 );
+		remove_filter( 'the_content', array( $GLOBALS['wp_embed'], 'autoembed' ), 8 );
+
 		return $theme->description;
 	}
 
