@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/theme-status-notice",
+  "version": "1.0.0-b268f31",
+  "title": "Theme Status Notice",
+  "category": "design",
+  "icon": "",
+  "description": "A notice to identify out-of-date themes.",
+  "textdomain": "wporg",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "spacing": {
+      "margin": [
+        "top",
+        "bottom"
+      ]
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "editorScript": "file:./index.js"
+}

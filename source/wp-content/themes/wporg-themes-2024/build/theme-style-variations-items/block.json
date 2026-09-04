@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/theme-style-variations-items",
+  "version": "1.0.0-b268f31",
+  "title": "Theme style variations (items)",
+  "category": "design",
+  "icon": "",
+  "description": "A list of style variations provided by this theme (with demo screenshots), variations only, grid-style.",
+  "textdomain": "wporg",
+  "attributes": {},
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": [
+        "top",
+        "bottom"
+      ]
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "editorScript": "file:./index.js",
+  "style": "wporg-theme-style-variations-style",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

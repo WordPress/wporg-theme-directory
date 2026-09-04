@@ -1,0 +1,34 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/theme-patterns",
+  "version": "1.0.0-b268f31",
+  "title": "Theme patterns",
+  "category": "design",
+  "icon": "",
+  "description": "A list of patterns provided by this theme (with screenshots).",
+  "textdomain": "wporg",
+  "attributes": {
+    "showAll": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": [
+        "top",
+        "bottom"
+      ]
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php",
+  "viewScript": "file:./view.js"
+}

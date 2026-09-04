@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/theme-downloads",
+  "version": "1.0.0-b268f31",
+  "title": "Downloads Chart",
+  "category": "design",
+  "icon": "",
+  "description": "",
+  "textdomain": "wporg",
+  "supports": {
+    "html": false
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "editorScript": "file:./index.js",
+  "viewScript": [
+    "google-charts-loader",
+    "file:./view.js"
+  ]
+}

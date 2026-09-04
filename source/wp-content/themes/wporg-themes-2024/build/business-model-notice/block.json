@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/business-model-notice",
+  "version": "1.0.0-b268f31",
+  "title": "Business Model Notice",
+  "category": "design",
+  "icon": "",
+  "description": "A notice to identify commercial or community themes.",
+  "textdomain": "wporg",
+  "supports": {
+    "html": false,
+    "typography": {
+      "fontSize": true
+    },
+    "layout": {
+      "allowEditing": false
+    }
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "editorScript": "file:./index.js"
+}

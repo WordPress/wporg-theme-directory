@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/theme-upload-form",
+  "version": "1.0.0-b268f31",
+  "title": "Theme upload form",
+  "category": "design",
+  "icon": "",
+  "description": "The handler for uploading a theme.",
+  "textdomain": "wporg",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
+}
