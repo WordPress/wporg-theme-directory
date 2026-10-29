@@ -38,7 +38,7 @@ function update_query_total_label( $label, $found_posts ) {
 	if ( 'commercial' === $current_browse ) {
 		/* translators: %s: the result count. */
 		return _n( '%s commercial theme', '%s commercial themes', $found_posts, 'wporg-themes' );
-	} else if ( 'community' === $current_browse ) {
+	} elseif ( 'community' === $current_browse ) {
 		/* translators: %s: the result count. */
 		return _n( '%s community theme', '%s community themes', $found_posts, 'wporg-themes' );
 	}
@@ -66,9 +66,9 @@ function get_filter_action_url() {
  * @param array $options The options for this filter.
  * @return array New list of layout options.
  */
-function get_layouts_options( $options ) {
-	$tags = get_query_tags();
-	$layouts = wporg_themes_get_feature_list( 'active', 'layouts' );
+function get_layouts_options( $options ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Preserve the filter callback signature.
+	$tags     = get_query_tags();
+	$layouts  = wporg_themes_get_feature_list( 'active', 'layouts' );
 	$selected = array_intersect( $tags, array_keys( $layouts ) );
 
 	$count = count( $selected );
@@ -79,11 +79,11 @@ function get_layouts_options( $options ) {
 	);
 
 	return array(
-		'label' => $label,
-		'title' => __( 'Layout', 'wporg-themes' ),
-		'key' => 'tag_slug__and',
-		'action' => get_filter_action_url(),
-		'options' => $layouts,
+		'label'    => $label,
+		'title'    => __( 'Layout', 'wporg-themes' ),
+		'key'      => 'tag_slug__and',
+		'action'   => get_filter_action_url(),
+		'options'  => $layouts,
 		'selected' => $selected,
 	);
 }
@@ -94,8 +94,8 @@ function get_layouts_options( $options ) {
  * @param array $options The options for this filter.
  * @return array New list of feature options.
  */
-function get_features_options( $options ) {
-	$tags = get_query_tags();
+function get_features_options( $options ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Preserve the filter callback signature.
+	$tags     = get_query_tags();
 	$features = wporg_themes_get_feature_list( 'active', 'features' );
 	$selected = array_intersect( $tags, array_keys( $features ) );
 
@@ -107,11 +107,11 @@ function get_features_options( $options ) {
 	);
 
 	return array(
-		'label' => $label,
-		'title' => __( 'Features', 'wporg-themes' ),
-		'key' => 'tag_slug__and',
-		'action' => get_filter_action_url(),
-		'options' => $features,
+		'label'    => $label,
+		'title'    => __( 'Features', 'wporg-themes' ),
+		'key'      => 'tag_slug__and',
+		'action'   => get_filter_action_url(),
+		'options'  => $features,
 		'selected' => $selected,
 	);
 }
@@ -122,8 +122,8 @@ function get_features_options( $options ) {
  * @param array $options The options for this filter.
  * @return array New list of subject options.
  */
-function get_subjects_options( $options ) {
-	$tags = get_query_tags();
+function get_subjects_options( $options ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Preserve the filter callback signature.
+	$tags     = get_query_tags();
 	$subjects = wporg_themes_get_feature_list( 'active', 'subjects' );
 	$selected = array_intersect( $tags, array_keys( $subjects ) );
 
@@ -135,11 +135,11 @@ function get_subjects_options( $options ) {
 	);
 
 	return array(
-		'label' => $label,
-		'title' => __( 'Subjects', 'wporg-themes' ),
-		'key' => 'tag_slug__and',
-		'action' => get_filter_action_url(),
-		'options' => $subjects,
+		'label'    => $label,
+		'title'    => __( 'Subjects', 'wporg-themes' ),
+		'key'      => 'tag_slug__and',
+		'action'   => get_filter_action_url(),
+		'options'  => $subjects,
 		'selected' => $selected,
 	);
 }
@@ -161,9 +161,9 @@ function inject_other_filters( $key, $block ) {
 	if ( $values ) {
 		if ( 'tag_slug__and' === $key ) {
 			$tag_key = $block->parsed_block['attrs']['key'] ?? false;
-			if ( in_array( $tag_key, [ 'layouts', 'features', 'subjects' ] ) ) {
+			if ( in_array( $tag_key, [ 'layouts', 'features', 'subjects' ], true ) ) {
 				$features = wporg_themes_get_feature_list( 'active', $tag_key );
-				$values = array_diff( $values, array_keys( $features ) );
+				$values   = array_diff( $values, array_keys( $features ) );
 			}
 		}
 
@@ -188,65 +188,65 @@ function inject_other_filters( $key, $block ) {
 /**
  * Provide a list of local navigation menus.
  */
-function add_site_navigation_menus( $menus ) {
+function add_site_navigation_menus( $menus ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Preserve the filter callback signature.
 	global $wp_query;
 	$current_browse = $wp_query->query['browse'] ?? false;
-	$current_tag = get_query_tags();
+	$current_tag    = get_query_tags();
 
 	$menu = array();
 
 	$menu[] = array(
 		'label' => __( 'Submit a theme', 'wporg-themes' ),
-		'url' => '/getting-started/',
+		'url'   => '/getting-started/',
 	);
 	$menu[] = array(
 		'label' => __( 'Commercial theme companies', 'wporg-themes' ),
-		'url' => '/commercial/',
+		'url'   => '/commercial/',
 	);
 	$menu[] = array(
-		'label' => __( 'My favorites', 'wporg-themes' ),
-		'url' => '/browse/favorites/',
+		'label'     => __( 'My favorites', 'wporg-themes' ),
+		'url'       => '/browse/favorites/',
 		'className' => ( 'favorites' === $current_browse ? 'current-menu-item ' : '' ) . 'has-separator',
 	);
 	if ( ! is_user_logged_in() ) {
 		global $wp;
 		$redirect_url = home_url( $wp->request );
-		$menu[] = array(
+		$menu[]       = array(
 			'label' => __( 'Log in', 'wporg-themes' ),
-			'url' => wp_login_url( $redirect_url ),
+			'url'   => wp_login_url( $redirect_url ),
 		);
 	}
 
 	$browse_menu = array(
 		array(
-			'label' => __( 'Popular', 'wporg-themes' ),
-			'url' => home_url( '/' ),
+			'label'     => __( 'Popular', 'wporg-themes' ),
+			'url'       => home_url( '/' ),
 			'className' => is_home() && ! $current_browse ? 'current-menu-item' : '',
 		),
 		array(
-			'label' => __( 'Latest', 'wporg-themes' ),
-			'url' => home_url( '/browse/new/' ),
+			'label'     => __( 'Latest', 'wporg-themes' ),
+			'url'       => home_url( '/browse/new/' ),
 			'className' => 'new' === $current_browse ? 'current-menu-item' : '',
 		),
 		array(
-			'label' => __( 'Community', 'wporg-themes' ),
-			'url' => home_url( '/browse/community/' ),
+			'label'     => __( 'Community', 'wporg-themes' ),
+			'url'       => home_url( '/browse/community/' ),
 			'className' => 'community' === $current_browse ? 'current-menu-item' : '',
 		),
 		array(
-			'label' => __( 'Commercial', 'wporg-themes' ),
-			'url' => home_url( '/browse/commercial/' ),
+			'label'     => __( 'Commercial', 'wporg-themes' ),
+			'url'       => home_url( '/browse/commercial/' ),
 			'className' => 'commercial' === $current_browse ? 'current-menu-item' : '',
 		),
 		array(
-			'label' => __( 'Block themes', 'wporg-themes' ),
-			'url' => home_url( '/tags/full-site-editing/' ),
-			'className' => in_array( 'full-site-editing', $current_tag ) && ! $current_browse ? 'current-menu-item' : '',
+			'label'     => __( 'Block themes', 'wporg-themes' ),
+			'url'       => home_url( '/tags/full-site-editing/' ),
+			'className' => in_array( 'full-site-editing', $current_tag, true ) && ! $current_browse ? 'current-menu-item' : '',
 		),
 	);
 
 	return array(
-		'main' => $menu,
+		'main'   => $menu,
 		'browse' => $browse_menu,
 	);
 }
@@ -266,8 +266,8 @@ function get_favorite_settings( $settings, $post_id ) {
 	}
 
 	return array(
-		'is_favorite' => wporg_themes_is_favourited( $theme_post->slug ),
-		'add_callback' => function ( $post_id ) {
+		'is_favorite'     => wporg_themes_is_favourited( $theme_post->slug ),
+		'add_callback'    => function ( $post_id ) {
 			$theme_post = get_theme_information( $post_id );
 			if ( ! $theme_post ) {
 				return new \WP_Error( 'theme-not-found', 'Theme not found.' );
@@ -323,9 +323,9 @@ function get_language_suggest_endpoint( $endpoint ) {
  */
 function inject_browse_search_block( $block_content ) {
 	global $wp_query;
-	$inputs = '';
+	$inputs         = '';
 	$current_browse = $wp_query->query['browse'] ?? false;
-	if ( in_array( $current_browse, [ 'community', 'commercial' ] ) ) {
+	if ( in_array( $current_browse, [ 'community', 'commercial' ], true ) ) {
 		$inputs .= sprintf( '<input type="hidden" name="browse" value="%s" />', esc_attr( $current_browse ) );
 	}
 
@@ -343,7 +343,7 @@ function inject_browse_search_block( $block_content ) {
  * @param array    $block         The full block, including name and attributes.
  * @param WP_Block $instance      The block instance.
  */
-function update_archive_title( $block_content, $block, $instance ) {
+function update_archive_title( $block_content, $block, $instance ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Preserve the filter callback signature.
 	global $wp_query;
 	$attributes = $block['attrs'];
 
@@ -369,13 +369,13 @@ function update_archive_title( $block_content, $block, $instance ) {
 			}
 		}
 
-		$tag_name           = isset( $attributes['level'] ) ? 'h' . (int) $attributes['level'] : 'h1';
-		$align_class_name   = empty( $attributes['textAlign'] ) ? '' : "has-text-align-{$attributes['textAlign']}";
+		$tag_name         = isset( $attributes['level'] ) ? 'h' . (int) $attributes['level'] : 'h1';
+		$align_class_name = empty( $attributes['textAlign'] ) ? '' : "has-text-align-{$attributes['textAlign']}";
 
 		// Required to prevent `block_to_render` from being null in `get_block_wrapper_attributes`.
-		$parent = WP_Block_Supports::$block_to_render;
+		$parent                             = WP_Block_Supports::$block_to_render;
 		WP_Block_Supports::$block_to_render = $block;
-		$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => $align_class_name ) );
+		$wrapper_attributes                 = get_block_wrapper_attributes( array( 'class' => $align_class_name ) );
 		WP_Block_Supports::$block_to_render = $parent;
 
 		return sprintf(
@@ -433,9 +433,9 @@ function set_rating_data( $data, $post_id ) {
 	}
 
 	return array(
-		'rating' => $theme->rating,
+		'rating'       => $theme->rating,
 		'ratingsCount' => $theme->num_ratings,
-		'ratings' => $theme->ratings,
-		'supportUrl' => get_support_url( $theme->slug . '/reviews/' ),
+		'ratings'      => $theme->ratings,
+		'supportUrl'   => get_support_url( $theme->slug . '/reviews/' ),
 	);
 }

@@ -6,7 +6,7 @@
  * @package wporg
  */
 
- namespace WordPressdotorg\Theme\Theme_Directory_2024\Meta_List;
+namespace WordPressdotorg\Theme\Theme_Directory_2024\Meta_List;
 
 add_action( 'init', __NAMESPACE__ . '\init' );
 
@@ -41,36 +41,36 @@ function render( $attributes, $content, $block ) {
 	$meta_fields = array(
 		array(
 			'label' => __( 'Version', 'wporg-themes' ),
-			'key' => 'version',
+			'key'   => 'version',
 		),
 		array(
 			'label' => __( 'Last updated', 'wporg-themes' ),
-			'key' => 'last-updated',
+			'key'   => 'last-updated',
 		),
 		array(
 			'label' => __( 'Active installations', 'wporg-themes' ),
-			'key' => 'active-installs',
+			'key'   => 'active-installs',
 		),
 		array(
 			'label' => __( 'Minimum WordPress version', 'wporg-themes' ),
-			'key' => 'requires-wp',
+			'key'   => 'requires-wp',
 		),
 		array(
 			'label' => __( 'Minimum PHP version', 'wporg-themes' ),
-			'key' => 'requires-php',
+			'key'   => 'requires-php',
 		),
 		array(
 			'label' => __( 'Theme homepage', 'wporg-themes' ),
-			'key' => 'theme-link',
+			'key'   => 'theme-link',
 		),
 	);
-	$show_label = $attributes['showLabel'] ?? false;
+	$show_label  = $attributes['showLabel'] ?? false;
 
 	if ( isset( $attributes['meta'] ) ) {
 		$meta_fields = array_filter(
 			$meta_fields,
 			function ( $field ) use ( $attributes ) {
-				return in_array( $field['key'], $attributes['meta'] );
+				return in_array( $field['key'], $attributes['meta'], true );
 			}
 		);
 	}
@@ -103,7 +103,7 @@ function render( $attributes, $content, $block ) {
 		}
 	}
 
-	$class = $show_label ? '' : 'has-hidden-label';
+	$class              = $show_label ? '' : 'has-hidden-label';
 	$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => $class ) );
 	return sprintf(
 		'<div %s><ul>%s</ul></div>',
@@ -121,7 +121,7 @@ function render( $attributes, $content, $block ) {
  * @return string
  */
 function get_value( $key, $post_id ) {
-	$p = get_post( $post_id );
+	$p     = get_post( $post_id );
 	$theme = wporg_themes_theme_information( $p->post_name );
 	if ( isset( $theme->error ) ) {
 		return '';

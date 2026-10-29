@@ -39,13 +39,13 @@ function render( $attributes, $content, $block ) {
 	}
 
 	$theme_post = get_post( $block->context['postId'] );
-	$theme = wporg_themes_theme_information( $theme_post->post_name );
+	$theme      = wporg_themes_theme_information( $theme_post->post_name );
 
 	if ( empty( $theme->parent ) ) {
 		return '';
 	}
 
-	$markup = '<!-- wp:wporg/notice {"type":"info"} -->';
+	$markup  = '<!-- wp:wporg/notice {"type":"info"} -->';
 	$markup .= '<div class="wp-block-wporg-notice is-info-notice">';
 	$markup .= '<div class="wp-block-wporg-notice__icon"></div>';
 	$markup .= '<div class="wp-block-wporg-notice__content"><p>';

@@ -41,27 +41,27 @@ function render( $attributes, $content, $block ) {
 	$theme_post = get_post( $block->context['postId'] );
 
 	$is_commercial = has_term( 'commercial', 'theme_business_model', $theme_post );
-	$is_community = has_term( 'community', 'theme_business_model', $theme_post );
+	$is_community  = has_term( 'community', 'theme_business_model', $theme_post );
 
 	if ( ! $is_commercial && ! $is_community ) {
 		return '';
 	}
 
-	$heading = '';
-	$content = '';
-	$url = '';
+	$heading   = '';
+	$content   = '';
+	$url       = '';
 	$link_text = '';
-	$markup = '';
+	$markup    = '';
 
 	if ( $is_commercial ) {
-		$heading = __( 'Commercial theme', 'wporg-themes' );
-		$content = __( 'This theme is free but offers additional paid commercial upgrades or support.', 'wporg-themes' );
-		$url = get_post_meta( $theme_post->ID, 'external_support_url', true );
+		$heading   = __( 'Commercial theme', 'wporg-themes' );
+		$content   = __( 'This theme is free but offers additional paid commercial upgrades or support.', 'wporg-themes' );
+		$url       = get_post_meta( $theme_post->ID, 'external_support_url', true );
 		$link_text = __( 'View support', 'wporg-themes' );
 	} else {
-		$heading = __( 'Community theme', 'wporg-themes' );
-		$content = __( 'This theme is developed and supported by a community.', 'wporg-themes' );
-		$url = get_post_meta( $theme_post->ID, 'external_repository_url', true );
+		$heading   = __( 'Community theme', 'wporg-themes' );
+		$content   = __( 'This theme is developed and supported by a community.', 'wporg-themes' );
+		$url       = get_post_meta( $theme_post->ID, 'external_repository_url', true );
 		$link_text = __( 'Contribute to this theme', 'wporg-themes' );
 	}
 
@@ -72,7 +72,7 @@ function render( $attributes, $content, $block ) {
 	$markup .= '<!-- wp:paragraph --><p>';
 	$markup .= esc_html( $content );
 	if ( $url ) {
-		$markup .= ' <a href="' . esc_url( $url ) . '" class="external-link">' . esc_html( $link_text ) . '</a>'; //nofollow
+		$markup .= ' <a href="' . esc_url( $url ) . '" class="external-link">' . esc_html( $link_text ) . '</a>'; // nofollow
 	}
 	$markup .= '</p><!-- /wp:paragraph -->';
 

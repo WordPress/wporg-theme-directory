@@ -135,11 +135,11 @@ function enqueue_assets() {
  */
 function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
 	$current_post = get_post( $post_id );
-	if ( THEME_POST_TYPE == $current_post->post_type ) {
+	if ( THEME_POST_TYPE === $current_post->post_type ) {
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
 		$src   = add_query_arg(
 			array(
-				'w' => $size,
+				'w'     => $size,
 				'strip' => 'all',
 			),
 			$theme->screenshot_url()
@@ -156,18 +156,18 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 		}
 
 		$html .= ' />';
-	} else if ( 'theme_shop' == $current_post->post_type ) {
+	} elseif ( 'theme_shop' === $current_post->post_type ) {
 		$src = get_post_meta( $current_post->ID, 'image_url', true );
 		if ( ! $src ) {
 			$url = get_post_meta( $current_post->ID, 'url', true );
 			if ( $url ) {
 				$src = add_query_arg(
 					array(
-						'w' => 700,
+						'w'   => 700,
 						'vpw' => 1200,
 						'vph' => 900,
 					),
-					'https://s0.wp.com/mshots/v1/' . urlencode( $url )
+					'https://s0.wp.com/mshots/v1/' . rawurlencode( $url )
 				);
 			}
 		}
@@ -295,7 +295,7 @@ function update_theme_shop_permalink( $post_link, $post ) {
  */
 function redirect_term_archives() {
 	global $wp_query, $wp;
-	$url = false;
+	$url        = false;
 	$query_vars = [];
 
 	// Return early if we're already on an author or browse page.
@@ -304,13 +304,13 @@ function redirect_term_archives() {
 	}
 
 	$browse = sanitize_text_field( $wp_query->query['browse'] ?? '' );
-	$terms = array_map( 'sanitize_text_field', get_query_tags() );
+	$terms  = array_map( 'sanitize_text_field', get_query_tags() );
 
 	if ( ! empty( $browse ) ) {
-		$url = home_url( '/browse/' . $browse . '/' );
+		$url        = home_url( '/browse/' . $browse . '/' );
 		$query_vars = [ 's', 'tag', 'tag_slug__and' ];
 
-	} else if ( count( $terms ) && ! str_starts_with( $wp->request, 'tags/' ) ) {
+	} elseif ( count( $terms ) && ! str_starts_with( $wp->request, 'tags/' ) ) {
 		if ( count( $terms ) === 1 ) {
 			$url = get_term_link( $terms[0], 'post_tag' );
 			if ( is_wp_error( $url ) ) {
@@ -318,13 +318,13 @@ function redirect_term_archives() {
 			}
 		} else {
 			$path = 'tags/' . implode( '+', $terms ) . '/';
-			$url = home_url( $path );
+			$url  = home_url( $path );
 		}
 		$query_vars = [ 's', 'browse' ];
 
-	} else if ( ! empty( $wp_query->query['s'] ) && empty( $wp->request ) ) {
+	} elseif ( ! empty( $wp_query->query['s'] ) && empty( $wp->request ) ) {
 		$search = sanitize_text_field( $wp_query->query['s'] );
-		$url = home_url( 'search/' . $search . '/' );
+		$url    = home_url( 'search/' . $search . '/' );
 	}
 
 	if ( $url ) {
@@ -406,7 +406,7 @@ function get_query_tags() {
 	if ( is_array( $tags ) ) {
 		// Workaround to make sure the default tag query behavior still works.
 		$tags = [];
-	} else if ( is_string( $tags ) ) {
+	} elseif ( is_string( $tags ) ) {
 		$tags = explode( '+', $tags );
 	}
 	$tags_and = isset( $wp_query->query['tag_slug__and'] ) ? (array) $wp_query->query['tag_slug__and'] : array();
@@ -428,7 +428,7 @@ function get_query_tags() {
  */
 function get_tag_labels( $tags ) {
 	$features = wporg_themes_get_feature_list( 'active' );
-	$labels = array_map(
+	$labels   = array_map(
 		function ( $tag ) use ( $features ) {
 			foreach ( $features as $list ) {
 				if ( isset( $list[ $tag ] ) ) {
@@ -447,15 +447,15 @@ function get_tag_labels( $tags ) {
  * Get all possible features. This list mirrors core, but needs the local
  * textdomain as the terms have been updated to be sentence-case.
  *
- * @param string $include Optional. Type of list: 'active', 'deprecated' or 'all'. Default 'active'.
- * @param string $subset  Optional. Returns only the selected subset of features.
+ * @param string $list_type Optional. Type of list: 'active', 'deprecated' or 'all'. Default 'active'.
+ * @param string $subset    Optional. Returns only the selected subset of features.
  *
  * @return array List of features.
  */
-function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
+function wporg_themes_get_feature_list( $list_type = 'active', $subset = '' ) {
 	$features = array();
 
-	if ( 'active' === $include || 'all' === $include ) {
+	if ( 'active' === $list_type || 'all' === $list_type ) {
 		$features = array(
 			__( 'Layout', 'wporg-themes' )   => array(
 				'grid-layout'   => __( 'Grid layout', 'wporg-themes' ),
@@ -509,7 +509,7 @@ function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
 		);
 	}
 
-	if ( 'deprecated' === $include || 'all' === $include ) {
+	if ( 'deprecated' === $list_type || 'all' === $list_type ) {
 		$features[ __( 'Colors', 'wporg-themes' ) ] = array(
 			'black'  => __( 'Black', 'wporg-themes' ),
 			'blue'   => __( 'Blue', 'wporg-themes' ),
@@ -528,7 +528,7 @@ function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
 			'light'  => __( 'Light', 'wporg-themes' ),
 		);
 
-		if ( 'deprecated' === $include ) {
+		if ( 'deprecated' === $list_type ) {
 			// Initialize arrays.
 			$features[ __( 'Layout', 'wporg-themes' ) ]   = array();
 			$features[ __( 'Features', 'wporg-themes' ) ] = array();
@@ -562,9 +562,9 @@ function wporg_themes_get_feature_list( $include = 'active', $subset = '' ) {
 
 	if ( 'layouts' === $subset ) {
 		return $features[ __( 'Layout', 'wporg-themes' ) ];
-	} else if ( 'features' === $subset ) {
+	} elseif ( 'features' === $subset ) {
 		return $features[ __( 'Features', 'wporg-themes' ) ];
-	} else if ( 'subjects' === $subset ) {
+	} elseif ( 'subjects' === $subset ) {
 		return $features[ __( 'Subject', 'wporg-themes' ) ];
 	}
 
@@ -610,8 +610,8 @@ function update_cached_style_variations( $post_id ) {
 	}
 
 	// Fetch fresh data.
-	$url = 'https://wp-themes.com/' . $post->post_name . '/';
-	$url = add_query_arg( 'rest_route', '/wporg-styles/v2/variations', $url );
+	$url      = 'https://wp-themes.com/' . $post->post_name . '/';
+	$url      = add_query_arg( 'rest_route', '/wporg-styles/v2/variations', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		return;
@@ -644,8 +644,8 @@ function update_cached_theme_patterns( $post_id ) {
 	}
 
 	// Fetch fresh data.
-	$url = 'https://wp-themes.com/' . $post->post_name . '/';
-	$url = add_query_arg( 'rest_route', '/wporg-patterns/v2/patterns', $url );
+	$url      = 'https://wp-themes.com/' . $post->post_name . '/';
+	$url      = add_query_arg( 'rest_route', '/wporg-patterns/v2/patterns', $url );
 	$response = wp_remote_get( $url );
 	if ( 200 !== wp_remote_retrieve_response_code( $response ) ) {
 		return;

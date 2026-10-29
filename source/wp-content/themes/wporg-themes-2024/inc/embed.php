@@ -52,7 +52,7 @@ function enable_embed_thumbnail() {
  *
  * @return string
  */
-function update_thumbnail_image_shape( $shape ) {
+function update_thumbnail_image_shape( $shape ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Preserve the filter callback signature.
 	return 'rectangular';
 }
 
@@ -75,12 +75,12 @@ function update_embed_thumbnail( $html, $attachment_id, $size, $icon, $attr ) {
 		$theme = new \WPORG_Themes_Repo_Package( $post );
 		$src   = add_query_arg(
 			array(
-				'w' => $size,
+				'w'     => $size,
 				'strip' => 'all',
 			),
 			$theme->screenshot_url()
 		);
-		$html = '<img src="' . esc_url( $src ) . '"';
+		$html  = '<img src="' . esc_url( $src ) . '"';
 
 		if ( is_array( $attr ) ) {
 			$attr['alt'] = '';
@@ -104,6 +104,6 @@ function update_embed_thumbnail( $html, $attachment_id, $size, $icon, $attr ) {
  * @param int    $size    Size of the site icon.
  * @param int    $blog_id ID of the blog to get the site icon for.
  */
-function update_site_icon( $url, $size, $blog_id ) {
+function update_site_icon( $url, $size, $blog_id ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Preserve the filter callback signature.
 	return 'https://wordpress.org/files/2024/06/charcoal-logo.png';
 }

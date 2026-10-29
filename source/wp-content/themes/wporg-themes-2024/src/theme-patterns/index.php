@@ -24,24 +24,24 @@ function init() {
  */
 function get_pattern_preview_block( $pattern, $is_overflow = false, $is_selected = false ) {
 	$cache_buster = '20250114'; // To break out of cached image.
-	$view_url = add_query_arg( 'v', $cache_buster, $pattern->preview_link );
+	$view_url     = add_query_arg( 'v', $cache_buster, $pattern->preview_link );
 
 	$args = array(
-		'src' => $view_url,
+		'src'           => $view_url,
 		// translators: %s pattern name.
-		'alt' => sprintf( __( 'Pattern: %s', 'wporg-themes' ), $pattern->title ),
-		'width' => 275,
+		'alt'           => sprintf( __( 'Pattern: %s', 'wporg-themes' ), $pattern->title ),
+		'width'         => 275,
 		// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- Name comes from API.
 		'viewportWidth' => $pattern->viewportWidth ?? 1200,
-		'fullPage' => true,
-		'isHidden' => $is_overflow,
+		'fullPage'      => true,
+		'isHidden'      => $is_overflow,
 	);
 
 	$image_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 
 	$instance_id = wp_unique_id( 'wporg-theme-patterns-item-' );
 
-	$extra_attrs = '';
+	$extra_attrs  = '';
 	$extra_attrs .= $is_overflow ? ' style="display:none;"' : '';
 	$extra_attrs .= $is_selected ? ' aria-selected="true"' : '';
 

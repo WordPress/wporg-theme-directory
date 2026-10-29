@@ -10,10 +10,10 @@ $theme_post = get_post( $block->context['postId'] );
 if (
 	(
 		! $theme_post->preview_blueprint &&
-		empty( $_GET['playground-preview'] )
+		empty( $_GET['playground-preview'] ) // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only flag that opts into the Playground preview.
 	) || (
 		! current_user_can( 'edit_post', $theme_post->ID ) &&
-		get_current_user_id() != $theme_post->post_author // Note: Loose comparison; int != string.
+		get_current_user_id() !== (int) $theme_post->post_author
 	)
 ) {
 	return;
@@ -26,7 +26,7 @@ wp_enqueue_script( 'wp-api-fetch' );
 $blueprint = [
 	'steps' => [
 		[
-			'step' => 'installTheme',
+			'step'         => 'installTheme',
 			'themeZipFile' => [
 				'resource' => 'wordpress.org/themes',
 				'slug'     => $theme_post->post_name,
@@ -47,7 +47,7 @@ if ( $theme_post->preview_blueprint ) {
 $blueprint = wp_json_encode( $blueprint, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
 
 // Initial state to pass to Interactivity API.
-$init_state = [
+$init_state    = [
 	'slug'      => $theme_post->post_name,
 	'blueprint' => $blueprint,
 	'labels'    => [
@@ -68,7 +68,7 @@ $encoded_state = wp_json_encode( $init_state );
 	<p class="wporg-theme-settings__description">
 		This is a work in progress, and not currently fully supported.<br>
 		Provide a Playground Blueprint to of your theme to be used for previews.<br>
-		The <a href="https://playground.wordpress.net/builder/builder.html#<?php echo urlencode( $blueprint ); ?>">Blueprint Builder</a> can be used to validate your JSON.
+		The <a href="https://playground.wordpress.net/builder/builder.html#<?php echo rawurlencode( $blueprint ); ?>">Blueprint Builder</a> can be used to validate your JSON.
 	</p>
 	<form data-wp-on--submit="actions.onSubmit" method="POST">
 		<div class="wporg-theme-settings__blueprint-field">

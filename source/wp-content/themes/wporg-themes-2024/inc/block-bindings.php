@@ -19,8 +19,8 @@ function register_block_bindings() {
 	register_block_bindings_source(
 		'wporg-themes/meta',
 		array(
-			'label' => 'Theme meta',
-			'uses_context' => [ 'postId' ],
+			'label'              => 'Theme meta',
+			'uses_context'       => [ 'postId' ],
 			'get_value_callback' => __NAMESPACE__ . '\get_meta_block_value',
 		)
 	);
@@ -34,7 +34,7 @@ function get_meta_block_value( $args, $block ) {
 		return '';
 	}
 
-	$p = get_post( $block->context['postId'] );
+	$p     = get_post( $block->context['postId'] );
 	$theme = wporg_themes_theme_information( $p->post_name );
 	if ( isset( $theme->error ) ) {
 		return '';
@@ -69,7 +69,7 @@ function get_meta_block_value( $args, $block ) {
 				'<strong>' . $active_installs . '</strong>'
 			);
 		case 'preview-url':
-			$playground = isset( $_REQUEST['playground-preview'] ) ? '?playground-preview=1' : '';
+			$playground = isset( $_REQUEST['playground-preview'] ) ? '?playground-preview=1' : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only flag that carries the Playground preview into the link.
 
 			return esc_url( untrailingslashit( get_permalink( $p ) ) . '/preview/' . $playground );
 		case 'download-url':

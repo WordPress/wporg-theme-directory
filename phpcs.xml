@@ -9,20 +9,13 @@
     <!-- Import the shared PHPCS settings. -->
     <rule ref="./phpcs.xml.dist" />
 
-    <!--
-        The shared config declares this inside its PHPCompatibilityWP rule, where PHPCS
-        does not apply it. Left unset, PHPCompatibility passes null to trim() and every
-        file aborts on PHP 8.1+. Redeclared here as a direct child of <ruleset>.
-    -->
-    <config name="testVersion" value="8.4-" />
-
-    <!--
-        WPCS 3 moved this sniff from Generic to Universal. The shared config still
-        excludes it under the old name, so silence it under the new name to keep
-        short array syntax allowed as the project already intends.
-    -->
-    <rule ref="Universal.Arrays.DisallowShortArraySyntax.Found">
-        <severity>0</severity>
+    <!-- Capabilities the Theme Directory plugin maps in its map_meta_cap filter. -->
+    <rule ref="WordPress.WP.Capabilities">
+        <properties>
+            <property name="custom_capabilities" type="array">
+                <element value="theme_configure_categorization_options"/>
+            </property>
+        </properties>
     </rule>
 
     <!-- Filter out 3rd-party code from being linted. -->
