@@ -3,7 +3,7 @@
  * templates or theme.json settings.
  */
 
-@import "listbox";
+@use "listbox";
 
 .wp-block-query-pagination.wp-block-query-pagination {
 	margin-bottom: 0;

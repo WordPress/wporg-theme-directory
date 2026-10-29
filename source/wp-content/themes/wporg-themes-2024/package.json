@@ -6,8 +6,7 @@
 	"license": "GPL-2.0-or-later",
 	"private": true,
 	"devDependencies": {
-		"@wordpress/scripts": "27.6.0",
-		"rtlcss-webpack-plugin": "4.0.7"
+		"@wordpress/scripts": "37.0.0"
 	},
 	"eslintConfig": {
 		"extends": "../../../../.eslintrc.js"
@@ -25,5 +24,13 @@
 		"lint:js": "wp-scripts lint-js src",
 		"lint:css": "wp-scripts lint-style src/**/*.scss",
 		"format": "wp-scripts format src -- --config=../../../../.prettierrc.js"
+	},
+	"dependencies": {
+		"@wordpress/block-editor": "19.0.0",
+		"@wordpress/blocks": "17.0.0",
+		"@wordpress/interactivity": "8.0.0",
+		"@wordpress/keycodes": "5.0.0",
+		"@wordpress/server-side-render": "7.0.0",
+		"@wordpress/url": "5.0.0"
 	}
 }
