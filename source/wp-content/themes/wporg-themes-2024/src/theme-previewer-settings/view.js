@@ -31,16 +31,16 @@ const { state } = store( 'wporg/themes/theme-previewer-settings', {
 		},
 		*onSubmit( event ) {
 			event.preventDefault();
-			const context       = getContext();
+			const context = getContext();
 			const { slug } = context;
-			const newBlueprint  = event.target.elements.blueprint?.value || '';
+			const newBlueprint = event.target.elements.blueprint?.value || '';
 
 			try {
 				const decoded = JSON.parse( newBlueprint );
 				if ( typeof decoded !== 'object' || ! decoded.steps ) {
-					throw new Exception( 'Invalid blueprint.' );
+					throw new Error( 'Invalid blueprint.' );
 				}
-			} catch( error ) {
+			} catch {
 				state.isInvalid = true;
 				return;
 			}
@@ -56,8 +56,8 @@ const { state } = store( 'wporg/themes/theme-previewer-settings', {
 					throw new Error( 'Invalid response from API.' );
 				}
 				state.isSuccess = true;
-				state.blueprint = newBlueprint
-			} catch ( error ) {
+				state.blueprint = newBlueprint;
+			} catch {
 				state.isError = true;
 			}
 			state.isSubmitting = false;

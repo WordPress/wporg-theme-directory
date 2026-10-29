@@ -7,9 +7,9 @@ async function renderChart( element ) {
 	try {
 		downloads = await jQuery.ajax( {
 			dataType: 'jsonp',
-			url: url,
+			url,
 		} );
-	} catch ( err ) {
+	} catch {
 		return;
 	}
 

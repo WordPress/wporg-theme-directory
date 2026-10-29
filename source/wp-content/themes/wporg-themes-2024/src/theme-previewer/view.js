@@ -2,7 +2,8 @@
  * WordPress dependencies
  */
 import { getContext, getElement, store } from '@wordpress/interactivity';
-import { startPlaygroundWeb } from 'https://playground.wordpress.net/client/index.js'; // or '@wp-playground/client';
+// eslint-disable-next-line import/no-unresolved -- Loaded from the Playground CDN at runtime, or '@wp-playground/client'.
+import { startPlaygroundWeb } from 'https://playground.wordpress.net/client/index.js';
 
 let playgroundClient = false;
 
@@ -20,12 +21,13 @@ store( 'wporg/themes/preview', {
 			wp.a11y?.speak( context.label.postNavigate, 'polite' );
 		},
 		async navigateIframe( event ) {
-			const context = getContext();
 			const { selectedElement: ref } = event;
-			const isSelected = 'wporg-select' === event.type;
 			if ( ! ref?.dataset ) {
 				return;
 			}
+
+			const context = getContext();
+			const isSelected = 'wporg-select' === event.type;
 
 			context.isLoaded = context.isPlayground;
 			if ( ref.dataset.style_variation ) {
@@ -49,15 +51,17 @@ store( 'wporg/themes/preview', {
 			context.url = previewURL;
 
 			if ( playgroundClient ) {
-				const currentURL    = await playgroundClient.getCurrentURL();
+				const currentURL = await playgroundClient.getCurrentURL();
 				const playgroundParams = new URLSearchParams( currentURL.replace( /^[/]?/, '' ) );
 
-				params.entries().forEach( ( [ key, value ] ) => { playgroundParams.set( key, value ); } );
+				params.entries().forEach( ( [ key, value ] ) => {
+					playgroundParams.set( key, value );
+				} );
 
 				playgroundClient.goTo( '/?' + playgroundParams.toString() );
 
 				// Ensure the current page url remains as a playground.
-				params.set('playground-preview', '1');
+				params.set( 'playground-preview', '1' );
 			}
 
 			const permalinkURL = new URL( context.permalink );
@@ -74,11 +78,11 @@ store( 'wporg/themes/preview', {
 			// The loading overlay doesn't play nicely with the low latency of playground.
 			context.isLoaded = true;
 
-			startPlaygroundWeb({
+			startPlaygroundWeb( {
 				iframe: ref,
 				remoteUrl: 'https://playground.wordpress.net/remote.html',
-				blueprint: JSON.parse( context.blueprint )
-			}).then( ( playground ) => {
+				blueprint: JSON.parse( context.blueprint ),
+			} ).then( ( playground ) => {
 				playgroundClient = playground;
 
 				// If the preview URL has any query params, head straight there.
@@ -86,7 +90,7 @@ store( 'wporg/themes/preview', {
 				if ( currentPreviewURL.searchParams.size ) {
 					playgroundClient.goTo( '/?' + currentPreviewURL.searchParams.toString() );
 				}
-			});
+			} );
 		},
 	},
 } );

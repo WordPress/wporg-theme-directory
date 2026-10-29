@@ -17,7 +17,7 @@ const SCROLL_TOLERANCE = 1;
  *
  * @param {Element} ref
  *
- * @return {Element}
+ * @return {Element} The row element.
  */
 function getRowElement( ref ) {
 	const container = ref.closest( '.wp-block-wporg-theme-style-variations' );

@@ -46,7 +46,7 @@ const { state } = store( 'wporg/themes/theme-settings', {
 				}
 				context.url = response[ key ];
 				state.isSuccess = true;
-			} catch ( error ) {
+			} catch {
 				inputEl.value = url;
 				state.isError = true;
 			}
