@@ -44,9 +44,15 @@ class wporgListbox {
 		this.updateRender();
 	}
 
-	handleFocus() {
+	handleFocus( event ) {
 		this.current = this.current || 0;
-		this.updateRender();
+
+		/*
+		 * Only scroll for keyboard focus. Focus from a click is followed by the
+		 * click handler scrolling to the clicked item, and scrolling to the
+		 * previous item first makes the list jump.
+		 */
+		this.updateRender( event.target.matches( ':focus-visible' ) );
 	}
 
 	increment( jump = false ) {
@@ -172,13 +178,17 @@ class wporgListbox {
 	 * Ensure the focused item is correctly flagged, and in view.
 	 *
 	 * This function is called after every update (manually).
+	 *
+	 * @param {boolean} scroll Whether to scroll the focused item into view.
 	 */
-	updateRender() {
+	updateRender( scroll = true ) {
 		const listbox = this.container.querySelector( '[role="listbox"]' );
 		const listItems = listbox.querySelectorAll( 'li' );
 		if ( typeof listItems[ this.current ] !== 'undefined' ) {
 			listbox.setAttribute( 'aria-activedescendant', listItems[ this.current ].id );
-			listItems[ this.current ].scrollIntoView( { block: 'nearest', inline: 'nearest' } );
+			if ( scroll ) {
+				listItems[ this.current ].scrollIntoView( { block: 'nearest', inline: 'nearest' } );
+			}
 		}
 
 		listItems.forEach( ( element, index ) => {
