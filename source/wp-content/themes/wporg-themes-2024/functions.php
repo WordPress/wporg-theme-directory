@@ -137,15 +137,24 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 	$current_post = get_post( $post_id );
 	if ( THEME_POST_TYPE === $current_post->post_type ) {
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
-		$src   = add_query_arg(
-			array(
-				'w'     => $size,
-				'strip' => 'all',
-			),
-			$theme->screenshot_url()
-		);
+		$src   = add_query_arg( 'strip', 'all', $theme->screenshot_url() );
 
-		$html = '<img src="' . esc_url( $src ) . '"';
+		// Photon needs a numeric width, so listing cards offer card-sized screenshots instead of
+		// the full-size image. The sizes match the 1, 2, and 3 column grid breakpoints.
+		// The single theme page keeps the full size.
+		$is_single_theme = is_singular( THEME_POST_TYPE ) && get_queried_object_id() === $current_post->ID;
+		if ( $is_single_theme ) {
+			$html = '<img src="' . esc_url( $src ) . '"';
+		} else {
+			$srcset = array();
+			foreach ( array( 400, 800, 1200 ) as $width ) {
+				$srcset[] = esc_url( add_query_arg( 'w', $width, $src ) ) . " {$width}w";
+			}
+
+			$html  = '<img src="' . esc_url( add_query_arg( 'w', 400, $src ) ) . '"';
+			$html .= ' srcset="' . implode( ', ', $srcset ) . '"';
+			$html .= ' sizes="(max-width: 600px) 100vw, (max-width: 1080px) 50vw, 33vw"';
+		}
 
 		if ( is_array( $attr ) ) {
 			$attr['alt'] = '';
