@@ -1,0 +1,1 @@
+(()=>{"use strict";const o=window.wp.blocks,e=window.wp.blockEditor,n=JSON.parse('{"UU":"wporg/theme-downloads"}'),t=window.ReactJSXRuntime;(0,o.registerBlockType)(n.UU,{edit:function(){return(0,t.jsx)("div",{...(0,e.useBlockProps)(),children:"Download chart"})},save:()=>null})})();

@@ -1,0 +1,1 @@
+(()=>{"use strict";const e=window.wp.blocks,i=window.wp.blockEditor,r=JSON.parse('{"UU":"wporg/theme-previewer-iframe"}'),o=window.ReactJSXRuntime;(0,e.registerBlockType)(r.UU,{edit:function(){return(0,o.jsx)("div",{...(0,i.useBlockProps)(),children:"Preview"})},save:()=>null})})();
