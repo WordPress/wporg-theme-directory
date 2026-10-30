@@ -139,17 +139,21 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
 		$src   = add_query_arg( 'strip', 'all', $theme->screenshot_url() );
 
-		// Photon needs a numeric width, so listing cards request a card-sized screenshot (with a
-		// 2x variant) instead of the full-size image. The single theme page keeps the full size.
+		// Photon needs a numeric width, so listing cards offer card-sized screenshots instead of
+		// the full-size image. The sizes match the 1, 2, and 3 column grid breakpoints.
+		// The single theme page keeps the full size.
 		$is_single_theme = is_singular( THEME_POST_TYPE ) && get_queried_object_id() === $current_post->ID;
 		if ( $is_single_theme ) {
 			$html = '<img src="' . esc_url( $src ) . '"';
 		} else {
-			$src_1x = add_query_arg( 'w', 400, $src );
-			$src_2x = add_query_arg( 'w', 800, $src );
+			$srcset = array();
+			foreach ( array( 400, 800, 1200 ) as $width ) {
+				$srcset[] = esc_url( add_query_arg( 'w', $width, $src ) ) . " {$width}w";
+			}
 
-			$html  = '<img src="' . esc_url( $src_1x ) . '"';
-			$html .= ' srcset="' . esc_url( $src_1x ) . ' 1x, ' . esc_url( $src_2x ) . ' 2x"';
+			$html  = '<img src="' . esc_url( add_query_arg( 'w', 400, $src ) ) . '"';
+			$html .= ' srcset="' . implode( ', ', $srcset ) . '"';
+			$html .= ' sizes="(max-width: 600px) 100vw, (max-width: 1080px) 50vw, 33vw"';
 		}
 
 		if ( is_array( $attr ) ) {
