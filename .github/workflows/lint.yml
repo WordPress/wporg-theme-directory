@@ -30,11 +30,6 @@ jobs:
               env:
                 COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Install Subversion
-              # Composer sources the wordpress-meta/* packages from SVN, which
-              # ubuntu-latest no longer ships.
-              run: sudo apt-get update && sudo apt-get install -y subversion
-
             - name: Install dependencies
               # PHP linting only needs Composer packages and the phpcs.xml.dist
               # generated from them, not npm or a theme build.

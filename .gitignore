@@ -5,17 +5,14 @@
 /**/node_modules
 /vendor
 *.map
-wp-cli.yml
 
 # Local build files.
 backstop_data
 lighthouse.html
 
-# Allow local environment overrides.
-.wp-env.override.json
-
 # Configs from wporg-repo-tools.
 .eslintrc.js
+eslint.config.js
 .prettierrc.js
 .stylelintrc
 phpcs.xml.dist
