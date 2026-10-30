@@ -137,15 +137,20 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 	$current_post = get_post( $post_id );
 	if ( THEME_POST_TYPE === $current_post->post_type ) {
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
-		$src   = add_query_arg(
-			array(
-				'w'     => $size,
-				'strip' => 'all',
-			),
-			$theme->screenshot_url()
-		);
+		$src   = add_query_arg( 'strip', 'all', $theme->screenshot_url() );
 
-		$html = '<img src="' . esc_url( $src ) . '"';
+		// Photon needs a numeric width, so listing cards request a card-sized screenshot (with a
+		// 2x variant) instead of the full-size image. The single theme page keeps the full size.
+		$is_single_theme = is_singular( THEME_POST_TYPE ) && get_queried_object_id() === $current_post->ID;
+		if ( $is_single_theme ) {
+			$html = '<img src="' . esc_url( $src ) . '"';
+		} else {
+			$src_1x = add_query_arg( 'w', 400, $src );
+			$src_2x = add_query_arg( 'w', 800, $src );
+
+			$html  = '<img src="' . esc_url( $src_1x ) . '"';
+			$html .= ' srcset="' . esc_url( $src_1x ) . ' 1x, ' . esc_url( $src_2x ) . ' 2x"';
+		}
 
 		if ( is_array( $attr ) ) {
 			$attr['alt'] = '';
