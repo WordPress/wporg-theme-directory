@@ -1,4 +1,3 @@
-/* global CustomEvent */
 /**
  * WordPress dependencies
  */

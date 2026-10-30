@@ -7,14 +7,14 @@ if ( ! $block->context['postId'] ) {
 $theme_post = get_post( $block->context['postId'] );
 
 $model_type = false;
-$url = '';
+$url        = '';
 
 if ( has_term( 'commercial', 'theme_business_model', $theme_post ) ) {
 	$model_type = 'commercial';
-	$url = get_post_meta( $theme_post->ID, 'external_support_url', true );
+	$url        = get_post_meta( $theme_post->ID, 'external_support_url', true );
 } elseif ( has_term( 'community', 'theme_business_model', $theme_post ) ) {
 	$model_type = 'community';
-	$url = get_post_meta( $theme_post->ID, 'external_repository_url', true );
+	$url        = get_post_meta( $theme_post->ID, 'external_repository_url', true );
 }
 
 // Not community/commercial, or the user is not an owner/admin.
@@ -29,25 +29,25 @@ $labels = [
 	'heading' => __( 'Theme options', 'wporg-themes' ),
 ];
 if ( 'community' === $model_type ) {
-	$labels['type'] = __( 'Community theme:', 'wporg-themes' );
+	$labels['type']        = __( 'Community theme:', 'wporg-themes' );
 	$labels['description'] = __( 'This theme is developed and supported by a community.', 'wporg-themes' );
-	$labels['form_label'] = __( 'Development repository URL', 'wporg-themes' );
-	$labels['form_help'] = __( 'Optional. The URL where development happens, such as at github.com.', 'wporg-themes' );
+	$labels['form_label']  = __( 'Development repository URL', 'wporg-themes' );
+	$labels['form_help']   = __( 'Optional. The URL where development happens, such as at github.com.', 'wporg-themes' );
 } elseif ( 'commercial' === $model_type ) {
-	$labels['type'] = __( 'Commercial theme:', 'wporg-themes' );
+	$labels['type']        = __( 'Commercial theme:', 'wporg-themes' );
 	$labels['description'] = __( 'This theme is free but offers paid upgrades, support, and/or add-ons.', 'wporg-themes' );
-	$labels['form_label'] = __( 'Commercial support URL', 'wporg-themes' );
-	$labels['form_help'] = __( 'Optional. The URL for theme support, other than its support forum on wordpress.org.', 'wporg-themes' );
+	$labels['form_label']  = __( 'Commercial support URL', 'wporg-themes' );
+	$labels['form_help']   = __( 'Optional. The URL for theme support, other than its support forum on wordpress.org.', 'wporg-themes' );
 }
 
 // Initial state to pass to Interactivity API.
-$init_state = [
-	'slug' => $theme_post->post_name,
-	'type' => $model_type,
-	'url' => $url,
+$init_state    = [
+	'slug'   => $theme_post->post_name,
+	'type'   => $model_type,
+	'url'    => $url,
 	'labels' => [
 		'success' => __( 'URL saved correctly!', 'wporg-themes' ),
-		'error' => __( 'Error updating the URL. Please try again.', 'wporg-themes' ),
+		'error'   => __( 'Error updating the URL. Please try again.', 'wporg-themes' ),
 	],
 ];
 $encoded_state = wp_json_encode( $init_state );

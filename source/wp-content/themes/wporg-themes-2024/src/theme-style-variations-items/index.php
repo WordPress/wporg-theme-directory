@@ -25,20 +25,20 @@ function init() {
  * Convert a style object into a screenshot preview block.
  */
 function get_style_variation_card( $style, $is_selected = false ) {
-	$args = array(
-		'src' => $style->preview_link,
+	$args         = array(
+		'src'            => $style->preview_link,
 		// translators: %s pattern name.
-		'alt' => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
-		'width' => 100,
-		'viewportWidth' => 1180,
+		'alt'            => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
+		'width'          => 100,
+		'viewportWidth'  => 1180,
 		'viewportHeight' => 740,
-		'fullPage' => false,
+		'fullPage'       => false,
 	);
 	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 
 	$instance_id = wp_unique_id( 'wporg-theme-style-var-item-' );
 
-	$extra_attrs = '';
+	$extra_attrs  = '';
 	$extra_attrs .= $is_selected ? ' aria-selected="true"' : '';
 
 	return sprintf(

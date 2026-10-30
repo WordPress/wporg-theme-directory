@@ -41,7 +41,7 @@ function render( $attributes, $content, $block ) {
 	}
 
 	$theme_post = get_post( $block->context['postId'] );
-	$theme = wporg_themes_theme_information( $theme_post->post_name );
+	$theme      = wporg_themes_theme_information( $theme_post->post_name );
 	if ( isset( $theme->error ) ) {
 		return '';
 	}
@@ -69,7 +69,7 @@ function render( $attributes, $content, $block ) {
  */
 function get_language_links( $slug ) {
 	$locale_subdomain_assoc = get_all_locales_with_subdomain();
-	$translated_locales = get_translated_locales( 'theme', $slug );
+	$translated_locales     = get_translated_locales( 'theme', $slug );
 
 	$available_languages = array();
 	foreach ( $translated_locales as $locale ) {

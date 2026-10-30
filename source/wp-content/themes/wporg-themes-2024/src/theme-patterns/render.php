@@ -11,9 +11,9 @@ if ( ! $current_post_id ) {
 $show_all = $attributes['showAll'] ?? false;
 
 $theme_post = get_post( $block->context['postId'] );
-$theme = wporg_themes_theme_information( $theme_post->post_name );
+$theme      = wporg_themes_theme_information( $theme_post->post_name );
 
-$patterns = get_theme_patterns( $theme_post );
+$patterns      = get_theme_patterns( $theme_post );
 $pattern_count = $patterns ? count( $patterns ) : 0;
 $initial_count = $show_all ? $pattern_count : 6;
 
@@ -22,9 +22,9 @@ if ( ! $pattern_count ) {
 }
 
 $selected_index = -1;
-if ( isset( $_GET['pattern_name'] ) ) {
+if ( isset( $_GET['pattern_name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the pattern to preview.
 	foreach ( $patterns as $i => $pattern ) {
-		if ( $pattern->name === $_GET['pattern_name'] ) {
+		if ( $pattern->name === $_GET['pattern_name'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the pattern to preview.
 			$selected_index = $i;
 			break;
 		}
@@ -32,11 +32,11 @@ if ( isset( $_GET['pattern_name'] ) ) {
 }
 
 // Initial state to pass to JS (*not* Interactivty API).
-$init_state = [
-	'hideOverflow' => true,
-	'allowUnselect' => true,
-	'initialCount' => $initial_count,
-	'totalCount' => $pattern_count,
+$init_state    = [
+	'hideOverflow'    => true,
+	'allowUnselect'   => true,
+	'initialCount'    => $initial_count,
+	'totalCount'      => $pattern_count,
 	'initialSelected' => $selected_index,
 ];
 $encoded_state = wp_json_encode( $init_state );

@@ -102,7 +102,8 @@
 				__( 'For specific questions, please use the <a href="%s">Themes and Templates forum</a>.', 'wporg-themes' ),
 				__( 'https://wordpress.org/support/forum/themes-and-templates', 'wporg-themes' )
 			)
-		); ?>
+		);
+		?>
 	</p>
 	<!-- /wp:paragraph -->
 

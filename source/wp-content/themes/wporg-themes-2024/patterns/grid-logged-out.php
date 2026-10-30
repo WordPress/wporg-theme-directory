@@ -7,7 +7,7 @@
  * This pattern is swapped out automatically when a logged out user visits `/favorites/`.
  */
 
-$login_url = wp_login_url( home_url( '/browse/favorites/' ) );
+$login_url    = wp_login_url( home_url( '/browse/favorites/' ) );
 $register_url = wp_registration_url();
 
 ?>

@@ -7,8 +7,8 @@
 
 use const WordPressdotorg\Theme\Theme_Directory_2024\THEME_POST_TYPE;
 
-$count = wp_count_posts( THEME_POST_TYPE )->publish;
-$count = floor( $count / 1000 ) * 1000;
+$count       = wp_count_posts( THEME_POST_TYPE )->publish;
+$count       = floor( $count / 1000 ) * 1000;
 $description = sprintf(
 	/* Translators: Total number of themes, rounded to thousands (ex, 12,000). */
 	_n(

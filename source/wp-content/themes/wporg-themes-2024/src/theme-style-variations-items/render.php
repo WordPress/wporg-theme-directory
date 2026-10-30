@@ -9,17 +9,17 @@ if ( ! $current_post_id ) {
 }
 
 $theme_post = get_post( $block->context['postId'] );
-$styles = get_theme_style_variations( $theme_post );
-$count = $styles ? count( $styles ) : 0;
+$styles     = get_theme_style_variations( $theme_post );
+$count      = $styles ? count( $styles ) : 0;
 
 if ( ! $count ) {
 	return '';
 }
 
 $selected_index = 0;
-if ( isset( $_GET['style_variation'] ) ) {
+if ( isset( $_GET['style_variation'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the style variation to preview.
 	foreach ( $styles as $i => $style ) {
-		if ( $style->title === $_GET['style_variation'] ) {
+		if ( $style->title === $_GET['style_variation'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the style variation to preview.
 			$selected_index = $i;
 			break;
 		}
@@ -27,10 +27,10 @@ if ( isset( $_GET['style_variation'] ) ) {
 }
 
 // Initial state to pass to JS (*not* Interactivty API).
-$init_state = [
-	'hideOverflow' => false,
-	'initialCount' => $count,
-	'totalCount' => $count,
+$init_state    = [
+	'hideOverflow'    => false,
+	'initialCount'    => $count,
+	'totalCount'      => $count,
 	'initialSelected' => $selected_index,
 ];
 $encoded_state = wp_json_encode( $init_state );

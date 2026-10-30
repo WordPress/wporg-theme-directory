@@ -72,7 +72,7 @@
 <!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|50"}}},"align":"wide","layout":{"type":"constrained","justifyContent":"left"}} -->
 <div id="theme-requirements" class="wp-block-group alignwide" style="margin-top:var(--wp--preset--spacing--50);">
 	<!-- wp:paragraph -->
-	<p><?php esc_html_e( 'If you would like to be included in this list please send your info to themes at wordpress dot org. To be included, you should:', 'wporg-themes' ); ?></p>
+	<p><?php esc_html_e( 'If you would like to be included in this list please send your info to themes at wordpress dot org. To be included, you should:', 'wporg-themes' ); // phpcs:ignore WordPress.WP.CapitalPDangit.MisspelledInText -- A spelled-out email address. ?></p>
 	<!-- /wp:paragraph -->
 
 	<!-- wp:list -->

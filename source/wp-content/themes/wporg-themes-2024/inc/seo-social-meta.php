@@ -82,16 +82,16 @@ function document_title_separator() {
  */
 function add_social_meta_tags( $tags ) {
 	$default_image = 'https://wordpress.org/files/2024/06/wporg-themes-ogimage-2024.png';
-	$site_title = function_exists( '\WordPressdotorg\site_brand' ) ? \WordPressdotorg\site_brand() : 'WordPress.org';
-	$description = __( 'Find the perfect theme for your WordPress website. Choose from thousands of stunning designs with a wide variety of features and customization options.', 'wporg-themes' );
+	$site_title    = function_exists( '\WordPressdotorg\site_brand' ) ? \WordPressdotorg\site_brand() : 'WordPress.org';
+	$description   = __( 'Find the perfect theme for your WordPress website. Choose from thousands of stunning designs with a wide variety of features and customization options.', 'wporg-themes' );
 
-	$tags['og:site_name']    = $site_title;
-	$tags['og:title']        = __( 'WordPress Theme Directory', 'wporg-themes' );
-	$tags['og:description']  = $description;
-	$tags['og:image']        = esc_url( $default_image );
-	$tags['og:image:alt']    = __( 'WordPress Theme Directory', 'wporg-themes' );
-	$tags['og:locale']       = get_locale();
-	$tags['twitter:card']    = 'summary_large_image';
+	$tags['og:site_name']   = $site_title;
+	$tags['og:title']       = __( 'WordPress Theme Directory', 'wporg-themes' );
+	$tags['og:description'] = $description;
+	$tags['og:image']       = esc_url( $default_image );
+	$tags['og:image:alt']   = __( 'WordPress Theme Directory', 'wporg-themes' );
+	$tags['og:locale']      = get_locale();
+	$tags['twitter:card']   = 'summary_large_image';
 
 	$current_browse = $wp_query->query['browse'] ?? false;
 
@@ -107,7 +107,7 @@ function add_social_meta_tags( $tags ) {
 			__( 'WordPress Themes by %s', 'wporg-themes' ),
 			get_the_author()
 		);
-	} else if ( is_singular( THEME_POST_TYPE ) ) {
+	} elseif ( is_singular( THEME_POST_TYPE ) ) {
 		$theme = get_theme_information();
 		if ( ! $theme ) {
 			return $tags;
@@ -136,7 +136,7 @@ function add_social_meta_tags( $tags ) {
  * Update the description meta value.
  */
 function add_seo_meta_tags( $tags ) {
-	$description = __( 'Find the perfect theme for your WordPress website. Choose from thousands of stunning designs with a wide variety of features and customization options.', 'wporg-themes' );
+	$description         = __( 'Find the perfect theme for your WordPress website. Choose from thousands of stunning designs with a wide variety of features and customization options.', 'wporg-themes' );
 	$tags['description'] = $description;
 
 	if ( is_singular( THEME_POST_TYPE ) ) {
@@ -157,31 +157,31 @@ function add_seo_meta_tags( $tags ) {
 function get_archive_title() {
 	global $wp_query;
 
-	$author = isset( $wp_query->query['author_name'] ) ? get_user_by( 'slug', $wp_query->query['author_name'] ) : false;
+	$author         = isset( $wp_query->query['author_name'] ) ? get_user_by( 'slug', $wp_query->query['author_name'] ) : false;
 	$current_browse = $wp_query->query['browse'] ?? false;
-	$tags = get_query_tags();
+	$tags           = get_query_tags();
 
 	if ( is_front_page() && ! $current_browse && ! is_paged() ) {
 		$title = 'WordPress Themes';
-	} else if ( $author ) {
+	} elseif ( $author ) {
 		// translators: %s Author name.
 		$title = sprintf( __( 'Author: %s', 'wporg-themes' ), $author->display_name );
-	} else if ( is_search() ) {
+	} elseif ( is_search() ) {
 		$title = __( 'Search results', 'wporg-themes' );
-	} else if ( ! empty( $tags ) ) {
+	} elseif ( ! empty( $tags ) ) {
 		$labels = get_tag_labels( $tags );
-		$title = wp_sprintf_l( '%l', $labels );
-	} else if ( 'community' === $current_browse ) {
+		$title  = wp_sprintf_l( '%l', $labels );
+	} elseif ( 'community' === $current_browse ) {
 		$title = __( 'Community themes', 'wporg-themes' );
-	} else if ( 'commercial' === $current_browse ) {
+	} elseif ( 'commercial' === $current_browse ) {
 		$title = __( 'Commercial themes', 'wporg-themes' );
-	} else if ( 'new' === $current_browse ) {
+	} elseif ( 'new' === $current_browse ) {
 		$title = __( 'Latest themes', 'wporg-themes' );
-	} else if ( 'updated' === $current_browse ) {
+	} elseif ( 'updated' === $current_browse ) {
 		$title = __( 'Recently updated themes', 'wporg-themes' );
-	} else if ( 'favorites' === $current_browse ) {
+	} elseif ( 'favorites' === $current_browse ) {
 		$title = __( 'My favorites', 'wporg-themes' );
-	} else if ( is_page() ) {
+	} elseif ( is_page() ) {
 		$title = get_the_title();
 	} else {
 		$title = __( 'All themes', 'wporg-themes' );

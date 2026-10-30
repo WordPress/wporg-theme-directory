@@ -7,20 +7,20 @@ if ( ! $current_post_id ) {
 	return;
 }
 
-$is_playground = ! empty( $_REQUEST['playground-preview'] );
+$is_playground = ! empty( $_REQUEST['playground-preview'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only flag that opts into the Playground preview.
 
 $theme_post = get_post( $block->context['postId'] );
-$theme = wporg_themes_theme_information( $theme_post->post_name );
+$theme      = wporg_themes_theme_information( $theme_post->post_name );
 
 // Get the device size from the query.
 $devices = [ 'desktop', 'tablet', 'mobile' ];
-$device = 'desktop';
-if ( isset( $_REQUEST['device'] ) && in_array( $_REQUEST['device'], $devices ) ) {
+$device  = 'desktop';
+if ( isset( $_REQUEST['device'] ) && in_array( $_REQUEST['device'], $devices, true ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the preview device size.
 	$device = $_REQUEST['device']; // phpcs:ignore -- exact match to a given string.
 }
 
 // Initial state to pass to Interactivity API.
-$init_state = [
+$init_state    = [
 	'device' => $device,
 ];
 $encoded_state = wp_json_encode( $init_state );

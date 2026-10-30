@@ -32,17 +32,17 @@ function get_style_variation_card( $style ) {
 	}
 
 	$cache_buster = '20241028'; // To break out of cached image.
-	$view_url = add_query_arg( 'v', $cache_buster, $style->preview_link );
+	$view_url     = add_query_arg( 'v', $cache_buster, $style->preview_link );
 
-	$args = array(
-		'src' => $view_url,
+	$args         = array(
+		'src'            => $view_url,
 		// translators: %s pattern name.
-		'alt' => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
-		'href' => $preview_link,
-		'width' => 130,
-		'viewportWidth' => 1180,
+		'alt'            => sprintf( __( 'Style: %s', 'wporg-themes' ), $style->title ),
+		'href'           => $preview_link,
+		'width'          => 130,
+		'viewportWidth'  => 1180,
 		'viewportHeight' => 740,
-		'fullPage' => false,
+		'fullPage'       => false,
 	);
 	$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 
@@ -65,10 +65,10 @@ function get_theme_preview_images( $theme_post ) {
 		if ( ! str_contains( $style->link, 'style_variation' ) ) {
 			$block_markup = do_blocks( '<!-- wp:post-featured-image {"style":{"border":{"radius":"3px","style":"solid","width":"1px"}},"borderColor":"black-opacity-15"} /-->' );
 		} else {
-			$args = array(
+			$args         = array(
 				'className' => 'is-preview-image',
-				'src' => $style->link,
-				'fullPage' => false,
+				'src'       => $style->link,
+				'fullPage'  => false,
 			);
 			$block_markup = do_blocks( sprintf( '<!-- wp:wporg/screenshot-preview %s /-->', serialize_block_attributes( $args ) ) );
 		}

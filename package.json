@@ -6,10 +6,12 @@
 	"license": "GPL-2.0-or-later",
 	"private": true,
 	"devDependencies": {
-		"@wordpress/scripts": "27.6.0"
+		"@wordpress/scripts": "37.0.0"
 	},
 	"scripts": {
 		"build:theme": "npm run build --workspace=wporg-themes-2024",
+		"lint:css": "npm run lint:css --workspace=wporg-themes-2024",
+		"lint:js": "npm run lint:js --workspace=wporg-themes-2024",
 		"lint:php": "composer lint ./source/wp-content/themes/wporg-themes-2024",
 		"setup:tools": "npm install && composer install && TEXTDOMAIN=wporg-themes composer exec update-configs",
 		"start:theme": "npm run start --workspace=wporg-themes-2024",

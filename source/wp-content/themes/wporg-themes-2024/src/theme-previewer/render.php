@@ -10,14 +10,14 @@ if ( ! $current_post_id ) {
 // Manually enqueue this script, so that it's available for the interactivity view script.
 wp_enqueue_script( 'wp-a11y' );
 
-$is_playground = ! empty( $_REQUEST['playground-preview'] );
+$is_playground = ! empty( $_REQUEST['playground-preview'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only flag that opts into the Playground preview.
 
 $theme_post = get_post( $block->context['postId'] );
-$theme = wporg_themes_theme_information( $theme_post->post_name );
+$theme      = wporg_themes_theme_information( $theme_post->post_name );
 
-$url = $theme->preview_url ?? '';
+$url       = $theme->preview_url ?? '';
 $permalink = get_permalink() . 'preview/';
-$selected = array();
+$selected  = array();
 
 $blueprint = '';
 if ( $is_playground ) {
@@ -36,48 +36,48 @@ if ( $is_playground ) {
 }
 
 // Switch to using the pattern URL if a pattern is requested.
-if ( isset( $_REQUEST['pattern_name'] ) ) {
+if ( isset( $_REQUEST['pattern_name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the pattern to preview.
 	$show_pattern = wp_unslash( $_REQUEST['pattern_name'] ); // phpcs:ignore -- exact match to a given string.
-	$patterns = get_theme_patterns( $theme_post );
+	$patterns     = get_theme_patterns( $theme_post );
 	if ( $patterns ) {
 		$matches = wp_list_filter( $patterns, [ 'name' => $show_pattern ] );
 		if ( $matches ) {
-			$url = current( $matches )->link;
+			$url                      = current( $matches )->link;
 			$selected['pattern_name'] = $show_pattern;
 		}
 	}
 }
 
 // Add the style variation to the URL if one is selected.
-if ( isset( $_REQUEST['style_variation'] ) ) {
+if ( isset( $_REQUEST['style_variation'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: selects the style variation to preview.
 	$show_style = wp_unslash( $_REQUEST['style_variation'] ); // phpcs:ignore -- exact match to a given string.
-	$styles = get_theme_style_variations( $theme_post );
+	$styles     = get_theme_style_variations( $theme_post );
 	if ( $styles ) {
 		$matches = wp_list_filter( $styles, [ 'title' => $show_style ] );
 		if ( $matches ) {
-			$url = add_query_arg( 'style_variation', $show_style, $url );
+			$url                         = add_query_arg( 'style_variation', $show_style, $url );
 			$selected['style_variation'] = $show_style;
 		}
 	}
 }
 
 // Initial state to pass to Interactivity API.
-$init_state = [
-	'isLoaded' => ! $is_playground,
+$init_state    = [
+	'isLoaded'     => ! $is_playground,
 	'isPlayground' => $is_playground,
-	'blueprint' => $blueprint,
-	'url' => $url,
-	'theme' => $theme_post->post_name,
-	'permalink' => $permalink,
-	'previewBase' => $theme->preview_url,
-	'selected' => $selected,
-	'label' => array(
+	'blueprint'    => $blueprint,
+	'url'          => $url,
+	'theme'        => $theme_post->post_name,
+	'permalink'    => $permalink,
+	'previewBase'  => $theme->preview_url,
+	'selected'     => $selected,
+	'label'        => array(
 		'postNavigate' => __( 'Theme preview frame updated.', 'wporg-themes' ),
 	),
 ];
 $encoded_state = wp_json_encode( $init_state );
 
-$markup = <<<BLOCKS
+$markup = <<<'BLOCKS'
 <!-- wp:columns {"align":"full","style":{"spacing":{"blockGap":{"top":"0","left":"0"}}},"className":"wporg-theme-preview__container"} -->
 <div class="wp-block-columns alignfull wporg-theme-preview__container">
 	<!-- wp:column {"width":"300px","style":{"elements":{"link":{"color":{"text":"var:preset|color|blueberry-2"}}},"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20","left":"var:preset|spacing|20","right":"var:preset|spacing|20"}},"border":{"right":{"color":"var:preset|color|white-opacity-15","style":"solid","width":"1px"},"top":{},"bottom":{},"left":{}}},"backgroundColor":"charcoal-1","textColor":"white"} -->

@@ -1,0 +1,75 @@
+name: Static Analysis (JS/CSS)
+
+on:
+    pull_request:
+        paths:
+            - 'source/wp-content/themes/wporg-themes-2024/**'
+            - package.json
+            - package-lock.json
+            - composer.json
+            - composer.lock
+            - .nvmrc
+            - .github/workflows/js-css-lint.yml
+    push:
+        branches: [trunk]
+        paths:
+            - 'source/wp-content/themes/wporg-themes-2024/**'
+            - package.json
+            - package-lock.json
+            - composer.json
+            - composer.lock
+            - .nvmrc
+            - .github/workflows/js-css-lint.yml
+    # Enable manually running action if necessary.
+    workflow_dispatch:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    theme:
+        name: Theme
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+              with:
+                  persist-credentials: false
+
+            - name: Set up Node.js
+              uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # v2.37.2
+              with:
+                  php-version: '8.4'
+                  tools: composer
+              env:
+                  COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Install dependencies
+              # The ESLint, Stylelint, and Prettier configs are generated from
+              # wporg-repo-tools, which Composer installs.
+              run: |
+                  npm ci --ignore-scripts
+                  composer install
+                  TEXTDOMAIN=wporg-themes composer exec update-configs
+
+            - name: Lint JavaScript
+              run: npm run lint:js
+
+            - name: Lint CSS
+              run: npm run lint:css
+
+            # Build output isn't committed (build.yml pushes it to the `build` branch on merge), so catch a broken build here.
+            - name: Build theme
+              run: npm run build:theme

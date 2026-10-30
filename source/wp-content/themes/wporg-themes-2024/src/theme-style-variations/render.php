@@ -9,8 +9,8 @@ if ( ! $current_post_id ) {
 }
 
 $theme_post = get_post( $block->context['postId'] );
-$styles = get_theme_style_variations( $theme_post );
-$count = $styles ? count( $styles ) : 0;
+$styles     = get_theme_style_variations( $theme_post );
+$count      = $styles ? count( $styles ) : 0;
 
 if ( ! $count ) {
 	// phpcs:ignore
@@ -25,8 +25,8 @@ $label = sprintf(
 );
 
 // Initial state to pass to Interactivity API.
-$init_state = [
-	'isRTL' => is_rtl(),
+$init_state    = [
+	'isRTL'    => is_rtl(),
 	'selected' => 'default',
 ];
 $encoded_state = wp_json_encode( $init_state );

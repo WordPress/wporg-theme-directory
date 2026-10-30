@@ -69,11 +69,13 @@
 
 		<!-- wp:paragraph {"align":"center"} -->
 		<p class="has-text-align-center">
-			<?php printf(
+			<?php
+			printf(
 				/* translators: %s is the homepage url. */
 				wp_kses_post( __( 'View <a href="%s">all themes</a> or try a different search. ', 'wporg-themes' ) ),
 				esc_url( home_url( '/' ) )
-			); ?>
+			);
+			?>
 		</p>
 		<!-- /wp:paragraph -->
 	<!-- /wp:query-no-results -->
