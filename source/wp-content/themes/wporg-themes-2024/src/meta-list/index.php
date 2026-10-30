@@ -52,11 +52,11 @@ function render( $attributes, $content, $block ) {
 			'key' => 'active-installs',
 		),
 		array(
-			'label' => __( 'WordPress version', 'wporg-themes' ),
+			'label' => __( 'Minimum WordPress version', 'wporg-themes' ),
 			'key' => 'requires-wp',
 		),
 		array(
-			'label' => __( 'PHP version', 'wporg-themes' ),
+			'label' => __( 'Minimum PHP version', 'wporg-themes' ),
 			'key' => 'requires-php',
 		),
 		array(
