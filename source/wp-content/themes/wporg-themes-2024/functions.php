@@ -139,14 +139,7 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
 		$src   = add_query_arg( 'strip', 'all', $theme->screenshot_url() );
 
-		/*
-		 * Photon needs a numeric width, so listing cards offer card-sized screenshots instead of
-		 * the full-size image. The single theme page keeps the full size.
-		 *
-		 * The sizes follow the grid's rendered card width: 20px edge padding up to 889px and 80px
-		 * above, a `clamp(30px, 5vw, 50px)` gap, one column up to 600px, two up to 1080px, and
-		 * three above, capped by the 1160px wide size.
-		 */
+		// Listing cards get card-sized screenshots matched to the grid layout; the single theme page keeps the full size.
 		$is_single_theme = is_singular( THEME_POST_TYPE ) && get_queried_object_id() === $current_post->ID;
 		if ( $is_single_theme ) {
 			$html = '<img src="' . esc_url( $src ) . '"';
