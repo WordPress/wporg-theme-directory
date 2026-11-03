@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "wporg/theme-previewer-iframe",
+  "version": "0.1.0",
+  "title": "Theme previewer",
+  "category": "design",
+  "icon": "",
+  "description": "An iframe portal to view the current theme's preview site.",
+  "textdomain": "wporg",
+  "supports": {
+    "html": false
+  },
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
+  "editorScript": "file:./index.js",
+  "style": "wporg-theme-previewer-style",
+  "render": "file:./render.php",
+  "viewScriptModule": "file:./view.js"
+}
