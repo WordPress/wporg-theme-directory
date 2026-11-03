@@ -139,21 +139,34 @@ function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr 
 		$theme = new \WPORG_Themes_Repo_Package( $current_post );
 		$src   = add_query_arg( 'strip', 'all', $theme->screenshot_url() );
 
-		// Photon needs a numeric width, so listing cards offer card-sized screenshots instead of
-		// the full-size image. The sizes match the 1, 2, and 3 column grid breakpoints.
-		// The single theme page keeps the full size.
+		/*
+		 * Photon needs a numeric width, so listing cards offer card-sized screenshots instead of
+		 * the full-size image. The single theme page keeps the full size.
+		 *
+		 * The sizes follow the grid's rendered card width: 20px edge padding up to 889px and 80px
+		 * above, a `clamp(30px, 5vw, 50px)` gap, one column up to 600px, two up to 1080px, and
+		 * three above, capped by the 1160px wide size.
+		 */
 		$is_single_theme = is_singular( THEME_POST_TYPE ) && get_queried_object_id() === $current_post->ID;
 		if ( $is_single_theme ) {
 			$html = '<img src="' . esc_url( $src ) . '"';
 		} else {
 			$srcset = array();
-			foreach ( array( 400, 800, 1200 ) as $width ) {
+			foreach ( array( 400, 600, 800, 1200 ) as $width ) {
 				$srcset[] = esc_url( add_query_arg( 'w', $width, $src ) ) . " {$width}w";
 			}
 
+			$sizes = array(
+				'(max-width: 600px) calc(100vw - 40px)',
+				'(max-width: 889px) calc(47.5vw - 20px)',
+				'(max-width: 1080px) calc(47.5vw - 80px)',
+				'(max-width: 1320px) calc(33.3vw - 87px)',
+				'354px',
+			);
+
 			$html  = '<img src="' . esc_url( add_query_arg( 'w', 400, $src ) ) . '"';
 			$html .= ' srcset="' . implode( ', ', $srcset ) . '"';
-			$html .= ' sizes="(max-width: 600px) 100vw, (max-width: 1080px) 50vw, 33vw"';
+			$html .= ' sizes="' . implode( ', ', $sizes ) . '"';
 		}
 
 		if ( is_array( $attr ) ) {
