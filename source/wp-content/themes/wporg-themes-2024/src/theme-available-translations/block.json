@@ -9,8 +9,11 @@
 	"description": "A list of the available translations for this theme.",
 	"textdomain": "wporg",
 	"supports": {
-		"html": false
+		"html": false,
+		"interactivity": true
 	},
 	"usesContext": [ "postId", "postType" ],
-	"editorScript": "file:./index.js"
+	"editorScript": "file:./index.js",
+	"viewScriptModule": "file:./view.js",
+	"style": "file:./style-index.css"
 }

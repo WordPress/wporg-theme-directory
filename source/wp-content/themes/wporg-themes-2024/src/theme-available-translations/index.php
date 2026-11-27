@@ -52,15 +52,60 @@ function render( $attributes, $content, $block ) {
 		return '';
 	}
 
-	$wrapper_attributes = get_block_wrapper_attributes();
+	$initial_limit = 10;
+	if ( count( $languages ) <= $initial_limit ) {
+		$wrapper_attributes = get_block_wrapper_attributes();
+		return sprintf(
+			'<div %s>%s</div>',
+			$wrapper_attributes,
+			sprintf(
+				// translators: %s is a list of links to the theme in each language.
+				esc_html__( 'This theme is available in the following languages: %s', 'wporg-themes' ),
+				wp_sprintf( '%l.', $languages )
+			)
+		);
+	}
+
+	$visible_languages = array_slice( $languages, 0, $initial_limit, true );
+	$hidden_languages  = array_slice( $languages, $initial_limit, null, true );
+
+	/* translators: %d: Number of additional languages. */
+	$show_more_label = sprintf( __( 'Show %d more', 'wporg-themes' ), count( $hidden_languages ) );
+	$show_less_label = __( 'Show less', 'wporg-themes' );
+
+	$wrapper_attributes = get_block_wrapper_attributes(
+		array(
+			'data-wp-interactive' => 'wporg/themes/available-translations',
+		)
+	);
+
+	$language_list = sprintf(
+		'%1$s<span data-wp-bind--hidden="!context.isExpanded" hidden>, %2$s</span>.',
+		implode( ', ', $visible_languages ),
+		wp_sprintf( '%l', $hidden_languages )
+	);
+
+	$toggle_button = sprintf(
+		' <button type="button" class="wp-block-wporg-theme-available-translations__toggle" data-wp-on--click="actions.toggle" data-wp-bind--aria-expanded="context.isExpanded" data-wp-text="state.toggleLabel">%s</button>',
+		esc_html( $show_more_label )
+	);
+
 	return sprintf(
-		'<div %s>%s</div>',
+		'<div %1$s %2$s>%3$s%4$s</div>',
 		$wrapper_attributes,
+		wp_interactivity_data_wp_context(
+			array(
+				'isExpanded'    => false,
+				'showMoreLabel' => $show_more_label,
+				'showLessLabel' => $show_less_label,
+			)
+		),
 		sprintf(
 			// translators: %s is a list of links to the theme in each language.
 			esc_html__( 'This theme is available in the following languages: %s', 'wporg-themes' ),
-			wp_sprintf( '%l.', $languages )
-		)
+			$language_list
+		),
+		$toggle_button
 	);
 }
 
